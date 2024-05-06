@@ -6,6 +6,7 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 import { LoginComponent } from './core/auth/pages/login/login.component';
 import { SignupComponent } from './core/auth/pages/signup/signup.component';
 import { PasswordRecoveryComponent } from './core/auth/pages/password-recovery/password-recovery.component';
+import { ProfileComponent } from './features/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'product', component: ProductComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'profile', component: ProfileComponent },
   {
     path: 'auth',
     children: [
