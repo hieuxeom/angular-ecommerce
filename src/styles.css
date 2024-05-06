@@ -1,1 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Import Google font Montserrat */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+:root {
+  --primary: #000;
+  --secondary: #999;
+  --disabled: #666;
+  --gray: #f0f0f0;
+  --danger: #ff3333;
+  --success: #01ab31;
+
+  --text-primary: var(--primary);
+  --text-secondary: var(--secondary);
+  --text-disabled: var(--disabled);
+  --text-danger: var(--danger);
+  --text-success: var(--success);
+}
+
+@layer primeng, reset;
+
+/* Reset CSS */
+@layer reset {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  h3 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  h4 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
