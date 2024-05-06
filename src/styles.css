@@ -5,6 +5,17 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
+@layer tailwind-base, primeng, reset, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -25,8 +36,6 @@
   --text-success: var(--success);
 }
 
-@layer primeng, reset;
-
 /* Reset CSS */
 @layer reset {
   body {
@@ -35,26 +44,21 @@
   }
 
   h1 {
-    font-size: 3.75rem;
-    line-height: 1;
+    @apply text-7xl;
   }
 
   h2 {
-    font-size: 3rem;
-    line-height: 1;
+    @apply text-5xl;
   }
 
   h3 {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    @apply text-4xl;
   }
 
   h4 {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    @apply text-3xl;
   }
   p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    @apply text-base;
   }
 }
