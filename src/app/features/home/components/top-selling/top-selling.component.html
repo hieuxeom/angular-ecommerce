@@ -1,0 +1,25 @@
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex flex-col items-center">
+    <header class="py-8">
+      <h2 class="uppercase font-extrabold">Top Selling</h2>
+    </header>
+    <main class="py-8">
+      <div class="grid grid-cols-4 gap-12">
+        <app-product-card
+          *ngFor="let product of listProducts"
+          [productName]="product.productName"
+          [isDiscount]="product.isDiscount"
+          [discountPercents]="product.discountPercents"
+          [productPrice]="product.productPrice"
+          [productImage]="product.productImage"
+          [productRating]="product.productRating"
+        />
+      </div>
+    </main>
+    <footer class="py-8">
+      <button class="border border-1 border-black/10 px-12 py-2 rounded-full">
+        View all
+      </button>
+    </footer>
+  </div>
+</section>

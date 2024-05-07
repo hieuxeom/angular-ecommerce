@@ -1,0 +1,32 @@
+<section class="bg-gray w-full flex justify-center max-h-[75vh]">
+  <div class="max-w-7xl w-full flex overflow-hidden">
+    <div class="w-1/2 flex flex-col justify-center items-start gap-8">
+      <h1 class="font-extrabold uppercase">
+        Find clothes that matches your style
+      </h1>
+      <p class="text-sub">
+        Browse through our diverse range of meticulously crafted garments,
+        designed to bring out your individuality and cater to your sense of
+        style.
+      </p>
+      <button
+        id="shopNowButton"
+        class="bg-primary text-white px-12 py-3 rounded-full"
+      >
+        Shop now
+      </button>
+      <div class="flex gap-8">
+        <div
+          class="flex flex-col gap-2"
+          *ngFor="let analyticData of analyticsData"
+        >
+          <h2 class="font-semibold">{{ analyticData.metricNumber }}+</h2>
+          <p class="category text-disabled">{{ analyticData.category }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-1/2">
+      <img class="w-full" src="assets/hero-image.png" alt="" />
+    </div>
+  </div>
+</section>
