@@ -2,3 +2,9 @@
   font-weight: 600;
   border-bottom: 2px solid var(--primary);
 }
+
+.nav-item:hover,
+.nav-action:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
