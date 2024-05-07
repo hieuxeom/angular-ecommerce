@@ -23,7 +23,8 @@
 
 :root {
   --primary: #000;
-  --secondary: #999;
+  --secondary: #ff5b5b;
+  --sub: #999;
   --disabled: #666;
   --gray: #f0f0f0;
   --danger: #ff3333;
@@ -57,6 +58,12 @@
 
   h4 {
     @apply text-3xl;
+  }
+  h5 {
+    @apply text-2xl;
+  }
+  h6 {
+    @apply text-xl;
   }
   p {
     @apply text-base;
