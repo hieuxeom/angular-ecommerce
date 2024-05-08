@@ -5,7 +5,7 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-@layer tailwind-base, primeng, reset, tailwind-utilities;
+@layer primeng ,tailwind-base , reset, tailwind-utilities;
 
 @layer tailwind-base {
   @tailwind base;
@@ -67,5 +67,15 @@
   }
   p {
     @apply text-base;
+  }
+
+  /* custom class PrimeNG Library */
+  .p-slider-handle {
+    border: 2px solid #3b82f6;
+  }
+
+  .p-highlight {
+    color: #1d4ed8;
+    background: #eff6ff;
   }
 }
