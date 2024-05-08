@@ -4,7 +4,7 @@ import { ProductCardComponent } from '../../../../shared/components/product-card
 import {
   ProductsDataService,
   type IProduct,
-} from '../../services/products-data/products-data.service';
+} from '../../../../shared/services/products-data/products-data.service';
 
 @Component({
   selector: 'app-top-selling',

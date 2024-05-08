@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   BrandsDataService,
   type IBrandData,
-} from '../../services/brands-data/brands-data.service';
+} from '../../../../shared/services/brands-data/brands-data.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
