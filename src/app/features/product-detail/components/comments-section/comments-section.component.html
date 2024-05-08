@@ -1,0 +1,16 @@
+<section class="w-full flex flex-col justify-center gap-4">
+  <div class="w-full grid grid-cols-2 gap-8">
+    <app-comment-card />
+    <app-comment-card />
+    <app-comment-card />
+    <app-comment-card />
+  </div>
+  <div>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+    />
+  </div>
+</section>
