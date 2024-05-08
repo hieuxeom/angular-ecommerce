@@ -17,6 +17,5 @@ export class BrandSlideComponent {
   brandsData: IBrandData[] = [];
   constructor(private brandsService: BrandsDataService) {
     this.brandsData = brandsService.getBrandsData();
-    console.log(this.brandsData);
   }
 }

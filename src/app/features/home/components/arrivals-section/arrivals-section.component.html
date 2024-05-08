@@ -7,12 +7,7 @@
       <div class="grid grid-cols-4 gap-12">
         <app-product-card
           *ngFor="let product of listProducts"
-          [productName]="product.productName"
-          [isDiscount]="product.isDiscount"
-          [discountPercents]="product.discountPercents"
-          [productPrice]="product.productPrice"
-          [productImage]="product.productImage"
-          [productRating]="product.productRating"
+          [productData]="product"
         />
       </div>
     </main>

@@ -1,28 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import type { IProduct } from '../../services/products-data/products-data.service';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input() productName?: string;
-  @Input() isDiscount?: boolean;
-  @Input() discountPercents?: string | number;
-  @Input() productPrice?: string | number;
-  @Input() productImage?: string;
-  @Input() productRating?: number;
+  @Input() productData?: IProduct;
   public productDiscountPrice: number = 0;
-  ngOnInit() {
-    this.discountPercents = Number(this.discountPercents);
-    this.productPrice = Number(this.productPrice);
 
-    if (this.isDiscount) {
-      this.productDiscountPrice =
-        this.productPrice - (this.productPrice * this.discountPercents) / 100;
+  ngOnInit() {
+    if (this.productData) {
+      this.productData.discountPercents = Number(
+        this.productData.discountPercents
+      );
+      this.productData.productPrice = Number(this.productData.productPrice);
+
+      if (this.productData.isDiscount) {
+        this.productDiscountPrice =
+          this.productData.productPrice -
+          (this.productData.productPrice * this.productData.discountPercents) /
+            100;
+      }
     }
   }
 }
