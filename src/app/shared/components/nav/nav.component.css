@@ -1,6 +1,7 @@
 .nav-item.active {
   font-weight: 600;
-  border-bottom: 2px solid var(--primary);
+  color: var(--highlight);
+  border-bottom: 2px solid var(--highlight);
 }
 
 .nav-item:hover,
