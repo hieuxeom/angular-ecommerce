@@ -1,1 +1,162 @@
-<p>checkout works!</p>
+<section class="w-full flex justify-center my-8">
+  <div *ngIf="step === 1; then stepOne"></div>
+  <div *ngIf="step === 2; then stepTwo"></div>
+  <div *ngIf="step === 3; then stepFinal"></div>
+</section>
+
+<ng-template #stepOne>
+  <div class="max-w-7xl w-full flex flex-col justify-center items-center gap-4">
+    <header class="w-full text-center flex flex-col gap-4">
+      <h3 class="font-bold">Where should we sent the order?</h3>
+      <p class="text-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore.
+      </p>
+    </header>
+    <main
+      class="w-3/4 flex flex-col gap-4 border border-black/10 px-6 py-4 rounded-2xl"
+    >
+      <h6 class="font-semibold">Billing Address</h6>
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="fullName">Full Name</label>
+          <input
+            class="border border-black/10 rounded-md text-xl px-4 py-2 outline-none"
+            type="text"
+            name="fullName"
+            id="fullName"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="email">Email</label>
+          <input
+            class="border border-black/10 rounded-md text-xl px-4 py-2 outline-none"
+            type="email"
+            name="email"
+            id="email"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="streetAddress">Street Address</label>
+          <input
+            class="border border-black/10 rounded-md text-xl px-4 py-2 outline-none"
+            type="text"
+            name="streetAddress"
+            id="streetAddress"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="province">Province</label>
+          <p-dropdown
+            [options]="provinces"
+            [(ngModel)]="selectedProvince"
+            styleClass="w-full border border-black/10"
+            placeholder="Select a Province"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="city">City</label>
+          <p-dropdown
+            [options]="cites"
+            [(ngModel)]="selectedCity"
+            styleClass="w-full border border-black/10"
+            placeholder="Select a City"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="postalCode">Postal Code</label>
+          <input
+            class="border border-black/10 rounded-md text-xl px-4 py-2 outline-none"
+            type="text"
+            name="postalCode"
+            id="postalCode"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="w-full bg-primary text-white px-8 py-4 font-semibold rounded-xl"
+          (click)="nextStep()"
+        >
+          Next
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+</ng-template>
+
+<ng-template #stepTwo>
+  <div class="max-w-7xl w-full flex flex-col justify-center items-center gap-4">
+    <header class="w-full text-center flex flex-col gap-4">
+      <h3 class="font-bold">Confirm and enjoy your order 🎉</h3>
+      <p class="text-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore.
+      </p>
+    </header>
+    <main
+      class="w-3/4 flex flex-col gap-4 border border-black/10 px-6 py-4 rounded-2xl"
+    >
+      <h6 class="font-semibold">Check out Summary</h6>
+      <div
+        class="w-full flex flex-col gap-2 px-6 py-4 border border-black/10 rounded-xl"
+      >
+        <div class="w-full flex justify-between items-center">
+          <p>Subtotal</p>
+          <p class="font-semibold">$100</p>
+        </div>
+        <div class="w-full flex justify-between items-center">
+          <p>Subtotal</p>
+          <p class="font-semibold">$100</p>
+        </div>
+        <div class="w-full flex justify-between items-center">
+          <p>Subtotal</p>
+          <p class="font-semibold">$100</p>
+        </div>
+        <div class="w-full flex justify-between items-center">
+          <p>Subtotal</p>
+          <p class="font-semibold">$100</p>
+        </div>
+        <app-hr />
+        <div class="w-full flex justify-between items-center">
+          <p class="text-xl font-semibold">Total</p>
+          <p class="text-xl font-bold">$100</p>
+        </div>
+      </div>
+      <button
+        class="w-full bg-primary text-white px-8 py-4 font-semibold rounded-xl"
+        (click)="nextStep()"
+      >
+        Complete Order
+      </button>
+    </main>
+  </div>
+</ng-template>
+
+<ng-template #stepFinal>
+  <div class="max-w-7xl w-full flex flex-col justify-center items-center gap-4">
+    <header class="w-full text-center flex flex-col gap-4">
+      <h3 class="font-bold">Yes, you've successfully ordered! 🎉</h3>
+      <p class="text-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore.
+      </p>
+    </header>
+    <main
+      class="w-3/4 flex flex-col items-center gap-4 border border-black/10 px-6 py-4 rounded-2xl"
+    >
+      <i class="text-8xl text-success fa-solid fa-circle-check"></i>
+      <h5>Thanks a lot for putting this order</h5>
+      <button
+        class="w-full bg-primary text-white px-8 py-4 font-semibold rounded-xl"
+      >
+        Back to Home
+      </button>
+    </main>
+  </div>
+</ng-template>
