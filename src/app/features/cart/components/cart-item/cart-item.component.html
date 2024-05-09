@@ -1,0 +1,47 @@
+<div class="w-full grid grid-cols-12">
+  <div class="col-span-2 bg-gray rounded-xl overflow-hidden">
+    <img src="assets/product/test-1.png" alt="" />
+  </div>
+  <div class="col-span-8 px-4 flex flex-wrap content-between">
+    <div class="w-full">
+      <p>Gradient Graphic T-shirt</p>
+      <p class="text-sm font-semibold">
+        Size: <span class="font-normal">Large</span>
+      </p>
+      <p class="text-sm font-semibold">
+        Color: <span class="font-normal">White</span>
+      </p>
+    </div>
+    <div>
+      <h5 class="font-bold">$145</h5>
+    </div>
+  </div>
+  <div class="col-span-2 flex flex-wrap content-between">
+    <div class="w-full flex justify-end">
+      <button
+        class="hover:bg-red-400/20 w-10 h-10 rounded-full flex justify-center items-center"
+      >
+        <i class="fa-solid fa-trash-can text-xl text-danger"></i>
+      </button>
+    </div>
+    <div class="min-w-max">
+      <button
+        (click)="minusQuantity()"
+        class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full"
+      >
+        -
+      </button>
+      <input
+        class="bg-gray px-4 py-2 max-w-16 text-center"
+        type="text"
+        [(ngModel)]="quantity"
+      />
+      <button
+        (click)="addQuantity()"
+        class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full"
+      >
+        +
+      </button>
+    </div>
+  </div>
+</div>

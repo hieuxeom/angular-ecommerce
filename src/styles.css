@@ -74,8 +74,12 @@
     border: 2px solid #3b82f6;
   }
 
-  .p-highlight {
+  .p-paginator-pages .p-highlight {
     color: #1d4ed8;
     background: #eff6ff;
+  }
+
+  .p-tabview-nav {
+    @apply text-xl;
   }
 }

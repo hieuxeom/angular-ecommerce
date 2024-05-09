@@ -24,8 +24,14 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  {
+    path: 'cart',
+
+    children: [
+      { path: '', component: CartComponent },
+      { path: 'checkout', component: CheckoutComponent },
+    ],
+  },
   { path: 'profile', component: ProfileComponent },
   {
     path: 'auth',

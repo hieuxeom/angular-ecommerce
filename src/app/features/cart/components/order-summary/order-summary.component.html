@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-4 h-max">
+  <header>
+    <h6 class="font-bold">Order Summary</h6>
+  </header>
+  <main class="flex flex-col gap-2">
+    <div class="w-full flex justify-between items-center">
+      <p class="text-xl text-sub">Subtotal</p>
+      <p class="text-xl font-bold">$565</p>
+    </div>
+    <div *ngIf="isVoucher; then haveVoucher; else noVoucher"></div>
+    <div *ngIf="isHaveShipFee; then haveShipFee; else freeShipFee"></div>
+    <app-hr></app-hr>
+    <div class="w-full flex justify-between items-center">
+      <p class="text-xl text-sub">Total</p>
+      <p class="text-2xl font-bold">$1000</p>
+    </div>
+  </main>
+  <footer class="flex flex-col gap-4">
+    <div class="flex justify-center items-center gap-4">
+      <div
+        class="bg-gray w-full px-4 py-2 flex justify-center items-center gap-2 rounded-full"
+      >
+        <i class="fa-solid fa-ticket text-sub -rotate-45"></i>
+        <input
+          type="text"
+          name="promoCode"
+          id="promoCode"
+          placeholder="Add promo code here"
+          class="w-full bg-transparent border-none outline-none"
+        />
+      </div>
+      <button class="bg-black px-8 py-2 rounded-full text-white">Apply</button>
+    </div>
+    <a
+      [routerLink]="['/cart/checkout']"
+      class="block text-center w-full bg-black px-8 py-4 rounded-full text-white"
+    >
+      Go to Checkout <i class="fa-solid fa-arrow-right ml-4"></i>
+    </a>
+  </footer>
+</div>
+
+<ng-template #haveVoucher>
+  <div class="w-full flex justify-between items-center">
+    <p class="text-xl text-sub">Discount(-20%)</p>
+    <p class="text-xl font-bold text-danger">$565</p>
+  </div>
+</ng-template>
+<ng-template #noVoucher>
+  <div class="w-full flex justify-between items-center">
+    <p class="text-xl text-sub">Discount</p>
+    <p class="text-xl font-bold">$565</p>
+  </div>
+</ng-template>
+
+<ng-template #freeShipFee>
+  <div class="w-full flex justify-between items-center">
+    <p class="text-xl text-sub">Delivery Fee(-100%)</p>
+    <p class="text-xl font-bold text-danger line-through">$0</p>
+  </div>
+</ng-template>
+<ng-template #haveShipFee>
+  <div class="w-full flex justify-between items-center">
+    <p class="text-xl text-sub">Delivery Fee</p>
+    <p class="text-xl font-bold">$15</p>
+  </div>
+</ng-template>

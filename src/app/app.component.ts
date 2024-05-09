@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  ActivatedRoute,
   RouterLink,
   RouterLinkActive,
   RouterModule,
@@ -17,5 +18,5 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular-ecommerce';
+  constructor() {}
 }
