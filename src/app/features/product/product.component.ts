@@ -1,17 +1,18 @@
+import { apiUrl } from './../../shared/utils/apiUrl';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule, type DropdownChangeEvent } from 'primeng/dropdown';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, type AfterContentInit } from '@angular/core';
 import { FilterBoardComponent } from './components/filter-board/filter-board.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import {
-  ProductsDataService,
-  type IProduct,
-} from '../../shared/services/products-data/products-data.service';
+
 import { HrComponent } from '../../shared/components/hr/hr.component';
 import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
+import { ProductService } from '../../shared/services/ProductServices/product.service';
+import { HttpClientModule } from '@angular/common/http';
+import type { IProduct } from '../../shared/interfaces/product';
 export type SortType =
   | 'most-popular'
   | 'price-asc'
@@ -30,16 +31,18 @@ export type SortType =
     ProductCardComponent,
     HrComponent,
     PaginatorModule,
+    HttpClientModule,
   ],
-  providers: [ProductsDataService],
+  providers: [ProductService],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
 })
 export class ProductComponent {
-  public selectedSortMode: SortType = 'most-popular';
   public first: number = 0;
   public rows: number = 1;
   public currentPage = 0;
+
+  public selectedSortMode: SortType = 'most-popular';
   public listSortMode = [
     { label: 'Most Popular', value: 'most-popular' },
     { label: 'Price: Low to High', value: 'price-asc' },
@@ -50,8 +53,13 @@ export class ProductComponent {
 
   public productData: IProduct[] = [];
 
-  public constructor(private productDataService: ProductsDataService) {
-    this.productData = productDataService.getAllProducts();
+  public constructor(private productApiServices: ProductService) {}
+
+  public ngOnInit() {
+    this.productApiServices.getAllProducts().subscribe((listProducts) => {
+      console.log(listProducts);
+      this.productData = listProducts.data;
+    });
   }
 
   public onChangeSort(event: DropdownChangeEvent) {}

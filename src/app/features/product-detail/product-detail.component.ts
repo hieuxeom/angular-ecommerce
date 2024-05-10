@@ -8,10 +8,9 @@ import { CommentsSectionComponent } from './components/comments-section/comments
 import { ReviewsSectionComponent } from './components/reviews-section/reviews-section.component';
 import type { MenuItem } from 'primeng/api';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import {
-  ProductsDataService,
-  type IProduct,
-} from '../../shared/services/products-data/products-data.service';
+import { ProductService } from '../../shared/services/ProductServices/product.service';
+import type { IProduct } from '../../shared/interfaces/product';
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -23,7 +22,7 @@ import {
     ReviewsSectionComponent,
     ProductCardComponent,
   ],
-  providers: [ProductsDataService],
+  providers: [ProductService],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
@@ -33,9 +32,9 @@ export class ProductDetailComponent {
   public top4RelateTo: IProduct[] = [];
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductsDataService
+    private productApiService: ProductService
   ) {
-    this.top4RelateTo = productService.getAllProducts().slice(0, 4);
+    console.log('vcl hihi');
   }
 
   ngOnInit() {
@@ -50,5 +49,8 @@ export class ProductDetailComponent {
         routerLink: ['/reviews'],
       },
     ];
+    this.productApiService.getAllProducts().subscribe((listProducts) => {
+      this.top4RelateTo = listProducts.data.slice(0, 4);
+    });
   }
 }
