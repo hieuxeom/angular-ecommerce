@@ -1,3 +1,4 @@
+import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { ProductComponent } from './features/product/product.component';
@@ -10,6 +11,8 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { ProductDetailComponent } from './features/product-detail/product-detail.component';
 import { CommentsSectionComponent } from './features/product-detail/components/comments-section/comments-section.component';
 import { ReviewsSectionComponent } from './features/product-detail/components/reviews-section/reviews-section.component';
+import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
+import { EditAddressesComponent } from './features/profile/components/edit-addresses/edit-addresses.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,7 +35,21 @@ export const routes: Routes = [
       { path: 'checkout', component: CheckoutComponent },
     ],
   },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [
+      { path: '', component: EditProfileComponent },
+      { path: 'list-address', component: ListAddressComponent },
+      {
+        path: 'edit-address',
+        children: [
+          { path: '', redirectTo: 'list-address', pathMatch: 'full' },
+          { path: ':addressId', component: EditAddressesComponent },
+        ],
+      },
+    ],
+  },
   {
     path: 'auth',
     children: [
@@ -43,5 +60,5 @@ export const routes: Routes = [
       { path: '**', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
-  // { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
