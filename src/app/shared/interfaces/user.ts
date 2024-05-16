@@ -1,18 +1,18 @@
-interface CartItem {
+export interface ICartItem {
   productId: string;
   quantity: number;
 }
 
-interface UserAddress {
-  provinceId: string;
-  districtId: string;
-  wardId: string;
+export interface IUserAddress {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
   fullAddress: string;
   isDefault: boolean;
 }
 
-interface UserCart {
-  cartItems: CartItem[];
+export interface IUserCart {
+  cartItems: ICartItem[];
   voucherCode: string;
 }
 
@@ -20,6 +20,7 @@ export interface IUser {
   userName: string;
   email: string;
   password: string;
-  cart: UserCart;
-  listAddresses: UserAddress[];
+  cart: IUserCart;
+  listAddresses: IUserAddress[];
+  accessToken: string;
 }
