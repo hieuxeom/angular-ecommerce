@@ -9,7 +9,15 @@
   <app-hr></app-hr>
 
   <div class="flex flex-col gap-2 justify-center">
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 't-shirt' }"
+    <ng-container *ngFor="let _c of listCategories">
+      <a
+        [routerLink]="['/product']"
+        [queryParams]="{ filter: _c.queryParams }"
+        >{{ _c.categoryName }}</a
+      >
+    </ng-container>
+
+    <!-- <a [routerLink]="['/product']" [queryParams]="{ filter: 't-shirt' }"
       >T-shirts</a
     >
     <a [routerLink]="['/product']" [queryParams]="{ filter: 'shorts' }"
@@ -21,7 +29,7 @@
     <a [routerLink]="['/product']" [queryParams]="{ filter: 'hoodies' }"
       >Hoodies</a
     >
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 'jeans' }">Jeans</a>
+    <a [routerLink]="['/product']" [queryParams]="{ filter: 'jeans' }">Jeans</a> -->
   </div>
 
   <app-hr></app-hr>

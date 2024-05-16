@@ -12,7 +12,9 @@ import { HrComponent } from '../../shared/components/hr/hr.component';
 import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
 import { ProductService } from '../../shared/services/ProductServices/product.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import type { IProduct } from '../../shared/interfaces/product';
+import { filter } from 'rxjs';
 export type SortType =
   | 'most-popular'
   | 'price-asc'
@@ -43,6 +45,7 @@ export class ProductComponent {
   public currentPage = 0;
 
   public selectedSortMode: SortType = 'most-popular';
+
   public listSortMode = [
     { label: 'Most Popular', value: 'most-popular' },
     { label: 'Price: Low to High', value: 'price-asc' },
@@ -53,14 +56,26 @@ export class ProductComponent {
 
   public productData: IProduct[] = [];
 
-  public constructor(private productApiServices: ProductService) {}
-
-  public ngOnInit() {
-    this.productApiServices.getAllProducts().subscribe((listProducts) => {
-      console.log(listProducts);
-      this.productData = listProducts.data;
+  public constructor(
+    private productApiService: ProductService,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe((params) => {
+      if (params['filter']) {
+        this.productApiService
+          .getProductsWithFilter(params['filter'])
+          .subscribe((listProducts) => {
+            this.productData = listProducts.data;
+          });
+      } else {
+        this.productApiService.getAllProducts().subscribe((listProducts) => {
+          this.productData = listProducts.data;
+        });
+      }
     });
   }
+
+  public ngOnInit() {}
 
   public onChangeSort(event: DropdownChangeEvent) {}
 
