@@ -7,20 +7,26 @@ export interface IProduct {
   productImage: string;
   productColor: string;
   productCategory: string;
-  productReviews: ProductReview[];
-  productComments: ProductComment[];
+  productReviews: IProductReview[];
+  productComments: IProductComment[];
   productRating: number;
   productStock: number;
   isDeleted: boolean;
 }
 
-export interface ProductComment {
+export interface IProductComment {
+  _id: string;
   userName: string;
   commentContent: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface ProductReview {
+export interface IProductReview {
+  _id: string;
   userName: string;
   reviewContent: string;
   reviewStar: number;
+  createdAt: string;
+  updatedAt: string;
 }
