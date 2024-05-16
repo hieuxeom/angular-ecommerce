@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  RouterLink,
-  RouterLinkActive,
-  RouterModule,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 
 import { NavComponent } from './shared/components/nav/nav.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { ScrollToTopService } from './shared/services/ScrollToTop/scroll-to-top.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, FooterComponent],
+  imports: [RouterModule, NavComponent, FooterComponent],
+  providers: [ScrollToTopService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor() {}
+  constructor(
+    private router: Router,
+    private scrollToTop: ScrollToTopService
+  ) {}
 }
