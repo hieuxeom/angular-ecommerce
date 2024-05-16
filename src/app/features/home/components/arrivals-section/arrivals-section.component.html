@@ -1,0 +1,20 @@
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex flex-col items-center">
+    <header class="py-8">
+      <h2 class="uppercase font-extrabold">New Arrivals</h2>
+    </header>
+    <main class="py-8">
+      <div class="grid grid-cols-4 gap-12">
+        <app-product-card
+          *ngFor="let product of listProducts"
+          [productData]="product"
+        />
+      </div>
+    </main>
+    <footer class="py-8">
+      <button class="border border-1 border-black/10 px-12 py-2 rounded-full">
+        View all
+      </button>
+    </footer>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+<nav class="w-full flex flex-col justify-center items-center">
+  <div
+    class="w-full bg-primary flex justify-center items-center gap-1 text-white py-2"
+  >
+    <p>Sign up and get 20% off to your first order.</p>
+    <a href="/auth/sign-up" class="font-medium underline">Sign Up Now</a>
+  </div>
+  <div
+    class="max-w-7xl w-full flex justify-between items-center gap-4 px-2 py-4"
+  >
+    <div class="max-w-[250px] flex items-center justify-center">
+      <img class="w-full" src="assets/logow_b.png" alt="" />
+    </div>
+    <div class="w-max flex gap-4 justify-center items-center">
+      <a
+        class="min-w-max nav-item"
+        [routerLink]="['/home']"
+        routerLinkActive="active"
+        >Home</a
+      >
+      <a
+        class="min-w-max nav-item"
+        [routerLink]="['/product']"
+        routerLinkActive="active"
+        >Product</a
+      >
+      <a
+        class="min-w-max nav-item"
+        [routerLink]="['/about-us']"
+        routerLinkActive="active"
+        >About Us</a
+      >
+      <a
+        class="min-w-max nav-item"
+        [routerLink]="['/contact']"
+        routerLinkActive="active"
+        >Contact</a
+      >
+    </div>
+    <div
+      class="bg-gray w-full px-4 py-2 flex justify-center items-center gap-2 rounded-full"
+    >
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        name=""
+        id="searchBox"
+        placeholder="Search for products"
+        class="w-full bg-transparent border-none outline-none"
+      />
+    </div>
+    <div class="w-max flex gap-4 justify-center items-center">
+      <a [routerLink]="['/cart']" class="nav-action text-primary text-xl"
+        ><i class="fa-solid fa-cart-shopping"></i
+      ></a>
+      <a [routerLink]="['/profile']" class="nav-action text-primary text-xl"
+        ><i class="fa-solid fa-circle-user"></i
+      ></a>
+    </div>
+  </div>
+</nav>

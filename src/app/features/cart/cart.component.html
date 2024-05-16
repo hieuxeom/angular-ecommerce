@@ -1,0 +1,17 @@
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex flex-col gap-4 my-4">
+    <header class="w-full text-center">
+      <h2 class="uppercase font-extrabold">Your cart</h2>
+    </header>
+    <main class="grid grid-cols-12 gap-4">
+      <div
+        class="col-span-8 border border-black/10 rounded-2xl flex flex-col gap-4 p-4"
+      >
+        <app-cart-item *ngFor="let item of cartItemSample" />
+      </div>
+      <div class="col-span-4 border border-black/10 rounded-2xl p-4 h-max">
+        <app-order-summary />
+      </div>
+    </main>
+  </div>
+</section>

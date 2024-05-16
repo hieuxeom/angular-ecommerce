@@ -1,0 +1,99 @@
+<section class="w-full flex gap-8 py-8">
+  <div class="w-1/2 p-4 bg-gray rounded-3xl">
+    <img class="w-full" src="assets/product/test-1.png" alt="" />
+  </div>
+  <div class="w-1/2 flex flex-col gap-4">
+    <h3 class="uppercase font-bold">{{ productName }}</h3>
+    <ng-container *ngIf="isDiscount; then discountBlock; else noDiscountBlock">
+    </ng-container>
+
+    <p>
+      This graphic t-shirt which is perfect for any occasion. Crafted from a
+      soft and breathable fabric, it offers superior comfort and style.
+    </p>
+    <app-hr></app-hr>
+    <p class="text-sub">Choose Size</p>
+    <div class="flex items-center gap-4">
+      <button
+        data-size="S"
+        (click)="onSelectSize($event)"
+        class="bg-gray font-medium px-4 py-2 rounded-xl {{
+          selectedSize === 'S' ? 'active' : ''
+        }}"
+      >
+        S
+      </button>
+      <button
+        data-size="M"
+        (click)="onSelectSize($event)"
+        class="bg-gray font-medium px-4 py-2 rounded-xl {{
+          selectedSize === 'M' ? 'active' : ''
+        }}"
+      >
+        M
+      </button>
+      <button
+        data-size="L"
+        (click)="onSelectSize($event)"
+        class="bg-gray font-medium px-4 py-2 rounded-xl {{
+          selectedSize === 'L' ? 'active' : ''
+        }}"
+      >
+        L
+      </button>
+      <button
+        data-size="XL"
+        (click)="onSelectSize($event)"
+        class="bg-gray font-medium px-4 py-2 rounded-xl {{
+          selectedSize === 'XL' ? 'active' : ''
+        }}"
+      >
+        XL
+      </button>
+    </div>
+
+    <app-hr></app-hr>
+
+    <div class="flex items-center justify-between gap-4">
+      <div class="min-w-max">
+        <button class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full">
+          -
+        </button>
+        <input
+          class="bg-gray px-4 py-2 max-w-16 text-center"
+          type="text"
+          [(ngModel)]="quantity"
+        />
+        <button class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full">
+          +
+        </button>
+      </div>
+      <div class="min-w-max">
+        <p>
+          (<span class="font-semibold">{{ productStock }}</span> pieces
+          available)
+        </p>
+      </div>
+      <button
+        class="w-full bg-primary px-4 py-2 text-white rounded-full font-medium"
+      >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</section>
+
+<ng-template #discountBlock>
+  <div class="flex gap-4 items-center">
+    <h4 class="font-bold">${{ newPrice }}</h4>
+    <h4 class="font-bold line-through text-sub">${{ productPrice }}</h4>
+    <span class="bg-red-300/20 text-danger px-4 py-1 rounded-full font-medium"
+      >-{{ discountPercents }}%</span
+    >
+  </div>
+</ng-template>
+<ng-template #noDiscountBlock>
+  <div class="flex gap-4 items-center">
+    <h4 class="font-bold">{{ productPrice }}</h4>
+  </div>
+</ng-template>

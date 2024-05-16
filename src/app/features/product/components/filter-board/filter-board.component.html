@@ -1,0 +1,73 @@
+<div
+  class="border border-1 border-black/10 flex flex-col gap-6 px-6 py-5 rounded-2xl"
+>
+  <div class="flex justify-between items-center">
+    <h6 class="font-bold">Filters</h6>
+    <i class="fa-solid fa-sliders rotate-90 text-xl"></i>
+  </div>
+
+  <app-hr></app-hr>
+
+  <div class="flex flex-col gap-2 justify-center">
+    <ng-container *ngFor="let _c of listCategories">
+      <a
+        [routerLink]="['/product']"
+        [queryParams]="{ filter: _c.queryParams }"
+        >{{ _c.categoryName }}</a
+      >
+    </ng-container>
+
+    <!-- <a [routerLink]="['/product']" [queryParams]="{ filter: 't-shirt' }"
+      >T-shirts</a
+    >
+    <a [routerLink]="['/product']" [queryParams]="{ filter: 'shorts' }"
+      >Shorts</a
+    >
+    <a [routerLink]="['/product']" [queryParams]="{ filter: 'shirts' }"
+      >Shirts</a
+    >
+    <a [routerLink]="['/product']" [queryParams]="{ filter: 'hoodies' }"
+      >Hoodies</a
+    >
+    <a [routerLink]="['/product']" [queryParams]="{ filter: 'jeans' }">Jeans</a> -->
+  </div>
+
+  <app-hr></app-hr>
+
+  <div class="flex justify-between items-center">
+    <h6 class="font-bold">Price</h6>
+  </div>
+  <div class="w-full flex justify-between items-center gap-4">
+    <input
+      class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md"
+      type="text"
+      value="{{ currentValue[0] }}"
+    />
+    <input
+      class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md text-right"
+      type="text"
+      value="{{ currentValue[1] }}"
+    />
+  </div>
+  <div>
+    <p-slider
+      [(ngModel)]="currentValue"
+      [range]="true"
+      [min]="minValue"
+      [max]="maxValue"
+      (onChange)="onChangeValue($event)"
+    />
+  </div>
+
+  <app-hr></app-hr>
+
+  <div class="flex justify-between items-center">
+    <h6 class="font-bold">Colors</h6>
+  </div>
+  <div class="grid grid-cols-5 gap-4">
+    <div
+      class="w-8 h-8 rounded-full bg-green-500"
+      *ngFor="let item of demoColor"
+    ></div>
+  </div>
+</div>

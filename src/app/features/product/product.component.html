@@ -1,0 +1,42 @@
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex flex-col gap-4">
+    <div></div>
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-3 w-full">
+        <app-filter-board />
+      </div>
+      <div class="col-span-9">
+        <div class="w-full flex flex-col gap-4 px-6">
+          <header class="flex justify-between items-center">
+            <h4 class="font-bold">List products</h4>
+            <div class="flex gap-2 items-center">
+              <p>Sort by:</p>
+              <p-dropdown
+                [options]="listSortMode"
+                [(ngModel)]="selectedSortMode"
+                name="sortMode"
+                placeholder="Select Sort Type"
+                (onChange)="onChangeSort($event)"
+              />
+            </div>
+          </header>
+          <main class="grid grid-cols-3 gap-8">
+            <app-product-card
+              *ngFor="let product of productData"
+              [productData]="product"
+            />
+          </main>
+          <app-hr></app-hr>
+          <footer>
+            <p-paginator
+              (onPageChange)="onPageChange($event)"
+              [first]="first"
+              [rows]="rows"
+              [totalRecords]="120"
+            />
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

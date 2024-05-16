@@ -1,0 +1,11 @@
+<section class="w-full bg-primary flex justify-center py-6">
+  <div class="w-full flex gap-4 justify-between items-center">
+    <div *ngFor="let brand of brandsData">
+      <img
+        class="max-h-12 h-full"
+        src="{{ brand.brandImagePath }}"
+        alt="{{ brand.brandName }} logo"
+      />
+    </div>
+  </div>
+</section>

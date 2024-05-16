@@ -1,0 +1,27 @@
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex flex-col gap-4">
+    <app-details-section [productDetails]="productDetails" />
+    <section class="w-full">
+      <p-tabView class="w-full">
+        <p-tabPanel header="Comments">
+          <app-comments-section [productComments]="productComments" />
+        </p-tabPanel>
+        <p-tabPanel header="Reviews">
+          <app-reviews-section [productReviews]="productReviews" />
+        </p-tabPanel>
+      </p-tabView>
+    </section>
+
+    <div class="w-full flex flex-col gap-4">
+      <header class="w-full text-center">
+        <h2 class="uppercase font-extrabold">You may also like</h2>
+      </header>
+      <main class="grid grid-cols-4 gap-8">
+        <app-product-card
+          *ngFor="let product of top4RelateTo"
+          [productData]="product"
+        />
+      </main>
+    </div>
+  </div>
+</section>
