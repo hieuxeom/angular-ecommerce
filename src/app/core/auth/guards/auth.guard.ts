@@ -1,5 +1,20 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+export function authGuard(): CanActivateFn {
+  return () => {
+    const router = inject(Router);
+    const _cookieService = inject(CookieService);
+    function isHaveAccessToken() {
+      const isHaveAccessToken = _cookieService.get('access_token');
+      return !!isHaveAccessToken;
+    }
+
+    if (isHaveAccessToken()) {
+      router.navigate(['/profile']); // Use navigate instead of createUrlTree
+      return false; // Prevent further navigation
+    }
+    return true;
+  };
+}
