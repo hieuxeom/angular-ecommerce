@@ -1,1 +1,49 @@
-<p>signup works!</p>
+<p-toast />
+<section class="w-full flex justify-center my-8">
+  <div class="max-w-7xl w-full flex justify-center">
+    <div
+      class="w-1/2 flex flex-col gap-4 border border-black/10 px-8 py-4 rounded-2xl"
+    >
+      <h3 class="font-bold">Sign Up.</h3>
+      <div class="flex flex-col gap-2 w-full">
+        <input
+          type="text"
+          [(ngModel)]="email"
+          id="email"
+          placeholder="Email"
+          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+        />
+        <input
+          type="text"
+          [(ngModel)]="userName"
+          id="userName"
+          placeholder="Username"
+          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+        />
+        <input
+          type="password"
+          [(ngModel)]="password"
+          id="password"
+          placeholder="Password"
+          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+        />
+        <input
+          type="password"
+          [(ngModel)]="rePassword"
+          id="rePassword"
+          placeholder="Re-Password"
+          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+        />
+      </div>
+      <div class="flex justify-between items-center px-4">
+        <a href="#" class="text-sub">Already have account?</a>
+      </div>
+      <button
+        (click)="handleSignUp()"
+        class="w-full bg-black text-white px-2 py-4 rounded-full"
+      >
+        Sign Up
+      </button>
+    </div>
+  </div>
+</section>
