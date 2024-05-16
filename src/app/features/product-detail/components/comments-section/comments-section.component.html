@@ -1,9 +1,9 @@
 <section class="w-full flex flex-col justify-center gap-4">
   <div class="w-full grid grid-cols-2 gap-8">
-    <app-comment-card />
-    <app-comment-card />
-    <app-comment-card />
-    <app-comment-card />
+    <app-comment-card
+      *ngFor="let commentData of productComments"
+      [commentData]="commentData"
+    />
   </div>
   <div>
     <p-paginator

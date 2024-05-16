@@ -1,13 +1,13 @@
 <section class="w-full flex justify-center">
   <div class="max-w-7xl w-full flex flex-col gap-4">
-    <app-details-section />
+    <app-details-section [productDetails]="productDetails" />
     <section class="w-full">
       <p-tabView class="w-full">
-        <p-tabPanel header="Comment">
-          <app-comments-section />
+        <p-tabPanel header="Comments">
+          <app-comments-section [productComments]="productComments" />
         </p-tabPanel>
         <p-tabPanel header="Reviews">
-          <app-reviews-section />
+          <app-reviews-section [productReviews]="productReviews" />
         </p-tabPanel>
       </p-tabView>
     </section>

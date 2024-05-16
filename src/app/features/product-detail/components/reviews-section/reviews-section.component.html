@@ -1,1 +1,16 @@
-<p>reviews-section works!</p>
+<section class="w-full flex flex-col justify-center gap-4">
+  <div class="w-full grid grid-cols-2 gap-8">
+    <app-review-card
+      *ngFor="let reviewData of productReviews"
+      [reviewData]="reviewData"
+    />
+  </div>
+  <div>
+    <!-- <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+    /> -->
+  </div>
+</section>
