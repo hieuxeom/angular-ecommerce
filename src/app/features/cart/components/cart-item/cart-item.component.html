@@ -1,25 +1,28 @@
 <div class="w-full grid grid-cols-12">
   <div class="col-span-2 bg-gray rounded-xl overflow-hidden">
-    <img src="assets/product/test-1.png" alt="" />
+    <img src="{{ imageUrlPrefix }}{{ productImage }}" alt="" />
   </div>
   <div class="col-span-8 px-4 flex flex-wrap content-between">
     <div class="w-full">
-      <p>Gradient Graphic T-shirt</p>
+      <a class="" [routerLink]="['/product', productId]">
+        {{ productName }}
+      </a>
       <p class="text-sm font-semibold">
-        Size: <span class="font-normal">Large</span>
+        Size: <span class="font-normal">{{ productVariant }}</span>
       </p>
       <p class="text-sm font-semibold">
         Color: <span class="font-normal">White</span>
       </p>
     </div>
     <div>
-      <h5 class="font-bold">$145</h5>
+      <h5 class="font-bold">${{ productPrice }}</h5>
     </div>
   </div>
   <div class="col-span-2 flex flex-wrap content-between">
     <div class="w-full flex justify-end">
       <button
         class="hover:bg-red-400/20 w-10 h-10 rounded-full flex justify-center items-center"
+        (click)="deleteProduct()"
       >
         <i class="fa-solid fa-trash-can text-xl text-danger"></i>
       </button>

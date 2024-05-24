@@ -5,7 +5,7 @@
   <main class="flex flex-col gap-2">
     <div class="w-full flex justify-between items-center">
       <p class="text-xl text-sub">Subtotal</p>
-      <p class="text-xl font-bold">$565</p>
+      <p class="text-xl font-bold">${{ subTotalPrice }}</p>
     </div>
     <div *ngIf="isVoucher; then haveVoucher; else noVoucher"></div>
     <div *ngIf="isHaveShipFee; then haveShipFee; else freeShipFee"></div>
@@ -23,13 +23,19 @@
         <i class="fa-solid fa-ticket text-sub -rotate-45"></i>
         <input
           type="text"
-          name="promoCode"
-          id="promoCode"
-          placeholder="Add promo code here"
+          name="voucherCode"
+          id="voucherCode"
+          placeholder="Add voucher code here"
+          [(ngModel)]="voucherCode"
           class="w-full bg-transparent border-none outline-none"
         />
       </div>
-      <button class="bg-black px-8 py-2 rounded-full text-white">Apply</button>
+      <button
+        (click)="onApplyVoucher()"
+        class="bg-black px-8 py-2 rounded-full text-white"
+      >
+        Apply
+      </button>
     </div>
     <a
       [routerLink]="['/cart/checkout']"
