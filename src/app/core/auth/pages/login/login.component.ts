@@ -2,12 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-import {
-  RouterModule,
-  RouterLink,
-  RouterLinkActive,
-  Router,
-} from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
@@ -37,16 +32,16 @@ export class LoginComponent {
     if (!this.email) {
       return this._messageService.add({
         severity: 'error',
-        summary: 'Email is required',
-        detail: 'Please fill your email before logging in',
+        summary: 'Error',
+        detail: 'Email is required',
       });
     }
 
     if (!this.password) {
       return this._messageService.add({
         severity: 'error',
-        summary: 'Password is required',
-        detail: 'Please fill your password  before logging in',
+        summary: `Error`,
+        detail: 'Password is required',
       });
     }
 
@@ -82,8 +77,8 @@ export class LoginComponent {
       ({ error }) => {
         return this._messageService.add({
           severity: 'error',
-          summary: `${error.message}`,
-          detail: 'Please check your login information again',
+          summary: `Error`,
+          detail: `${error.message}`,
         });
       }
     );
