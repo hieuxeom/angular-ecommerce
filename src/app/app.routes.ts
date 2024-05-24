@@ -10,10 +10,13 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 import { HomeComponent } from './features/home/home.component';
 import { ProductDetailComponent } from './features/product-detail/product-detail.component';
 import { ProductComponent } from './features/product/product.component';
-import { EditAddressesComponent } from './features/profile/components/edit-addresses/edit-addresses.component';
-import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
-import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { InformationComponent } from './features/profile/components/information/information.component';
+import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
+import { ChangePasswordComponent } from './features/profile/components/change-password/change-password.component';
+// import { EditAddressesComponent } from './features/profile/components/edit-addresses/edit-addresses.component';
+// import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
+// import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
+    canActivate: [profileGuard()],
     children: [
       { path: '', component: CartComponent },
       { path: 'checkout', component: CheckoutComponent },
@@ -40,14 +44,17 @@ export const routes: Routes = [
     component: ProfileComponent,
     canActivate: [profileGuard()],
     children: [
-      { path: '', component: EditProfileComponent },
-      { path: 'list-address', component: ListAddressComponent },
       {
-        path: 'edit-address',
-        children: [
-          { path: '', redirectTo: 'list-address', pathMatch: 'full' },
-          { path: ':addressId', component: EditAddressesComponent },
-        ],
+        path: '',
+        component: InformationComponent,
+      },
+      {
+        path: 'list-address',
+        component: ListAddressComponent,
+      },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
       },
     ],
   },
