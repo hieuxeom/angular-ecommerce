@@ -1,0 +1,8 @@
+<div class="py-4">
+  <p-rating
+    (onRate)="handleStarChange($event)"
+    (onFocus)="handleOnFocus($event)"
+    [(ngModel)]="numsOfStar"
+    [cancel]="false"
+  />
+</div>
