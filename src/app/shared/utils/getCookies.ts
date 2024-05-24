@@ -7,6 +7,5 @@ export const getCookies = () => {
     mappedCookies.set(key, value);
   });
 
-  console.log(mappedCookies);
   return mappedCookies;
 };

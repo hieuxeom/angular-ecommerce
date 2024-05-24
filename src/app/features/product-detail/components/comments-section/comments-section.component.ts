@@ -25,7 +25,5 @@ export class CommentsSectionComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  public onPageChange(event: PaginatorState) {
-    console.log(event);
-  }
+  public onPageChange(event: PaginatorState) {}
 }

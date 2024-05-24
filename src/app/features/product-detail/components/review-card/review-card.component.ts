@@ -20,8 +20,6 @@ export class ReviewCardComponent implements OnChanges {
   public postedOn: string = '';
 
   ngOnChanges() {
-    console.log(this.reviewData);
-
     if (this.reviewData) {
       this._idReview = this.reviewData._id;
       this.userName = this.reviewData.userName;
