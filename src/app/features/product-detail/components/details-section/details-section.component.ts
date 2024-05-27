@@ -10,22 +10,36 @@ import {
 import { HrComponent } from '../../../../shared/components/hr/hr.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
 import type {
   IProduct,
   IProductComment,
 } from '../../../../shared/interfaces/product';
+import { CartService } from '../../../../shared/services/CartServices/cart.service';
+import { apiUrl } from '../../../../shared/utils/apiUrl';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-details-section',
   standalone: true,
-  imports: [CommonModule, FormsModule, HrComponent, InputNumberModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HrComponent,
+    InputNumberModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
   templateUrl: './details-section.component.html',
   styleUrl: './details-section.component.css',
 })
 export class DetailsSectionComponent implements OnChanges {
   @Input() productDetails: IProduct | undefined;
 
+  public imageUrlPrefix = apiUrl;
+
+  public productId: string = '';
   public selectedSize: string = 'S';
   public quantity: number = 1;
   public productName: string = '';
@@ -39,9 +53,14 @@ export class DetailsSectionComponent implements OnChanges {
   public productStock: number = 0;
   public newPrice = 0;
 
+  constructor(
+    private cartApiService: CartService,
+    private _messsageService: MessageService
+  ) {}
+
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (this.productDetails) {
+      this.productId = this.productDetails._id;
       this.productName = this.productDetails.productName;
       this.productPrice = this.productDetails.productPrice;
       this.isDiscount = this.productDetails.isDiscount;
@@ -62,5 +81,32 @@ export class DetailsSectionComponent implements OnChanges {
   public onSelectSize(event: MouseEvent) {
     const element = event.target as HTMLButtonElement;
     return (this.selectedSize = element.getAttribute('data-size') || 'S');
+  }
+
+  public addProductToCart() {
+    this.cartApiService
+      .addProductToCart({
+        productId: this.productId,
+        quantity: this.quantity,
+        productVariant: this.selectedSize,
+      })
+      .subscribe(
+        (response) => {
+          if (response.status === 'success') {
+            this._messsageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+          }
+        },
+        (err) => {
+          this._messsageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Login first',
+          });
+        }
+      );
   }
 }

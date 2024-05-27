@@ -1,6 +1,11 @@
+<p-toast />
 <section class="w-full flex gap-8 py-8">
   <div class="w-1/2 p-4 bg-gray rounded-3xl">
-    <img class="w-full" src="assets/product/test-1.png" alt="" />
+    <img
+      class="w-full rounded-2xl"
+      src="{{ imageUrlPrefix }}/{{ productImage }}"
+      alt=""
+    />
   </div>
   <div class="w-1/2 flex flex-col gap-4">
     <h3 class="uppercase font-bold">{{ productName }}</h3>
@@ -75,7 +80,8 @@
         </p>
       </div>
       <button
-        class="w-full bg-primary px-4 py-2 text-white rounded-full font-medium"
+        (click)="addProductToCart()"
+        class="w-full btn-large btn-primary btn-r-full"
       >
         Add to Cart
       </button>

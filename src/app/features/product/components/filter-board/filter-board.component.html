@@ -9,44 +9,48 @@
   <app-hr></app-hr>
 
   <div class="flex flex-col gap-2 justify-center">
+    <a
+      [routerLink]="['/product']"
+      [ngClass]="{ 'font-bold underline': activeFilter === 'all' }"
+      >All</a
+    >
     <ng-container *ngFor="let _c of listCategories">
       <a
         [routerLink]="['/product']"
         [queryParams]="{ filter: _c.queryParams }"
+        [ngClass]="{ 'font-bold underline': activeFilter === _c.queryParams }"
         >{{ _c.categoryName }}</a
       >
     </ng-container>
-
-    <!-- <a [routerLink]="['/product']" [queryParams]="{ filter: 't-shirt' }"
-      >T-shirts</a
-    >
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 'shorts' }"
-      >Shorts</a
-    >
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 'shirts' }"
-      >Shirts</a
-    >
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 'hoodies' }"
-      >Hoodies</a
-    >
-    <a [routerLink]="['/product']" [queryParams]="{ filter: 'jeans' }">Jeans</a> -->
   </div>
 
   <app-hr></app-hr>
 
   <div class="flex justify-between items-center">
     <h6 class="font-bold">Price</h6>
+    <div>
+      <p-checkbox
+        [(ngModel)]="filterWithPrice"
+        [binary]="true"
+        inputId="filterWithPrice"
+        ngClass="border border-black/10 rounded-md"
+      />
+    </div>
   </div>
   <div class="w-full flex justify-between items-center gap-4">
     <input
       class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md"
       type="text"
-      value="{{ currentValue[0] }}"
+      [(ngModel)]="currentValue[0]"
+      [disabled]="!filterWithPrice"
+      readonly
     />
     <input
       class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md text-right"
       type="text"
-      value="{{ currentValue[1] }}"
+      [(ngModel)]="currentValue[1]"
+      [disabled]="!filterWithPrice"
+      readonly
     />
   </div>
   <div>
@@ -56,8 +60,22 @@
       [min]="minValue"
       [max]="maxValue"
       (onChange)="onChangeValue($event)"
+      [disabled]="!filterWithPrice"
     />
   </div>
+  <button
+    class="bg-black rounded-md text-white px-4 py-2"
+    [ngClass]="{ 'bg-black': filterWithPrice, 'bg-black/10': !filterWithPrice }"
+    [disabled]="!filterWithPrice"
+    [routerLink]="['/product']"
+    [queryParams]="{
+      filter: activeFilter,
+      min: currentValue[0],
+      max: currentValue[1]
+    }"
+  >
+    Apply
+  </button>
 
   <app-hr></app-hr>
 
@@ -66,8 +84,9 @@
   </div>
   <div class="grid grid-cols-5 gap-4">
     <div
-      class="w-8 h-8 rounded-full bg-green-500"
-      *ngFor="let item of demoColor"
+      *ngFor="let color of listColors"
+      class="w-8 h-8 rounded-full shadow-lg border border-black/10"
+      [ngStyle]="{ background: color }"
     ></div>
   </div>
 </div>

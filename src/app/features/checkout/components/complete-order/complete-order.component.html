@@ -1,0 +1,21 @@
+<div class="max-w-7xl w-full flex flex-col justify-center items-center gap-4">
+  <header class="w-full text-center flex flex-col gap-4">
+    <h3 class="font-bold">Yes, you've successfully ordered! 🎉</h3>
+    <p class="text-sub">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore.
+    </p>
+  </header>
+  <main
+    class="w-3/4 flex flex-col items-center gap-4 border border-black/10 px-6 py-4 rounded-2xl"
+  >
+    <i class="text-8xl text-success fa-solid fa-circle-check"></i>
+    <h5>Thanks a lot for putting this order</h5>
+    <button
+      [routerLink]="['/home']"
+      class="w-full btn-large btn-primary btn-r-full"
+    >
+      Back to Home
+    </button>
+  </main>
+</div>

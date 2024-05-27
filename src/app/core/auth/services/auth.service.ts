@@ -3,8 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import type { ILogin, INewAccount } from '../../../shared/interfaces/auth';
 import { catchError, type Observable } from 'rxjs';
 import type { IApiResponse } from '../../../shared/interfaces/api';
-import type { IUser } from '../../../shared/interfaces/user';
+import type { IUserAuth } from '../../../shared/interfaces/user';
 import { CookieService } from 'ngx-cookie-service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -22,17 +23,27 @@ export class AuthService {
     private _cookieService: CookieService
   ) {}
 
+  public isLoggedIn() {
+    if (this._cookieService.get('access_token')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public createNewAccount(
     registerData: INewAccount
-  ): Observable<IApiResponse<IUser>> {
-    return this.httpClient.post<IApiResponse<IUser>>(
+  ): Observable<IApiResponse<IUserAuth>> {
+    return this.httpClient.post<IApiResponse<IUserAuth>>(
       `${this.API_URL}/signup`,
       registerData
     );
   }
 
-  public verifyAccount(loginData: ILogin): Observable<IApiResponse<IUser>> {
-    return this.httpClient.post<IApiResponse<IUser>>(
+  public verifyAccount(
+    loginData: FormGroup
+  ): Observable<IApiResponse<IUserAuth>> {
+    return this.httpClient.post<IApiResponse<IUserAuth>>(
       `${this.API_URL}/signin`,
       loginData
     );

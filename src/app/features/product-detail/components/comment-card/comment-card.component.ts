@@ -23,8 +23,6 @@ export class CommentCardComponent implements OnChanges {
   public postedOn: string = '';
 
   ngOnChanges() {
-    console.log(this.commentData);
-
     if (this.commentData) {
       this._idComment = this.commentData._id;
       this.userName = this.commentData.userName;

@@ -1,38 +1,39 @@
 <p-toast />
 <section class="w-full flex justify-center my-8">
   <div class="max-w-7xl w-full flex justify-center">
-    <div
+    <form
       class="w-1/2 flex flex-col gap-4 border border-black/10 px-8 py-4 rounded-2xl"
+      [formGroup]="authForm"
     >
       <h3 class="font-bold">Log In.</h3>
       <div class="flex flex-col gap-2 w-full">
         <input
           type="text"
-          [(ngModel)]="email"
           id="email"
           placeholder="Email"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
+          formControlName="email"
         />
         <input
           type="password"
-          [(ngModel)]="password"
           id="password"
           placeholder="Password"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
+          formControlName="password"
         />
       </div>
       <div class="flex justify-between items-center px-4">
-        <a href="#" class="text-sub">Forgot password?</a>
-        <a [routerLink]="['/auth/sign-up']" class="text-sub"
+        <a href="#" class="link link-sub">Forgot password?</a>
+        <a [routerLink]="['/auth', 'sign-up']" class="link link-sub"
           >Create new account</a
         >
       </div>
       <button
         (click)="handleLogin()"
-        class="w-full bg-black text-white px-2 py-4 rounded-full"
+        class="w-full btn-large btn-primary hover:bg-secondary btn-r-full"
       >
         Login
       </button>
-    </div>
+    </form>
   </div>
 </section>

@@ -2,12 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterModule,
-} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import type { INewAccount } from '../../../../shared/interfaces/auth';
 import { ToastService } from 'angular-toastify';
 import { MessageService } from 'primeng/api';
@@ -17,15 +12,7 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    RouterLink,
-    RouterLinkActive,
-    ToastModule,
-    RippleModule,
-  ],
+  imports: [CommonModule, FormsModule, RouterModule, ToastModule, RippleModule],
   providers: [AuthService, MessageService, Router],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',

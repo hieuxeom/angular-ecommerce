@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import type { IProduct } from '../../services/products-data/products-data.service';
+import { apiUrl } from '../../utils/apiUrl';
 
 @Component({
   selector: 'app-product-card',
@@ -11,8 +11,9 @@ import type { IProduct } from '../../services/products-data/products-data.servic
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input() productData?: IProduct;
+  @Input() productData?: any;
   public productDiscountPrice: number = 0;
+  public imageUrlPrefix = apiUrl;
 
   ngOnInit() {
     if (this.productData) {

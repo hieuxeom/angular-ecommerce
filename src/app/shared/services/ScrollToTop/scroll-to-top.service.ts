@@ -11,7 +11,6 @@ export class ScrollToTopService {
     private router: Router,
     private viewportScroller: ViewportScroller
   ) {
-    console.log('scroll to top');
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
