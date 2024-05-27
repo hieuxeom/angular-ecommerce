@@ -30,3 +30,5 @@ export interface IProductReview {
   createdAt: string;
   updatedAt: string;
 }
+
+export type TypeFilter = 'all' | 't-shirts' | 'shirts' | 'shorts' | 'hoodies';
