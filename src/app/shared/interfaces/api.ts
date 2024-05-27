@@ -1,4 +1,4 @@
-export interface IApiResponse<T> {
+export interface IApiResponse<T = any> {
   status: 'success' | 'failure' | 'error';
   message: string;
   data: T;
