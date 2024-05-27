@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  ElementRef,
   Input,
   Output,
+  ViewChild,
   type OnChanges,
   type SimpleChanges,
 } from '@angular/core';
@@ -28,6 +30,8 @@ export class CartItemComponent implements OnChanges {
   @Output() onDelete = new EventEmitter();
   @Output() onUpdateQuantity = new EventEmitter();
 
+  @ViewChild('parentElement') parentElement!: ElementRef;
+
   public productId: string = '';
   public productName: string = '';
   public productPrice: number = 0;
@@ -52,6 +56,10 @@ export class CartItemComponent implements OnChanges {
         this.quantity = this.itemData?.quantity || 1;
       });
   }
+
+  ngAfterViewInit(): void {
+    console.log(this.parentElement.nativeElement);
+  }
   public addQuantity() {
     this.quantity += 1;
 
@@ -62,7 +70,11 @@ export class CartItemComponent implements OnChanges {
         newQuantity: this.quantity,
       })
       .subscribe((response) => {
-        this.onUpdateQuantity.emit(response);
+        this.onUpdateQuantity.emit({
+          productId: this.productId,
+          productVariant: this.productVariant,
+          newQuantity: this.quantity,
+        });
       });
   }
 
@@ -76,19 +88,26 @@ export class CartItemComponent implements OnChanges {
         newQuantity: this.quantity,
       })
       .subscribe((response) => {
-        this.onUpdateQuantity.emit(response);
+        this.onUpdateQuantity.emit({
+          productId: this.productId,
+          productVariant: this.productVariant,
+          newQuantity: this.quantity,
+        });
       });
   }
 
-  deleteProduct() {
+  public deleteProduct() {
     return this.cartApiService
       .deleteCartItem({
         productId: this.productId,
         productVariant: this.productVariant,
       })
       .subscribe((response) => {
-        this.onDelete.emit(this.productId);
-        this.onUpdateQuantity.emit(response);
+        this.parentElement.nativeElement.remove();
+        this.onDelete.emit({
+          productId: this.productId,
+          productVariant: this.productVariant,
+        });
       });
   }
 }

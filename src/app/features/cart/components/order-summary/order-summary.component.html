@@ -7,12 +7,12 @@
       <p class="text-xl text-sub">Subtotal</p>
       <p class="text-xl font-bold">${{ subTotalPrice }}</p>
     </div>
-    <div *ngIf="isVoucher; then haveVoucher; else noVoucher"></div>
+    <div *ngIf="isDiscount; then haveDiscount; else noDiscount"></div>
     <div *ngIf="isHaveShipFee; then haveShipFee; else freeShipFee"></div>
     <app-hr></app-hr>
     <div class="w-full flex justify-between items-center">
       <p class="text-xl text-sub">Total</p>
-      <p class="text-2xl font-bold">$1000</p>
+      <p class="text-2xl font-bold">${{ totalPrice }}</p>
     </div>
   </main>
   <footer class="flex flex-col gap-4">
@@ -27,47 +27,48 @@
           id="voucherCode"
           placeholder="Add voucher code here"
           [(ngModel)]="voucherCode"
-          class="w-full bg-transparent border-none outline-none"
+          class="w-full input bg-transparent outline-none"
         />
       </div>
-      <button
-        (click)="onApplyVoucher()"
-        class="bg-black px-8 py-2 rounded-full text-white"
-      >
+      <button (click)="onApplyVoucher()" class="btn btn-primary btn-r-full">
         Apply
       </button>
     </div>
     <a
-      [routerLink]="['/cart/checkout']"
-      class="block text-center w-full bg-black px-8 py-4 rounded-full text-white"
+      [routerLink]="['/cart', 'checkout']"
+      class="block text-center btn-large btn-primary btn-r-full"
     >
       Go to Checkout <i class="fa-solid fa-arrow-right ml-4"></i>
     </a>
   </footer>
 </div>
 
-<ng-template #haveVoucher>
+<ng-template #haveDiscount>
   <div class="w-full flex justify-between items-center">
-    <p class="text-xl text-sub">Discount(-20%)</p>
-    <p class="text-xl font-bold text-danger">$565</p>
+    <p class="text-xl text-sub">Discount(-{{ discountPercentage }}%)</p>
+    <p class="text-xl font-bold text-danger">-${{ discountPrice }}</p>
   </div>
 </ng-template>
-<ng-template #noVoucher>
+<ng-template #noDiscount>
   <div class="w-full flex justify-between items-center">
     <p class="text-xl text-sub">Discount</p>
-    <p class="text-xl font-bold">$565</p>
+    <p class="text-xl font-bold">$0</p>
   </div>
 </ng-template>
 
 <ng-template #freeShipFee>
   <div class="w-full flex justify-between items-center">
-    <p class="text-xl text-sub">Delivery Fee(-100%)</p>
-    <p class="text-xl font-bold text-danger line-through">$0</p>
+    <p class="text-xl text-sub">Delivery Fee(-{{ deliveryPercentage }}%)</p>
+    <p class="text-xl font-bold text-danger">
+      ${{ deliveryFeeDefault }} - ${{ deliveryFee }} = ${{
+        deliveryFeeDefault - deliveryFee
+      }}
+    </p>
   </div>
 </ng-template>
 <ng-template #haveShipFee>
   <div class="w-full flex justify-between items-center">
     <p class="text-xl text-sub">Delivery Fee</p>
-    <p class="text-xl font-bold">$15</p>
+    <p class="text-xl font-bold">${{ deliveryFeeDefault }}</p>
   </div>
 </ng-template>

@@ -1,17 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ViewChildren,
-  QueryList,
-  type AfterViewInit,
-  type SimpleChanges,
-  type OnChanges,
-} from '@angular/core';
+import { Component, SimpleChanges, OnChanges } from '@angular/core';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../shared/services/CartServices/cart.service';
-import type { ICartItem } from '../../shared/interfaces/user';
+import { ICartItem } from '../../shared/interfaces/user';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ProductService } from '../../shared/services/ProductServices/product.service';
@@ -42,7 +35,10 @@ export class CartComponent implements OnChanges {
     this.fetchUserCart();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    this.subTotalPrice = this.calculateSubTotal();
+  }
 
   private fetchUserCart() {
     return this.cartApiService.getUserCart().subscribe((response) => {
@@ -66,17 +62,52 @@ export class CartComponent implements OnChanges {
     });
   }
 
-  public onDeleteItem() {
+  public onDeleteItem({
+    productId,
+    productVariant,
+  }: {
+    productId: string;
+    productVariant: string;
+  }) {
+    this.listCartItems = this.listCartItems.filter((item) => {
+      if (item.productId !== productId) {
+        return item;
+      } else if (
+        item.productId === productId &&
+        item.productVariant !== productVariant
+      ) {
+        return item;
+      } else {
+        return;
+      }
+    });
+
+    this.subTotalPrice = this.calculateSubTotal();
     this._messageService.add({
       severity: 'success',
       summary: 'Success',
       detail: 'Delete item successfully',
     });
-    return this.fetchUserCart();
   }
 
-  public onUpdateQuantity() {
-    return this.fetchUserCart();
+  public onUpdateQuantity({
+    productId,
+    productVariant,
+    newQuantity,
+  }: {
+    productId: string;
+    productVariant: string;
+    newQuantity: number;
+  }) {
+    this.listCartItems.forEach((item) => {
+      if (
+        item.productId === productId &&
+        item.productVariant === productVariant
+      ) {
+        item.quantity = newQuantity;
+      }
+    });
+    this.subTotalPrice = this.calculateSubTotal();
   }
 
   public calculateSubTotal() {

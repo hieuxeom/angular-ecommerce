@@ -9,8 +9,8 @@
         class="col-span-8 border border-black/10 rounded-2xl flex flex-col gap-4 p-4"
       >
         <app-cart-item
-          (onDelete)="onDeleteItem()"
-          (onUpdateQuantity)="onUpdateQuantity()"
+          (onDelete)="onDeleteItem($event)"
+          (onUpdateQuantity)="onUpdateQuantity($event)"
           *ngFor="let item of listCartItems"
           [itemData]="item"
         />
