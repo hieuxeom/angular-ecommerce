@@ -11,36 +11,38 @@
           [(ngModel)]="email"
           id="email"
           placeholder="Email"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
         />
         <input
           type="text"
           [(ngModel)]="userName"
           id="userName"
           placeholder="Username"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
         />
         <input
           type="password"
           [(ngModel)]="password"
           id="password"
           placeholder="Password"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
         />
         <input
           type="password"
           [(ngModel)]="rePassword"
           id="rePassword"
           placeholder="Re-Password"
-          class="text-base w-full px-4 py-2 border border-black/10 rounded-full"
+          class="text-base w-full input-md input-r-full"
         />
       </div>
       <div class="flex justify-between items-center px-4">
-        <a href="#" class="text-sub">Already have account?</a>
+        <a [routerLink]="['/auth', 'login']" class="link link-sub"
+          >Already have account?</a
+        >
       </div>
       <button
         (click)="handleSignUp()"
-        class="w-full bg-black text-white px-2 py-4 rounded-full"
+        class="w-full btn-large btn-primary btn-r-full hover:bg-secondary"
       >
         Sign Up
       </button>
