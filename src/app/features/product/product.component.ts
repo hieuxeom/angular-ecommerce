@@ -13,8 +13,8 @@ import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
 import { ProductService } from '../../shared/services/ProductServices/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import type { IProduct } from '../../shared/interfaces/product';
-import { filter } from 'rxjs';
+import type { TypeFilter, IProduct } from '../../shared/interfaces/product';
+
 export type SortType =
   | 'most-popular'
   | 'price-asc'
@@ -55,6 +55,8 @@ export class ProductComponent {
   ];
 
   public productData: IProduct[] = [];
+
+  public activeFilter: TypeFilter = 'all';
 
   public constructor(
     private productApiService: ProductService,
