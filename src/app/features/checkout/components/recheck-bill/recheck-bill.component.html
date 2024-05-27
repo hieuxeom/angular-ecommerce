@@ -1,0 +1,97 @@
+<div class="max-w-7xl w-full flex flex-col justify-center items-center gap-4">
+  <header class="w-full text-center flex flex-col gap-4">
+    <h3 class="font-bold">Confirm and enjoy your order 🎉</h3>
+    <p class="text-sub">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore.
+    </p>
+  </header>
+  <main
+    class="w-3/4 flex flex-col gap-4 border border-black/10 px-6 py-4 rounded-2xl"
+  >
+    <div
+      class="w-full flex flex-col gap-4 px-6 py-4 border border-black/10 rounded-xl"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col">
+          <h6 class="font-semibold">Order Review</h6>
+          <p *ngIf="!showOrderReview" class="text-sub text-sm">
+            {{ cartItems.length }} item(s) in cart
+          </p>
+        </div>
+
+        <button (click)="handleShowOrderReview()">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+      <div
+        *ngIf="showOrderReview"
+        class="flex flex-col gap-4 overflow-hidden"
+        [ngClass]="{ 'h-0': !showOrderReview, 'h-max': showOrderReview }"
+      >
+        <app-review-item *ngFor="let item of cartItems" [itemData]="item" />
+      </div>
+    </div>
+    <div
+      class="w-full flex flex-col gap-4 px-6 py-4 border border-black/10 rounded-xl"
+    >
+      <h6 class="font-semibold">Billing Address</h6>
+      <div class="w-full flex justify-between items-start">
+        <p class="w-2/5">Full Name</p>
+        <p class="w-3/5 font-bold text-right">{{ billingAddress.fullName }}</p>
+      </div>
+      <div class="w-full flex justify-between items-start">
+        <p class="w-2/5">Email</p>
+        <p class="w-3/5 font-bold text-right">{{ billingAddress.email }}</p>
+      </div>
+      <div class="w-full flex justify-between items-start">
+        <p class="w-2/5">Phone Number</p>
+        <p class="w-3/5 font-bold text-right">
+          {{ billingAddress.phoneNumber }}
+        </p>
+      </div>
+      <div class="w-full flex justify-between items-start">
+        <p class="w-2/5">Address</p>
+        <p class="w-3/5 font-bold text-right">
+          {{ billingAddress.fullAddress }}
+        </p>
+      </div>
+    </div>
+    <div
+      class="w-full flex flex-col gap-4 px-6 py-4 border border-black/10 rounded-xl"
+    >
+      <h6 class="font-semibold">Check out Summary</h6>
+      <div class="w-full flex justify-between items-center">
+        <p>Subtotal</p>
+        <p class="font-bold">${{ subTotalPrice }}</p>
+      </div>
+      <div class="w-full flex justify-between items-center">
+        <p>Discount</p>
+        <p class="font-bold">
+          {{ discountPrice > 0 ? "-$" + discountPrice : "$" + discountPrice }}
+        </p>
+      </div>
+      <div class="w-full flex justify-between items-center">
+        <p>Delivery Fee</p>
+        <p class="font-bold">${{ deliveryFee }}</p>
+      </div>
+      <div class="w-full flex justify-between items-center">
+        <p>Payment Type</p>
+        <p class="font-bold">Cash on Delivery</p>
+      </div>
+
+      <app-hr />
+      <div class="w-full flex justify-between items-center">
+        <p class="text-xl font-semibold">Total</p>
+        <p class="text-xl font-bold">${{ totalPrice }}</p>
+      </div>
+    </div>
+    <button
+      class="w-full btn-large btn-primary btn-r-xl"
+      (click)="handleOnNext()"
+    >
+      Next
+      <i class="fa-solid fa-arrow-right ml-2"></i>
+    </button>
+  </main>
+</div>

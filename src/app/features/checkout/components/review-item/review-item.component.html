@@ -1,0 +1,18 @@
+<div class="flex items-center justify-between" *ngIf="productData">
+  <div class="flex items-center gap-2">
+    <div class="w-8 h-8 rounded-2xl">
+      <img
+        src="http://localhost:5000/images/1576b4f97487fc26e2d6779268d99d58.jpg"
+        alt=""
+      />
+    </div>
+    <p class="font-semibold">
+      {{ productData.productName }} - ({{ itemData.productVariant }})
+    </p>
+    <p class="text-sub">x</p>
+    <p class="text-sub">{{ itemData.quantity }}</p>
+  </div>
+  <div>
+    <p class="font-bold">${{ productData.productPrice * itemData.quantity }}</p>
+  </div>
+</div>
