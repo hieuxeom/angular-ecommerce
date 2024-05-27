@@ -83,4 +83,105 @@
   .p-tabview-nav {
     @apply text-xl;
   }
+
+  .btn {
+    @apply px-8;
+    @apply py-2;
+    @apply text-white;
+    @apply min-w-max;
+    @apply transition-all;
+    @apply duration-300;
+  }
+
+  .btn-large {
+    @apply px-8;
+    @apply py-3;
+    @apply text-white;
+    @apply min-w-max;
+    @apply transition-all;
+    @apply duration-300;
+  }
+
+  .btn-r-full {
+    @apply rounded-full;
+  }
+
+  .btn-r-xl {
+    @apply rounded-xl;
+  }
+
+  .btn-r-2xl {
+    @apply rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply bg-primary/80;
+  }
+
+  .btn-primary:hover {
+    @apply bg-primary;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary/80;
+  }
+  .btn-secondary:hover {
+    @apply bg-secondary;
+  }
+
+  .input-sm {
+    @apply px-2 py-1;
+    @apply outline-secondary/25;
+    @apply border-primary/10;
+    @apply transition-all;
+    @apply duration-200;
+  }
+
+  .input-md {
+    @apply px-4;
+    @apply py-2;
+    @apply border;
+    @apply transition-all;
+    @apply duration-200;
+    @apply border-primary/10;
+    @apply outline-secondary/25;
+  }
+
+  .input-r-full {
+    @apply rounded-full;
+  }
+
+  .input-r-xl {
+    @apply rounded-xl;
+  }
+  .input-r-2xl {
+    @apply rounded-2xl;
+  }
+
+  .link {
+    @apply transition-all;
+    @apply duration-300;
+  }
+
+  .link-primary {
+    @apply text-primary;
+  }
+
+  .link-secondary {
+    @apply text-secondary/80;
+  }
+
+  .link-sub {
+    @apply text-sub;
+  }
+
+  .link:hover {
+    @apply text-secondary;
+  }
+
+  .link.active {
+    @apply text-secondary;
+    @apply border-b-2;
+    @apply border-secondary;
+  }
 }
