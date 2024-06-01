@@ -1,0 +1,118 @@
+<p-toast />
+<div class="flex flex-col gap-4">
+  <form [formGroup]="addressForm" class="flex flex-col items-center gap-4">
+    <div class="flex gap-4 w-full">
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="fullName">Full Name</label>
+        <input
+          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+          type="text"
+          name="fullName"
+          id="fullName"
+          formControlName="fullName"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="email">Email</label>
+        <input
+          formControlName="email"
+          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+          type="email"
+          name="email"
+          id="email"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="phoneNumber">Phone Number</label>
+        <input
+          formControlName="phoneNumber"
+          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+          type="text"
+          name="phoneNumber"
+          id="phoneNumber"
+        />
+      </div>
+    </div>
+
+    <div class="w-full flex items-center gap-4">
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="streetAddress"
+          >Full Address
+          <span class="text-sub italic"
+            >(Use the form below to complete this box)</span
+          ></label
+        >
+        <input
+          formControlName="fullAddress"
+          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+          type="text"
+          name="fullAddress"
+          id="fullAddress"
+          readonly
+        />
+      </div>
+    </div>
+  </form>
+  <app-hr />
+  <ng-container *ngIf="isNewAddress">
+    <div class="w-full flex items-center gap-4">
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="streetAddress">Street Address</label>
+        <input
+          [(ngModel)]="streetAddress"
+          (input)="onFillAddress()"
+          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+          type="text"
+          name="fullAddress"
+          id="fullAddress"
+        />
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="province">Province</label>
+        <p-dropdown
+          filter="true"
+          [options]="provinces"
+          [(ngModel)]="selectedProvince"
+          (onChange)="getListDistricts()"
+          styleClass="w-full border border-black/10"
+          placeholder="Select a Province"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="city">District</label>
+        <p-dropdown
+          filter="true"
+          [options]="districts"
+          [(ngModel)]="selectedDistrict"
+          (onChange)="getListWards()"
+          styleClass="w-full border border-black/10"
+          emptyMessage="Select province first"
+          placeholder="Select a District"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-1">
+        <label class="text-sm" for="city">Ward</label>
+        <p-dropdown
+          filter="true"
+          [options]="wards"
+          [(ngModel)]="selectedWard"
+          (onChange)="onFillAddress()"
+          styleClass="w-full border border-black/10"
+          emptyMessage="Select district first"
+          placeholder="Select a Ward"
+        />
+      </div>
+    </div>
+  </ng-container>
+  <div class="flex items-center gap-4">
+    <button
+      class="w-full btn-large btn-primary btn-r-xl"
+      (click)="onSaveButton()"
+    >
+      Save and Continue
+      <i class="fa-solid fa-arrow-right ml-2"></i>
+    </button>
+  </div>
+</div>
