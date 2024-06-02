@@ -1,1 +1,20 @@
-<p>profile works!</p>
+<section class="w-full flex justify-center">
+  <div class="max-w-7xl w-full flex gap-4">
+    <div
+      class="w-1/5 border border-black/10 rounded-2xl flex flex-col gap-4 p-2"
+    >
+      <div class="w-full flex flex-col gap-4 items-center">
+        <a [routerLink]="['/profile']">My Information</a>
+        <a [routerLink]="['list-address']">List Address</a>
+        <a [routerLink]="['change-password']">Change Password</a>
+      </div>
+      <app-hr></app-hr>
+      <div class="w-full flex flex-col gap-4 items-center">
+        <a [routerLink]="['/profile']">My Orders</a>
+      </div>
+    </div>
+    <div class="w-4/5 border border-black/10 rounded-2xl">
+      <router-outlet />
+    </div>
+  </div>
+</section>
