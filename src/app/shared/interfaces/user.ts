@@ -6,6 +6,7 @@ export interface ICartItem {
 }
 
 export interface IUserAddress {
+  _id: string;
   fullName: string;
   email: string;
   phoneNumber: string;
