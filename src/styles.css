@@ -91,6 +91,17 @@
     @apply min-w-max;
     @apply transition-all;
     @apply duration-300;
+    @apply flex;
+    @apply items-center;
+    @apply gap-2;
+  }
+
+  .btn-icon {
+    @apply px-4 py-2;
+    @apply text-white;
+    @apply min-w-max;
+    @apply transition-all;
+    @apply duration-300;
   }
 
   .btn-large {
@@ -129,9 +140,26 @@
     @apply bg-secondary;
   }
 
+  .btn-danger {
+    @apply bg-danger/80;
+  }
+
+  .btn-danger:hover {
+    @apply bg-danger;
+  }
+
+  .btn-warning {
+    @apply bg-warning/80;
+  }
+
+  .btn-warning:hover {
+    @apply bg-warning;
+  }
+
   .input-sm {
     @apply px-2 py-1;
     @apply outline-secondary/25;
+    @apply border;
     @apply border-primary/10;
     @apply transition-all;
     @apply duration-200;
@@ -143,6 +171,7 @@
     @apply border;
     @apply transition-all;
     @apply duration-200;
+    @apply border;
     @apply border-primary/10;
     @apply outline-secondary/25;
   }
