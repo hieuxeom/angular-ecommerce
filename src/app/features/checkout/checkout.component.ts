@@ -12,6 +12,7 @@ import { BillingAddressComponent } from './components/billing-address/billing-ad
 import { CompleteOrderComponent } from './components/complete-order/complete-order.component';
 import { RecheckBillComponent } from './components/recheck-bill/recheck-bill.component';
 import { OrderService } from '../../shared/services/OrderServices/order.service';
+import { UserAddressService } from '../../shared/services/UserAddressServices/user-address.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -34,7 +35,7 @@ export class CheckoutComponent {
   public billingAddress!: IUserAddress;
 
   constructor(
-    private userService: UserService,
+    private userAddressService: UserAddressService,
     private orderService: OrderService
   ) {}
 
@@ -45,9 +46,11 @@ export class CheckoutComponent {
       this.billingAddress = formValue;
 
       if (isSave) {
-        this.userService.saveNewAddress(formValue).subscribe((response) => {
-          console.log(response);
-        });
+        this.userAddressService
+          .saveNewAddress(formValue)
+          .subscribe((response) => {
+            console.log(response);
+          });
       }
 
       this.step += 1;

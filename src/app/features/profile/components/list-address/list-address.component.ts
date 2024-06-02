@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AddressService } from '../../../../shared/services/AddressServices/address.service';
 import { IUserAddress } from '../../../../shared/interfaces/user';
 import { UserService } from '../../../../shared/services/UserServices/user.service';
+import { UserAddressService } from '../../../../shared/services/UserAddressServices/user-address.service';
 
 @Component({
   selector: 'app-list-address',
@@ -16,16 +17,15 @@ import { UserService } from '../../../../shared/services/UserServices/user.servi
 export class ListAddressComponent {
   public listAddresses: IUserAddress[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userAddressService: UserAddressService) {}
 
   ngOnInit() {
     this.getListAddress();
   }
 
   private getListAddress() {
-    this.userService.getListAddresses().subscribe((response) => {
+    this.userAddressService.getListAddresses().subscribe((response) => {
       this.listAddresses = response.data;
-      console.log(this.listAddresses);
     });
   }
 }

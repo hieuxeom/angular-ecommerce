@@ -16,6 +16,7 @@ import { IUserAddress } from '../../../../shared/interfaces/user';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { UserAddressService } from '../../../../shared/services/UserAddressServices/user-address.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -38,7 +39,7 @@ export class EditAddressComponent {
   public addressData!: IUserAddress;
   public addressId: string | undefined;
   constructor(
-    private userService: UserService,
+    private userAddressService: UserAddressService,
     private _formBuilder: FormBuilder,
     private _messageService: MessageService,
     private _route: ActivatedRoute,
@@ -56,7 +57,7 @@ export class EditAddressComponent {
       this.addressId = param['addressId'];
       if (this.addressId) {
         console.log(this.addressId);
-        this.userService
+        this.userAddressService
           .getUserAddressDetails(this.addressId)
           .subscribe((response) => {
             this.addressData = response.data;
@@ -67,7 +68,7 @@ export class EditAddressComponent {
 
   public onSaveAddress($event: any) {
     const { formValue: newAddress } = $event;
-    this.userService
+    this.userAddressService
       .editAddress(this.addressId!, newAddress)
       .subscribe((response) => {
         this._messageService.add({

@@ -17,6 +17,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { AddressBoxComponent } from '../../../../shared/components/address-box/address-box.component';
 import { IUserAddress } from '../../../../shared/interfaces/user';
+import { UserAddressService } from '../../../../shared/services/UserAddressServices/user-address.service';
 
 interface IEmitData {
   formValue: any;
@@ -50,11 +51,11 @@ export class BillingAddressComponent {
   public addressData: IUserAddress | undefined;
   public isNewAddress: boolean = true;
 
-  constructor(private userService: UserService) {
+  constructor(private userAddressService: UserAddressService) {
     this.getListAddresses();
   }
   public getListAddresses() {
-    return this.userService.getListAddresses().subscribe(({ data }) => {
+    return this.userAddressService.getListAddresses().subscribe(({ data }) => {
       this.listAddresses = data;
       this.listAddressesOptions = data.map(({ fullAddress }, index) => {
         return { label: fullAddress, value: index };
