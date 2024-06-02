@@ -1,0 +1,13 @@
+<section class="w-full p-4 flex flex-col gap-4">
+  <header class="flex flex-col gap-2">
+    <h5 class="font-bold">List address</h5>
+    <p class="italic">Manage your list addresses</p>
+  </header>
+  <app-hr />
+  <main class="w-full flex flex-col gap-2">
+    <address-block
+      *ngFor="let address of listAddresses"
+      [addressData]="address"
+    />
+  </main>
+</section>

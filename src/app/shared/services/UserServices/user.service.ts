@@ -9,10 +9,10 @@ import { HttpConfigService } from '../HttpConfig/http-config.service';
   providedIn: 'root',
 })
 export class UserService {
-  public API_URL = 'http://localhost:5000/api/users';
+  private API_URL = 'http://localhost:5000/api/users';
+
   constructor(
     private httpClient: HttpClient,
-    private _cookieService: CookieService,
     private _httpConfig: HttpConfigService
   ) {}
 
@@ -23,10 +23,26 @@ export class UserService {
     );
   }
 
+  public getUserAddressDetails(addressId: string) {
+    return this.httpClient.get<IApiResponse<IUserAddress>>(
+      `${this.API_URL}/me/address/${addressId}`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
   public saveNewAddress(newAddress: IUserAddress) {
     return this.httpClient.post(
       `${this.API_URL}/me/address`,
       newAddress,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public editAddress(addressId: string, newAddress: IUserAddress) {
+    console.log(newAddress);
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}/me/address/${addressId}`,
+      { newAddress: newAddress },
       this._httpConfig.getHttpOptions()
     );
   }
