@@ -47,7 +47,7 @@ export class CheckoutComponent {
 
       if (isSave) {
         this.userAddressService
-          .saveNewAddress(formValue)
+          .createNewAddress(formValue)
           .subscribe((response) => {
             console.log(response);
           });
