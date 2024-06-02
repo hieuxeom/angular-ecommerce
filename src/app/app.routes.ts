@@ -14,9 +14,7 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { InformationComponent } from './features/profile/components/information/information.component';
 import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
 import { ChangePasswordComponent } from './features/profile/components/change-password/change-password.component';
-// import { EditAddressesComponent } from './features/profile/components/edit-addresses/edit-addresses.component';
-// import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
-// import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
+import { EditAddressComponent } from './features/profile/components/edit-address/edit-address.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,7 +48,29 @@ export const routes: Routes = [
       },
       {
         path: 'list-address',
-        component: ListAddressComponent,
+        children: [
+          {
+            path: '',
+            component: ListAddressComponent,
+          },
+          {
+            path: ':addressId',
+            component: EditAddressComponent,
+          },
+        ],
+      },
+      {
+        path: 'orders',
+        children: [
+          {
+            path: '',
+            component: EditAddressComponent,
+          },
+          {
+            path: ':orderId',
+            component: EditAddressComponent,
+          },
+        ],
       },
       {
         path: 'change-password',
