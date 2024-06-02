@@ -59,13 +59,27 @@ export class LoginComponent {
     this.authApiService.verifyAccount(this.authForm.value).subscribe(
       (response) => {
         if (response.status === 'success') {
-          const expiredTime = new Date();
-          expiredTime.setHours(expiredTime.getHours() + 1);
+          const accessTokenExpiredTime = new Date();
+          accessTokenExpiredTime.setHours(
+            accessTokenExpiredTime.getHours() + 1
+          );
+
+          const refreshTokenExpiredTime = new Date();
+          refreshTokenExpiredTime.setDate(
+            refreshTokenExpiredTime.getDate() + 1
+          );
 
           this._cookieService.set(
             'access_token',
             response.data.accessToken,
-            expiredTime,
+            accessTokenExpiredTime,
+            '/'
+          );
+
+          this._cookieService.set(
+            'refresh_token',
+            response.data.refreshToken,
+            refreshTokenExpiredTime,
             '/'
           );
 
