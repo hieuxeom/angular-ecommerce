@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IUserAddress } from '../../../../shared/interfaces/user';
 import { RouterModule } from '@angular/router';
 
@@ -12,8 +19,15 @@ import { RouterModule } from '@angular/router';
 })
 export class AddressBlockComponent {
   @Input() addressData!: IUserAddress;
+  @Output() onDelete = new EventEmitter<string>();
 
+  @ViewChild('parentElement') parentElement!: ElementRef;
   ngOnInit() {
     console.log(this.addressData);
+  }
+
+  public onDeleteButton() {
+    this.parentElement.nativeElement.remove();
+    return this.onDelete.emit(this.addressData._id);
   }
 }

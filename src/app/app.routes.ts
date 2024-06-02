@@ -15,6 +15,7 @@ import { InformationComponent } from './features/profile/components/information/
 import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
 import { ChangePasswordComponent } from './features/profile/components/change-password/change-password.component';
 import { EditAddressComponent } from './features/profile/components/edit-address/edit-address.component';
+import { CreateAddressComponent } from './features/profile/components/create-address/create-address.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -52,6 +53,10 @@ export const routes: Routes = [
           {
             path: '',
             component: ListAddressComponent,
+          },
+          {
+            path: 'new',
+            component: CreateAddressComponent,
           },
           {
             path: ':addressId',

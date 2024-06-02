@@ -29,19 +29,25 @@ export class UserAddressService {
     );
   }
 
-  public saveNewAddress(newAddress: IUserAddress) {
+  public createNewAddress(newAddress: IUserAddress) {
     return this.httpClient.post(
       `${this.API_URL}`,
-      newAddress,
+      { newAddress: newAddress },
       this._httpConfig.getHttpOptions()
     );
   }
 
   public editAddress(addressId: string, newAddress: IUserAddress) {
-    console.log(newAddress);
     return this.httpClient.put<IApiResponse>(
       `${this.API_URL}/${addressId}`,
       { newAddress: newAddress },
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public removeAddress(addressId: string) {
+    return this.httpClient.delete<IApiResponse>(
+      `${this.API_URL}/${addressId}`,
       this._httpConfig.getHttpOptions()
     );
   }

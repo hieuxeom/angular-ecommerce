@@ -97,6 +97,41 @@ export class AddressBoxComponent {
     }
   }
 
+  private getWardName(wardId: string) {
+    if (!wardId) {
+      return '_';
+    }
+    return this.wards.find((ward) => ward.value === wardId).label;
+  }
+
+  private getDistrictName(districtId: string) {
+    if (!districtId) {
+      return '_';
+    }
+    return this.districts.find((district) => district.value === districtId)
+      .label;
+  }
+
+  private getProvinceName(provinceId: string) {
+    if (!provinceId) {
+      return '_';
+    }
+
+    return this.provinces.find((province) => province.value === provinceId)
+      .label;
+  }
+  private checkValidAddress(): boolean {
+    if (
+      this.selectedProvince &&
+      this.selectedDistrict &&
+      this.selectedWard &&
+      this.streetAddress
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   public getListProvinces() {
     return this.addressService.getListProvinces().subscribe(({ results }) => {
       const reMapResults = results.map(({ province_id, province_name }) => {
@@ -139,30 +174,6 @@ export class AddressBoxComponent {
       });
   }
 
-  private getWardName(wardId: string) {
-    if (!wardId) {
-      return '_';
-    }
-    return this.wards.find((ward) => ward.value === wardId).label;
-  }
-
-  private getDistrictName(districtId: string) {
-    if (!districtId) {
-      return '_';
-    }
-    return this.districts.find((district) => district.value === districtId)
-      .label;
-  }
-
-  private getProvinceName(provinceId: string) {
-    if (!provinceId) {
-      return '_';
-    }
-
-    return this.provinces.find((province) => province.value === provinceId)
-      .label;
-  }
-
   public onFillAddress() {
     return this.addressForm.patchValue({
       fullAddress: `${this.streetAddress}, ${this.getWardName(
@@ -171,18 +182,6 @@ export class AddressBoxComponent {
         this.selectedDistrict
       )}, ${this.getProvinceName(this.selectedProvince)}`,
     });
-  }
-
-  private checkValidAddress(): boolean {
-    if (
-      this.selectedProvince &&
-      this.selectedDistrict &&
-      this.selectedWard &&
-      this.streetAddress
-    ) {
-      return true;
-    }
-    return false;
   }
 
   public onSaveButton() {
