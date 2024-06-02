@@ -1,21 +1,66 @@
 import { CookieService } from 'ngx-cookie-service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { AuthService } from '../../../core/auth/services/auth.service';
+import { IApiResponse } from '../../interfaces/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpConfigService {
-  constructor(private _cookieService: CookieService) {}
+  public REFRESH_TOKEN_API_URL: string = 'http://localhost:5000/api/users/rftk';
 
-  getHttpOptions() {
+  constructor(
+    private httpClient: HttpClient,
+    private _cookieService: CookieService
+  ) {}
+
+  public getNewAccessToken() {
+    this.httpClient
+      .get<IApiResponse>(this.REFRESH_TOKEN_API_URL, this.getRefreshOptions())
+      .subscribe((response) => {
+        const accessTokenExpiredTime = new Date();
+        accessTokenExpiredTime.setHours(accessTokenExpiredTime.getHours() + 1);
+
+        this._cookieService.set(
+          'access_token',
+          response.data,
+          accessTokenExpiredTime,
+          '/'
+        );
+      });
+  }
+
+  public getRefreshOptions() {
     return {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this._cookieService.get('access_token')}`,
+        'x-rftk': this._cookieService.get('refresh_token'),
       },
     };
+  }
+
+  public getHttpOptions() {
+    let returnHeader = {};
+
+    if (this._cookieService.get('access_token')) {
+      returnHeader = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._cookieService.get('access_token')}`,
+        },
+      };
+    } else {
+      this.getNewAccessToken();
+      returnHeader = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._cookieService.get('access_token')}`,
+        },
+      };
+    }
+    return returnHeader;
   }
 
   handleError(error: HttpErrorResponse) {
