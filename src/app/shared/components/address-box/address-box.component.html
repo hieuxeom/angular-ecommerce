@@ -34,24 +34,62 @@
       </div>
     </div>
 
-    <div class="w-full flex items-center gap-4">
-      <div class="w-full flex flex-col gap-1">
-        <label class="text-sm" for="streetAddress"
-          >Full Address
-          <span class="text-sub italic"
-            >(Use the form below to complete this box)</span
-          ></label
-        >
-        <input
-          formControlName="fullAddress"
-          class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
-          type="text"
-          name="fullAddress"
-          id="fullAddress"
-          readonly
-        />
+    <ng-container *ngIf="isEdit; then editForm; else billingForm">
+    </ng-container>
+    <ng-template #editForm>
+      <div class="w-full flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="streetAddress">Current Address </label>
+          <input
+            class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+            type="text"
+            name="fullAddress"
+            id="fullAddress"
+            [value]="currentFullAddress"
+            readonly
+          />
+        </div>
       </div>
-    </div>
+      <div class="w-full flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="streetAddress"
+            >New Address
+            <span class="text-sub italic"
+              >(Use the form below to complete this box)</span
+            ></label
+          >
+          <input
+            formControlName="fullAddress"
+            class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+            type="text"
+            name="fullAddress"
+            id="fullAddress"
+            readonly
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #billingForm>
+      <div class="w-full flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <label class="text-sm" for="streetAddress"
+            >Full Address
+            <span class="text-sub italic"
+              >(Use the form below to complete this box)</span
+            ></label
+          >
+          <input
+            formControlName="fullAddress"
+            class="border border-black/10 rounded-md text-md px-4 py-2 outline-none"
+            type="text"
+            name="fullAddress"
+            id="fullAddress"
+            readonly
+          />
+        </div>
+      </div>
+    </ng-template>
   </form>
   <app-hr />
   <ng-container *ngIf="isNewAddress">

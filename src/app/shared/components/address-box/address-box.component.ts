@@ -44,6 +44,7 @@ interface IAddressBoxEmit {
 export class AddressBoxComponent {
   @Output() onSave = new EventEmitter<IAddressBoxEmit>();
 
+  @Input() isEdit: boolean = false;
   @Input() addressData: IUserAddress | undefined;
   @Input() isNewAddress: boolean = true;
 
@@ -59,11 +60,11 @@ export class AddressBoxComponent {
   public streetAddress: string = '';
 
   public addressForm: FormGroup;
+  public currentFullAddress: string = '';
 
   constructor(
     private _formBuilder: FormBuilder,
     private addressService: AddressService,
-
     private _messageService: MessageService
   ) {
     this.getListProvinces();
@@ -76,15 +77,23 @@ export class AddressBoxComponent {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('🚀 ~ AddressBoxComponent ~ ngOnChanges ~ changes:', changes);
     if (this.addressData) {
       const { fullName, email, phoneNumber, fullAddress } = this.addressData;
-      this.addressForm.patchValue({
-        fullName,
-        email,
-        phoneNumber,
-        fullAddress,
-      });
+      if (this.isEdit) {
+        this.currentFullAddress = fullAddress;
+        this.addressForm.patchValue({
+          fullName,
+          email,
+          phoneNumber,
+        });
+      } else {
+        this.addressForm.patchValue({
+          fullName,
+          email,
+          phoneNumber,
+          fullAddress,
+        });
+      }
     }
   }
 
@@ -164,7 +173,7 @@ export class AddressBoxComponent {
     });
   }
 
-  public checkValidAddress(): boolean {
+  private checkValidAddress(): boolean {
     if (
       this.selectedProvince &&
       this.selectedDistrict &&
@@ -184,7 +193,7 @@ export class AddressBoxComponent {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Please select a delivery address',
+          detail: 'Please provide the complete address information.',
         });
       }
     } else {
