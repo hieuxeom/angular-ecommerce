@@ -6,6 +6,5 @@
     [billingAddress]="billingAddress"
     (onNext)="onNextStep2($event)"
   />
-  <app-complete-order *ngIf="step === 3" />
-  <!-- <div *ngIf="step === 3"></div> -->
+  <app-complete-order *ngIf="step === 3" (onNext)="onComplete($event)" />
 </section>

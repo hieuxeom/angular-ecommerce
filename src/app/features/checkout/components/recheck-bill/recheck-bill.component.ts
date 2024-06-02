@@ -25,7 +25,8 @@ export class RecheckBillComponent {
   public totalPrice: number = 0;
   public discountPrice: number = 0;
   public deliveryFee: number = 0;
-  public showOrderReview = false;
+  public showOrderReview: boolean = false;
+  public voucherCode: string = '';
   constructor(private cartService: CartService) {
     this.cartService.getUserCart().subscribe((response) => {
       this.cartItems = response.data.cartItems;
@@ -33,6 +34,7 @@ export class RecheckBillComponent {
       this.discountPrice = response.data.discountPrice;
       this.deliveryFee = response.data.deliveryFee;
       this.totalPrice = response.data.totalPrice;
+      this.voucherCode = response.data.voucherCode;
     });
   }
 
@@ -41,6 +43,19 @@ export class RecheckBillComponent {
   }
 
   public handleOnNext() {
-    return this.onNext.emit();
+    return this.onNext.emit({
+      orderItems: this.cartItems,
+      subTotalPrice: this.subTotalPrice,
+      totalPrice: this.totalPrice,
+      discountPrice: this.discountPrice,
+      deliveryFee: this.deliveryFee,
+      voucherCode: this.voucherCode,
+      customerInfo: {
+        fullName: this.billingAddress.fullName,
+        email: this.billingAddress.email,
+        phoneNumber: this.billingAddress.phoneNumber,
+        fullAddress: this.billingAddress.fullAddress,
+      },
+    });
   }
 }

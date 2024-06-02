@@ -11,6 +11,7 @@ import type { IUserAddress } from '../../shared/interfaces/user';
 import { BillingAddressComponent } from './components/billing-address/billing-address.component';
 import { CompleteOrderComponent } from './components/complete-order/complete-order.component';
 import { RecheckBillComponent } from './components/recheck-bill/recheck-bill.component';
+import { OrderService } from '../../shared/services/OrderServices/order.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -32,7 +33,10 @@ export class CheckoutComponent {
   public step: number = 1;
   public billingAddress!: IUserAddress;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private orderService: OrderService
+  ) {}
 
   public onNextStep1(event: any) {
     if (event) {
@@ -50,8 +54,12 @@ export class CheckoutComponent {
     }
   }
 
-  public onNextStep2(event: any) {
-    console.log(event);
+  public onNextStep2($event: any) {
+    this.orderService.createNewOrder($event).subscribe((response) => {
+      console.log(response);
+    });
     return (this.step += 1);
   }
+
+  public onComplete($event: any) {}
 }
