@@ -96,12 +96,29 @@
     @apply gap-2;
   }
 
+  .btn:disabled {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
   .btn-icon {
     @apply px-4 py-2;
     @apply text-white;
     @apply min-w-max;
     @apply transition-all;
     @apply duration-300;
+  }
+
+  .btn-primary-outline {
+    @apply bg-transparent;
+    @apply text-primary;
+    @apply underline;
+  }
+
+  .btn-secondary-outline {
+    @apply bg-transparent;
+    @apply text-secondary;
+    @apply underline;
   }
 
   .btn-large {
