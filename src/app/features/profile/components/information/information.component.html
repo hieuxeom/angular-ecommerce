@@ -1,0 +1,95 @@
+<p-toast />
+<section class="w-full p-4 flex flex-col gap-4">
+  <header class="flex flex-col gap-2">
+    <h5 class="font-bold">My Information</h5>
+    <p class="italic">Manage and protect your account</p>
+  </header>
+  <app-hr />
+  <main class="w-full flex flex-col gap-2" *ngIf="userData">
+    <div class="w-full flex gap-2 items-center">
+      <p class="text-sub w-1/6">Username</p>
+      <ng-container
+        *ngIf="isChangeUsernameMode; then changeUsername; else showUsername"
+      >
+      </ng-container>
+    </div>
+    <div class="w-full flex gap-2 items-start">
+      <p class="text-sub w-1/6">Email</p>
+      <ng-container *ngIf="isChangeEmailMode; then changeEmail; else showEmail">
+      </ng-container>
+    </div>
+  </main>
+</section>
+
+<ng-template #showEmail>
+  <div class="flex items-center gap-4">
+    <p class="w-full">{{ userData.email }}</p>
+    <button class="btn btn-primary-outline" (click)="onClickChangeEmail()">
+      Change
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #changeEmail>
+  <form class="w-full flex flex-col gap-4" [formGroup]="changeEmailForm">
+    <div class="flex items-center gap-4">
+      <input
+        class="w-full input input-md input-r-xl"
+        type="email"
+        placeholder="New email here"
+        formControlName="newEmail"
+      />
+      <button
+        [disabled]="!changeEmailForm.valid"
+        (click)="onSaveButton()"
+        class="btn btn-r-2xl btn-primary"
+      >
+        Save
+      </button>
+    </div>
+    <div class="w-max flex items-center gap-4">
+      <input
+        class="w-full input input-md input-r-xl"
+        type="text"
+        placeholder="OTP Code"
+        formControlName="otpCode"
+      />
+      <button
+        (click)="sendOTPChangeMail()"
+        class="btn btn-r-2xl btn-primary"
+        #getOTPButton
+      >
+        Get OTP
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #showUsername>
+  <div class="flex items-center gap-4">
+    <p class="w-full">{{ userData.userName }}</p>
+    <button class="btn btn-primary-outline" (click)="onClickChangeUsername()">
+      Change
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #changeUsername>
+  <form class="w-full flex flex-col gap-4" [formGroup]="changeUsernameForm">
+    <div class="flex items-center gap-4">
+      <input
+        class="w-full input input-md input-r-xl"
+        type="email"
+        placeholder="New username here"
+        formControlName="newUsername"
+      />
+      <button
+        [disabled]="!changeUsernameForm.valid"
+        (click)="onChangeUserName()"
+        class="btn btn-r-2xl btn-primary"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</ng-template>
