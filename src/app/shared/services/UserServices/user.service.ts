@@ -4,10 +4,17 @@ import { CookieService } from 'ngx-cookie-service';
 import type { IApiResponse } from '../../interfaces/api';
 import type { IUserAuth, IUserAddress, IUser } from '../../interfaces/user';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
+import { catchError, throwError } from 'rxjs';
 
 interface changeEmailForm {
   newEmail: string;
   otpCode: string;
+}
+
+interface changePasswordForm {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 @Injectable({
@@ -42,5 +49,19 @@ export class UserService {
       changeUsernameData,
       this._httpConfig.getHttpOptions()
     );
+  }
+
+  public changePassword(newPasswordData: changePasswordForm) {
+    return this.httpClient
+      .post<IApiResponse>(
+        `${this.API_URL}/change-password`,
+        newPasswordData,
+        this._httpConfig.getHttpOptions()
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
   }
 }

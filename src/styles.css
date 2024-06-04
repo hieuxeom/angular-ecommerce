@@ -93,6 +93,7 @@
     @apply duration-300;
     @apply flex;
     @apply items-center;
+    @apply justify-center;
     @apply gap-2;
   }
 

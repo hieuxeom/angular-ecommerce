@@ -12,6 +12,12 @@
       <div class="w-full flex flex-col gap-4 items-center">
         <a [routerLink]="['/profile']">My Orders</a>
       </div>
+      <app-hr></app-hr>
+      <div class="w-full flex flex-col gap-4 items-center">
+        <button (click)="handleSignOut()" class="btn btn-danger btn-r-full">
+          Sign Out
+        </button>
+      </div>
     </div>
     <div class="w-4/5 border border-black/10 rounded-2xl">
       <router-outlet />
