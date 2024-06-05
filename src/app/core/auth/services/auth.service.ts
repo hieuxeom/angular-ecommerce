@@ -50,4 +50,11 @@ export class AuthService {
       loginData
     );
   }
+
+  public isAdminRole() {
+    return this.httpClient.get<IApiResponse>(
+      `${this.API_URL}/admin`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
 }
