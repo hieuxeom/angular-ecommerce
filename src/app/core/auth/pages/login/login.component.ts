@@ -35,12 +35,17 @@ export class LoginComponent {
   public authForm: FormGroup;
 
   constructor(
-    private authApiService: AuthService,
+    private authService: AuthService,
     private _messageService: MessageService,
     private _router: Router,
     private _cookieService: CookieService,
     private _formBuilder: FormBuilder
   ) {
+    if (this.authService.isLoggedIn()) {
+      console.log('direct in component');
+      this._router.navigate(['/profile']);
+    }
+
     this.authForm = this._formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -56,7 +61,7 @@ export class LoginComponent {
       });
     }
 
-    this.authApiService.verifyAccount(this.authForm.value).subscribe(
+    this.authService.verifyAccount(this.authForm.value).subscribe(
       (response) => {
         if (response.status === 'success') {
           const accessTokenExpiredTime = new Date();
