@@ -7,22 +7,40 @@
         <h6 class="font-bold">Side Board</h6>
       </header>
       <div class="w-full flex flex-col gap-2">
-        <a [routerLink]="['/admin']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['dashboard']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Dashboard</a
         >
-        <a [routerLink]="['users']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['users']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Users</a
         >
-        <a [routerLink]="['categories']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['categories']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Categories</a
         >
-        <a [routerLink]="['products']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['products']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Products</a
         >
-        <a [routerLink]="['orders']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['orders']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Orders</a
         >
-        <a [routerLink]="['vouchers']" class="btn btn-flat-primary btn-r-md"
+        <a
+          [routerLink]="['vouchers']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
           >Vouchers</a
         >
       </div>
