@@ -36,5 +36,8 @@ export interface IUser {
   password: string;
   cart: IUserCart;
   listAddresses: IUserAddress;
+  createdAt: string;
+  updatedAt: string;
   role: number;
+  isActive: number;
 }

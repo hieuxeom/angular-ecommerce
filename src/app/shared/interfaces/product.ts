@@ -12,6 +12,9 @@ export interface IProduct {
   productRating: number;
   productStock: number;
   isDeleted: boolean;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IProductComment {
