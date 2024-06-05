@@ -58,7 +58,7 @@ export class FilterBoardComponent {
   }
 
   public ngOnInit() {
-    this.categoryApiService.getAllCategory().subscribe((listCategories) => {
+    this.categoryApiService.getAllCategories().subscribe((listCategories) => {
       this.listCategories = listCategories.data;
     });
 

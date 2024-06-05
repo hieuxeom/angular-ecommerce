@@ -11,7 +11,7 @@ export class CategoryService {
   private API_URL = 'http://localhost:5000/api/categories';
   constructor(private httpClient: HttpClient) {}
 
-  public getAllCategory() {
+  public getAllCategories() {
     return this.httpClient.get<IApiResponse<ICategory[]>>(this.API_URL);
   }
 
