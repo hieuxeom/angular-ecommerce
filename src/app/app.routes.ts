@@ -16,9 +16,43 @@ import { ListAddressComponent } from './features/profile/components/list-address
 import { ChangePasswordComponent } from './features/profile/components/change-password/change-password.component';
 import { EditAddressComponent } from './features/profile/components/edit-address/edit-address.component';
 import { CreateAddressComponent } from './features/profile/components/create-address/create-address.component';
+import { AdminIndexComponent } from './core/admin/pages/admin-index/admin-index.component';
+import { AdminAnalyticsComponent } from './core/admin/pages/admin-analytics/admin-analytics.component';
+import { OrderManagementComponent } from './core/admin/pages/order-management/order-management.component';
+import { UserManagementComponent } from './core/admin/pages/user-management/user-management.component';
+import { adminGuard } from './core/admin/guards/admin.guard';
+import { CategoriesManagementComponent } from './core/admin/pages/categories-management/categories-management.component';
+import { ProductsManagementComponent } from './core/admin/pages/products-management/products-management.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'admin',
+    component: AdminIndexComponent,
+    // canActivate: [adminGuard()],
+    children: [
+      {
+        path: '',
+        component: AdminAnalyticsComponent,
+      },
+      {
+        path: 'categories',
+        component: CategoriesManagementComponent,
+      },
+      {
+        path: 'products',
+        component: ProductsManagementComponent,
+      },
+      {
+        path: 'orders',
+        component: OrderManagementComponent,
+      },
+      {
+        path: 'users',
+        component: UserManagementComponent,
+      },
+    ],
+  },
   { path: 'home', component: HomeComponent },
   {
     path: 'product',
