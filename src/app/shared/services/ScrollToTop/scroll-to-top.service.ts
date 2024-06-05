@@ -17,4 +17,8 @@ export class ScrollToTopService {
         this.viewportScroller.scrollToPosition([0, 0]);
       });
   }
+
+  public scrollToTop() {
+    return this.viewportScroller.scrollToPosition([0, 0]);
+  }
 }
