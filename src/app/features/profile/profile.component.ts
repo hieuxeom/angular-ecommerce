@@ -26,7 +26,7 @@ export class ProfileComponent {
     if (this.authService.isLoggedIn()) {
       this.getUserData();
     } else {
-      window.location.href = '/auth/login';
+      this._router.navigate(['/auth', 'login']);
     }
   }
 
