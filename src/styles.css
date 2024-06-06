@@ -98,7 +98,17 @@
     @apply gap-2;
   }
 
-  .btn:disabled {
+  .btn-large {
+    @apply px-8;
+    @apply py-3;
+    @apply text-white;
+    @apply min-w-max;
+    @apply transition-all;
+    @apply duration-300;
+  }
+
+  .btn:disabled,
+  .btn-large:disabled {
     pointer-events: none;
     opacity: 0.2;
   }
@@ -154,15 +164,6 @@
     @apply bg-transparent;
     @apply text-secondary;
     @apply underline;
-  }
-
-  .btn-large {
-    @apply px-8;
-    @apply py-3;
-    @apply text-white;
-    @apply min-w-max;
-    @apply transition-all;
-    @apply duration-300;
   }
 
   .btn-r-full {
@@ -235,6 +236,12 @@
   .input-sm:disabled,
   .input-md:disabled {
     @apply bg-black/10;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   .input-r-full {
