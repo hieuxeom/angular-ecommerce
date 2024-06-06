@@ -83,6 +83,17 @@ export class DetailsSectionComponent implements OnChanges {
     return (this.selectedSize = element.getAttribute('data-size') || 'S');
   }
 
+  public increaseQuantity() {
+    return (this.quantity += 1);
+  }
+
+  public decreaseQuantity() {
+    if (this.quantity === 0) {
+      return;
+    }
+    return (this.quantity -= 1);
+  }
+
   public addProductToCart() {
     this.cartApiService
       .addProductToCart({
