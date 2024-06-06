@@ -1,0 +1,93 @@
+<p-toast />
+<section class="w-full flex flex-col gap-4">
+  <header>
+    <h5 class="font-bold">Edit Voucher</h5>
+  </header>
+  <main>
+    <form class="flex flex-col gap-4" [formGroup]="newVoucherForm">
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-1">
+          <p class="text-sub">Voucher Code</p>
+          <input
+            type="text"
+            class="input-md input-r-xl"
+            formControlName="voucherCode"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <p class="text-sub">% Discount</p>
+          <input
+            type="number"
+            class="input-md input-r-xl"
+            formControlName="discount"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <p class="text-sub">Minimum Order Value</p>
+          <input
+            type="number"
+            class="input-md input-r-xl"
+            formControlName="minimumOrderValue"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <p class="text-sub">Voucher Type</p>
+          <p-dropdown
+            [options]="voucherType"
+            formControlName="type"
+            placeholder="Select Voucher Type"
+            ngClass="border border-black/10 rounded-md"
+            [style]="{ minWidth: '100%' }"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex flex-col gap-1">
+          <p class="text-sub">Max Usage</p>
+          <input
+            class="input-md input-r-xl"
+            type="number"
+            formControlName="maxUsage"
+          />
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="text-sub">Valid From</p>
+          <input
+            type="datetime-local"
+            class="input-md input-r-xl"
+            formControlName="validFrom"
+          />
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="text-sub">Valid To</p>
+          <input
+            type="datetime-local"
+            class="input-md input-r-xl"
+            formControlName="validTo"
+          />
+        </div>
+        <div class="flex items-center gap-1">
+          <input type="checkbox" formControlName="isActive" id="isActive" />
+          <label class="text-base" for="isActive">Is Active</label>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-sub">Description</p>
+        <textarea
+          type="text"
+          class="input-md input-r-xl"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div>
+        <button
+          (click)="handleCreateVoucher()"
+          class="btn btn-primary btn-r-full"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </main>
+</section>

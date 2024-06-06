@@ -1,0 +1,44 @@
+<div
+  class="border border-primary/10 w-full flex items-center rounded-xl relative"
+  *ngIf="voucherData"
+>
+  <div
+    class="absolute left-[20%] h-full border border-black border-dashed"
+  ></div>
+
+  <div
+    class="w-1/5 h-full flex flex-col gap-1 justify-center items-center px-4 py-2"
+  >
+    <p class="text-danger font-semibold">{{ voucherData.discount }}%</p>
+    <p class="text-danger font-semibold">OFF</p>
+  </div>
+
+  <div class="w-4/5 h-full flex flex-col justify-between gap-4 px-4 py-2">
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center justify-between">
+        <p class="text-sub">
+          {{ voucherData ? VoucherType[voucherData.type] : "" }}
+        </p>
+        <div class="flex items-center gap-1">
+          <button class="text-danger">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <button [routerLink]="[voucherData._id, 'edit']" class="text-warning">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="text-secondary">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </div>
+      </div>
+      <p class="text-3xl font-bold">
+        {{ voucherData.voucherCode | uppercase }}
+      </p>
+    </div>
+    <div class="w-full flex items-center gap-1 text-sub">
+      <p>{{ voucherData.usedCount || 0 }} used</p>
+      <p>-</p>
+      <p class="">Valid to {{ voucherData.validTo }}</p>
+    </div>
+  </div>
+</div>
