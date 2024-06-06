@@ -49,6 +49,7 @@ export class OrderSummaryComponent {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     this.onChangeVoucherCode();
   }
 
@@ -73,24 +74,29 @@ export class OrderSummaryComponent {
           console.log(err);
         },
         () => {
-          this.totalPrice = this.calculateNewTotal();
-          this.cartApiService
-            .setNewCartDetails({
-              totalPrice: this.totalPrice,
-              discountPrice: this.discountPrice,
-              deliveryFee: this.isHaveShipFee
-                ? this.deliveryFeeDefault
-                : this.deliveryFeeDefault - this.deliveryFee,
-              subTotalPrice: this.subTotalPrice,
-            })
-            .subscribe((response) => {
-              console.log(response);
-            });
+          this.setNewCartDetails();
         }
       );
+    } else {
+      this.setNewCartDetails();
     }
   }
 
+  private setNewCartDetails() {
+    this.totalPrice = this.calculateNewTotal();
+    this.cartApiService
+      .setNewCartDetails({
+        totalPrice: this.totalPrice,
+        discountPrice: this.discountPrice,
+        deliveryFee: this.isHaveShipFee
+          ? this.deliveryFeeDefault
+          : this.deliveryFeeDefault - this.deliveryFee,
+        subTotalPrice: this.subTotalPrice,
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
   private resetValue() {
     this.discountPrice = 0;
     this.discountPercentage = 0;
