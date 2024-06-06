@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
 import { IApiResponse } from '../../interfaces/api';
+import { IOrder } from '../../interfaces/order';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  public API_URL: string = 'http://localhost:5000/api/orders';
+  private API_URL: string = 'http://localhost:5000/api/orders';
 
   constructor(
     private httpClient: HttpClient,
@@ -18,6 +19,28 @@ export class OrderService {
     return this.httpClient.post<IApiResponse>(
       this.API_URL,
       postData,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public getAllOrders() {
+    return this.httpClient.get<IApiResponse<IOrder[]>>(
+      this.API_URL,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public getOrderDetails(orderId: string) {
+    return this.httpClient.get<IApiResponse<IOrder>>(
+      `${this.API_URL}/${orderId}`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public changeOrderStatus(orderId: string, orderStatusForm: any) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}/${orderId}`,
+      orderStatusForm,
       this._httpConfig.getHttpOptions()
     );
   }

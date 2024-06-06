@@ -23,6 +23,7 @@ import { UserManagementComponent } from './core/admin/pages/user-management/user
 import { adminGuard } from './core/admin/guards/admin.guard';
 import { CategoriesManagementComponent } from './core/admin/pages/categories-management/categories-management.component';
 import { ProductsManagementComponent } from './core/admin/pages/products-management/products-management.component';
+import { OrderDetailsComponent } from './core/admin/pages/order-details/order-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,7 +51,16 @@ export const routes: Routes = [
       },
       {
         path: 'orders',
-        component: OrderManagementComponent,
+        children: [
+          {
+            path: '',
+            component: OrderManagementComponent,
+          },
+          {
+            path: ':orderId',
+            component: OrderDetailsComponent,
+          },
+        ],
       },
       {
         path: 'users',
