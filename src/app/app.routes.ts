@@ -14,12 +14,92 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { InformationComponent } from './features/profile/components/information/information.component';
 import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
 import { ChangePasswordComponent } from './features/profile/components/change-password/change-password.component';
-// import { EditAddressesComponent } from './features/profile/components/edit-addresses/edit-addresses.component';
-// import { EditProfileComponent } from './features/profile/components/edit-profile/edit-profile.component';
-// import { ListAddressComponent } from './features/profile/components/list-address/list-address.component';
+import { EditAddressComponent } from './features/profile/components/edit-address/edit-address.component';
+import { CreateAddressComponent } from './features/profile/components/create-address/create-address.component';
+import { AdminIndexComponent } from './core/admin/pages/admin-index/admin-index.component';
+import { AdminAnalyticsComponent } from './core/admin/pages/admin-analytics/admin-analytics.component';
+import { OrderManagementComponent } from './core/admin/pages/order-management/order-management.component';
+import { UserManagementComponent } from './core/admin/pages/user-management/user-management.component';
+import { adminGuard } from './core/admin/guards/admin.guard';
+import { CategoriesManagementComponent } from './core/admin/pages/categories-management/categories-management.component';
+import { ProductsManagementComponent } from './core/admin/pages/products-management/products-management.component';
+import { OrderDetailsComponent } from './core/admin/pages/order-details/order-details.component';
+import { VoucherManagementComponent } from './core/admin/pages/voucher-management/voucher-management.component';
+import { VoucherEditComponent } from './core/admin/pages/voucher-edit/voucher-edit.component';
+import { VoucherNewComponent } from './core/admin/pages/voucher-new/voucher-new.component';
+import { MyOrdersComponent } from './features/profile/components/my-orders/my-orders.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'admin',
+    component: AdminIndexComponent,
+    // canActivate: [adminGuard()],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: AdminAnalyticsComponent,
+      },
+      {
+        path: 'categories',
+        component: CategoriesManagementComponent,
+      },
+      {
+        path: 'products',
+        component: ProductsManagementComponent,
+      },
+      {
+        path: 'orders',
+        children: [
+          {
+            path: '',
+            component: OrderManagementComponent,
+          },
+          {
+            path: ':orderId',
+            component: OrderDetailsComponent,
+          },
+        ],
+      },
+      {
+        path: 'vouchers',
+        children: [
+          {
+            path: '',
+            component: VoucherManagementComponent,
+          },
+          {
+            path: 'new',
+            component: VoucherNewComponent,
+          },
+
+          {
+            path: ':voucherId',
+            children: [
+              {
+                path: '',
+                redirectTo: '/admin/vouchers',
+                pathMatch: 'full',
+              },
+              {
+                path: 'edit',
+                component: VoucherEditComponent,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'users',
+        component: UserManagementComponent,
+      },
+    ],
+  },
   { path: 'home', component: HomeComponent },
   {
     path: 'product',
@@ -50,7 +130,33 @@ export const routes: Routes = [
       },
       {
         path: 'list-address',
-        component: ListAddressComponent,
+        children: [
+          {
+            path: '',
+            component: ListAddressComponent,
+          },
+          {
+            path: 'new',
+            component: CreateAddressComponent,
+          },
+          {
+            path: ':addressId',
+            component: EditAddressComponent,
+          },
+        ],
+      },
+      {
+        path: 'orders',
+        children: [
+          {
+            path: '',
+            component: MyOrdersComponent,
+          },
+          {
+            path: ':orderId',
+            component: EditAddressComponent,
+          },
+        ],
       },
       {
         path: 'change-password',

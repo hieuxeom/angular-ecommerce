@@ -30,7 +30,8 @@
     <h6 class="font-bold">Price</h6>
     <div>
       <p-checkbox
-        [(ngModel)]="filterWithPrice"
+        [(ngModel)]="isActivePriceFilter"
+        (onChange)="handleFilterWithPrice($event)"
         [binary]="true"
         inputId="filterWithPrice"
         ngClass="border border-black/10 rounded-md"
@@ -42,14 +43,14 @@
       class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md"
       type="text"
       [(ngModel)]="currentValue[0]"
-      [disabled]="!filterWithPrice"
+      [disabled]="!isActivePriceFilter"
       readonly
     />
     <input
       class="w-1/2 border-2 border-black/10 px-2 py-1 rounded-md text-right"
       type="text"
       [(ngModel)]="currentValue[1]"
-      [disabled]="!filterWithPrice"
+      [disabled]="!isActivePriceFilter"
       readonly
     />
   </div>
@@ -60,13 +61,16 @@
       [min]="minValue"
       [max]="maxValue"
       (onChange)="onChangeValue($event)"
-      [disabled]="!filterWithPrice"
+      [disabled]="!isActivePriceFilter"
     />
   </div>
   <button
     class="bg-black rounded-md text-white px-4 py-2"
-    [ngClass]="{ 'bg-black': filterWithPrice, 'bg-black/10': !filterWithPrice }"
-    [disabled]="!filterWithPrice"
+    [ngClass]="{
+      'bg-black': isActivePriceFilter,
+      'bg-black/10': !isActivePriceFilter
+    }"
+    [disabled]="!isActivePriceFilter"
     [routerLink]="['/product']"
     [queryParams]="{
       filter: activeFilter,

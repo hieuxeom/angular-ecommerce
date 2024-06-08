@@ -6,6 +6,7 @@ export interface ICartItem {
 }
 
 export interface IUserAddress {
+  _id: string;
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -35,5 +36,8 @@ export interface IUser {
   password: string;
   cart: IUserCart;
   listAddresses: IUserAddress;
+  createdAt: string;
+  updatedAt: string;
   role: number;
+  isActive: number;
 }

@@ -4,37 +4,72 @@ import { CookieService } from 'ngx-cookie-service';
 import type { IApiResponse } from '../../interfaces/api';
 import type { IUserAuth, IUserAddress, IUser } from '../../interfaces/user';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
+import { catchError, throwError } from 'rxjs';
+import { IOrder } from '../../interfaces/order';
+
+interface changeEmailForm {
+  newEmail: string;
+  otpCode: string;
+}
+
+interface changePasswordForm {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  public API_URL = 'http://localhost:5000/api/users';
+  private API_URL = 'http://localhost:5000/api/users';
+
   constructor(
     private httpClient: HttpClient,
-    private _cookieService: CookieService,
     private _httpConfig: HttpConfigService
   ) {}
-
-  public getListAddresses() {
-    return this.httpClient.get<IApiResponse<IUserAddress[]>>(
-      `${this.API_URL}/me/address`,
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public saveNewAddress(newAddress: IUserAddress) {
-    return this.httpClient.post(
-      `${this.API_URL}/me/address`,
-      newAddress,
-      this._httpConfig.getHttpOptions()
-    );
-  }
 
   public getMe() {
     return this.httpClient.get<IApiResponse<IUser>>(
       `${this.API_URL}/me`,
       this._httpConfig.getHttpOptions()
     );
+  }
+
+  public getUserOrders() {
+    return this.httpClient.get<IApiResponse<IOrder[]>>(
+      `${this.API_URL}/me/orders`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public changeEmailAddress(changeEmailData: changeEmailForm) {
+    return this.httpClient.post<IApiResponse>(
+      `${this.API_URL}/email-address`,
+      changeEmailData,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public changeUsername(changeUsernameData: { newUserName: string }) {
+    return this.httpClient.post<IApiResponse>(
+      `${this.API_URL}/username`,
+      changeUsernameData,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public changePassword(newPasswordData: changePasswordForm) {
+    return this.httpClient
+      .post<IApiResponse>(
+        `${this.API_URL}/change-password`,
+        newPasswordData,
+        this._httpConfig.getHttpOptions()
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
   }
 }

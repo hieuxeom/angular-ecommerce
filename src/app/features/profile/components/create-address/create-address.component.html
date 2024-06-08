@@ -1,0 +1,20 @@
+<p-toast />
+<section class="w-full p-4 flex flex-col gap-4">
+  <header class="flex justify-between items-center gap-2">
+    <div>
+      <h5 class="font-bold">Create new address</h5>
+    </div>
+    <div>
+      <button
+        [routerLink]="['/profile', 'list-address']"
+        class="btn btn-icon btn-r-full btn-primary"
+      >
+        <i class="fa-solid fa-plus"></i>New address
+      </button>
+    </div>
+  </header>
+  <app-hr />
+  <main class="w-full flex flex-col gap-2">
+    <app-address-box (onSave)="onCreateAddress($event)" />
+  </main>
+</section>

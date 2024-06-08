@@ -35,12 +35,17 @@ export class LoginComponent {
   public authForm: FormGroup;
 
   constructor(
-    private authApiService: AuthService,
+    private authService: AuthService,
     private _messageService: MessageService,
     private _router: Router,
     private _cookieService: CookieService,
     private _formBuilder: FormBuilder
   ) {
+    if (this.authService.isLoggedIn()) {
+      console.log('direct in component');
+      this._router.navigate(['/profile']);
+    }
+
     this.authForm = this._formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -56,16 +61,30 @@ export class LoginComponent {
       });
     }
 
-    this.authApiService.verifyAccount(this.authForm.value).subscribe(
+    this.authService.verifyAccount(this.authForm.value).subscribe(
       (response) => {
         if (response.status === 'success') {
-          const expiredTime = new Date();
-          expiredTime.setHours(expiredTime.getHours() + 1);
+          const accessTokenExpiredTime = new Date();
+          accessTokenExpiredTime.setHours(
+            accessTokenExpiredTime.getHours() + 1
+          );
+
+          const refreshTokenExpiredTime = new Date();
+          refreshTokenExpiredTime.setDate(
+            refreshTokenExpiredTime.getDate() + 1
+          );
 
           this._cookieService.set(
             'access_token',
             response.data.accessToken,
-            expiredTime,
+            accessTokenExpiredTime,
+            '/'
+          );
+
+          this._cookieService.set(
+            'refresh_token',
+            response.data.refreshToken,
+            refreshTokenExpiredTime,
             '/'
           );
 

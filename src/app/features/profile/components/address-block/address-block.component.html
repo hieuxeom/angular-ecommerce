@@ -1,0 +1,38 @@
+<div
+  class="flex items-start gap-2 border border-black/10 p-4 rounded-xl"
+  *ngIf="addressData"
+  #parentElement
+>
+  <div class="w-full flex flex-col gap-4">
+    <div class="flex items-center gap-2">
+      <p class="font-bold">{{ addressData.fullName }}</p>
+      <p class="text-sub">|</p>
+      <p class="text-sub">{{ addressData.phoneNumber }}</p>
+    </div>
+    <div>
+      <p>
+        {{ addressData.fullAddress }}
+      </p>
+    </div>
+    <div
+      class="border border-red-400 text-red-400 px-2 py-1 w-max text-sm"
+      *ngIf="addressData.isDefault"
+    >
+      Default
+    </div>
+  </div>
+  <div class="min-w-max flex flex-col gap-4">
+    <div class="flex items-center gap-2">
+      <button
+        [routerLink]="['/profile', 'list-address', addressData._id]"
+        class="btn-warning btn btn-r-xl"
+      >
+        Edit
+      </button>
+      <button class="btn-danger btn-icon btn-r-xl" (click)="onDeleteButton()">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+    <button class="btn-secondary btn btn-r-xl">Set as Default</button>
+  </div>
+</div>

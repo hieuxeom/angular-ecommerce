@@ -1,0 +1,4 @@
+.btn-flat-primary.active {
+  @apply bg-primary;
+  @apply text-white;
+}

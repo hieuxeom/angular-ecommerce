@@ -1,15 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
+import { IApiResponse } from '../../interfaces/api';
+import { ICategory } from '../../interfaces/category';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  public API_URL = 'http://localhost:5000/api/categories';
+  private API_URL = 'http://localhost:5000/api/categories';
   constructor(private httpClient: HttpClient) {}
 
-  public getAllCategory(): Observable<any> {
-    return this.httpClient.get(this.API_URL);
+  public getAllCategories(onlyActive: boolean = true) {
+    return this.httpClient.get<IApiResponse<ICategory[]>>(
+      `${this.API_URL}?onlyActive=${onlyActive}`
+    );
+  }
+
+  public getCategoryById(categoryId: string) {
+    return this.httpClient.get<IApiResponse<ICategory>>(
+      `${this.API_URL}/${categoryId}`
+    );
   }
 }

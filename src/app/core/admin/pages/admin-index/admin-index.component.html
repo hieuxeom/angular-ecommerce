@@ -1,0 +1,52 @@
+<section class="w-full flex justify-center">
+  <div class="w-full max-w-[90vw] grid grid-cols-12 gap-2">
+    <div
+      class="w-full col-span-2 border border-black/10 rounded-xl p-4 flex flex-col gap-4"
+    >
+      <header class="text-center">
+        <h6 class="font-bold">Side Board</h6>
+      </header>
+      <div class="w-full flex flex-col gap-2">
+        <a
+          [routerLink]="['dashboard']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Dashboard</a
+        >
+        <a
+          [routerLink]="['users']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Users</a
+        >
+        <a
+          [routerLink]="['categories']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Categories</a
+        >
+        <a
+          [routerLink]="['products']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Products</a
+        >
+        <a
+          [routerLink]="['orders']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Orders</a
+        >
+        <a
+          [routerLink]="['vouchers']"
+          [routerLinkActive]="'active'"
+          class="btn btn-flat-primary btn-r-md"
+          >Vouchers</a
+        >
+      </div>
+    </div>
+    <div class="col-span-10 border border-black/10 rounded-xl p-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

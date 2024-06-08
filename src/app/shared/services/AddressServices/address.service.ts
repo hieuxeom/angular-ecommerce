@@ -12,9 +12,9 @@ import type {
   providedIn: 'root',
 })
 export class AddressService {
-  public API_PROVINCES = 'https://vapi.vnappmob.com/api/province';
-  public API_DISTRICTS = 'https://vapi.vnappmob.com/api/province/district';
-  public API_WARDS = 'https://vapi.vnappmob.com/api/province/ward';
+  private API_PROVINCES = 'https://vapi.vnappmob.com/api/province';
+  private API_DISTRICTS = 'https://vapi.vnappmob.com/api/province/district';
+  private API_WARDS = 'https://vapi.vnappmob.com/api/province/ward';
 
   constructor(private httpClient: HttpClient) {}
   public getListProvinces() {

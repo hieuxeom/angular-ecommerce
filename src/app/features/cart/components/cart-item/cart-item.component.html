@@ -27,24 +27,30 @@
         <i class="fa-solid fa-trash-can text-xl text-danger"></i>
       </button>
     </div>
-    <div class="min-w-max">
-      <button
-        (click)="minusQuantity()"
-        class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full"
-      >
-        -
-      </button>
-      <input
-        class="bg-gray px-4 py-2 max-w-16 text-center"
-        type="text"
-        [(ngModel)]="quantity"
-      />
-      <button
-        (click)="addQuantity()"
-        class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full"
-      >
-        +
-      </button>
+    <div class="flex flex-col gap-1">
+      <p class="text-sm text-center">
+        (<strong>{{ productStock }}</strong> pieces available)
+      </p>
+      <div class="min-w-max">
+        <button
+          (click)="minusQuantity()"
+          class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full"
+        >
+          -
+        </button>
+        <input
+          class="bg-gray px-4 py-2 max-w-16 text-center"
+          type="text"
+          (change)="onChange($event)"
+          [(ngModel)]="quantity"
+        />
+        <button
+          (click)="addQuantity()"
+          class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full"
+        >
+          +
+        </button>
+      </div>
     </div>
   </div>
 </div>

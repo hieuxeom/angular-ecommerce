@@ -38,6 +38,7 @@ export class CartItemComponent implements OnChanges {
   public productVariant: string = '';
   public productImage: string = '';
   public quantity: number = 1;
+  public productStock: number = 0;
   public imageUrlPrefix = apiUrl;
   constructor(
     private productApiService: ProductService,
@@ -46,12 +47,13 @@ export class CartItemComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.productApiService
-      .getProductWithId(this.itemData?.productId || '')
+      .getProductById(this.itemData?.productId || '')
       .subscribe(({ data }) => {
         this.productId = data._id;
         this.productName = data.productName;
         this.productPrice = data.productPrice;
         this.productImage = data.productImage;
+        this.productStock = data.productStock;
         this.productVariant = this.itemData?.productVariant || '';
         this.quantity = this.itemData?.quantity || 1;
       });
@@ -60,7 +62,26 @@ export class CartItemComponent implements OnChanges {
   ngAfterViewInit(): void {
     console.log(this.parentElement.nativeElement);
   }
+
+  onChange($event: any) {
+    if ($event.target.value > this.productStock) {
+      this.quantity = this.productStock;
+    } else {
+      this.quantity = $event.target.value;
+    }
+
+    this.onUpdateQuantity.emit({
+      productId: this.productId,
+      productVariant: this.productVariant,
+      newQuantity: this.quantity,
+    });
+  }
+
   public addQuantity() {
+    if (this.quantity + 1 > this.productStock) {
+      return;
+    }
+
     this.quantity += 1;
 
     return this.cartApiService
@@ -79,6 +100,10 @@ export class CartItemComponent implements OnChanges {
   }
 
   public minusQuantity() {
+    if (this.quantity - 1 < 1) {
+      return;
+    }
+
     this.quantity -= 1;
 
     return this.cartApiService

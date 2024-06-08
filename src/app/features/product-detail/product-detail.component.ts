@@ -75,7 +75,7 @@ export class ProductDetailComponent {
   public isLoggedIn!: boolean;
 
   constructor(
-    private productApiService: ProductService,
+    private productService: ProductService,
     private commentApiService: CommentService,
     private reviewApiService: ReviewService,
     private authApiService: AuthService,
@@ -90,24 +90,26 @@ export class ProductDetailComponent {
         this._router.navigateByUrl('/product');
       }
 
-      this.productApiService.getProductWithId(this.productId).subscribe(
-        (response) => {
+      this.productService.increaseView(this.productId).subscribe();
+
+      this.productService.getProductById(this.productId).subscribe({
+        next: (response) => {
           this.productDetails = response.data;
           this.productComments = response.data.productComments;
           this.productReviews = response.data.productReviews;
         },
-        (error) => {
+        error: (error) => {
           this._messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: error.message,
           });
           this._router.navigateByUrl('/home');
-        }
-      );
+        },
+      });
     });
 
-    this.productApiService.getAllProducts().subscribe((listProducts) => {
+    this.productService.getAllProducts().subscribe((listProducts) => {
       this.top4RelateTo = listProducts.data.slice(0, 4);
     });
 

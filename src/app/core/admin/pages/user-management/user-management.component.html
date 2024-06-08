@@ -1,0 +1,85 @@
+<p-toast />
+<section class="w-full flex flex-col gap-4">
+  <header class="flex items-center gap-4">
+    <div
+      class="min-w-max flex gap-4 items-center bg-danger/10 font-medium text-danger px-4 py-2 rounded-md"
+    >
+      <p>Total User:</p>
+      <p>{{ listUsers.length }}</p>
+    </div>
+
+    <div
+      class="min-w-max flex gap-4 items-center bg-success/10 font-medium text-success px-4 py-2 rounded-md"
+    >
+      <p>New Users Today:</p>
+      <p>1</p>
+    </div>
+  </header>
+  <main>
+    <p-table [value]="listUsers" [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Register Date</th>
+          <th class="text-center">Role</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.userName }}</td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td>{{ user.createdAt }}</td>
+          <td class="text-center">
+            <div class="flex items-center justify-center">
+              <button
+                class="btn btn-r-xl pointer-events-none"
+                [ngClass]="{
+                'btn-flat-danger': user.role === 1,
+                'btn-flat-secondary': user.role === 0,
+            }"
+              >
+                {{ user.role === 1 ? "Admin" : "User" }}
+              </button>
+            </div>
+          </td>
+          <td
+            class="text-center"
+            [ngClass]="{
+            'text-success': user.isActive=== 1,
+            'text-danger': user.isActive === 0,}"
+          >
+            {{ user.isActive ? "Active" : "Disabled" }}
+          </td>
+          <td class="text-center">
+            <div class="flex justify-center">
+              <button
+                (click)="handleDeactivateUser(user._id)"
+                class="btn btn-icon btn-danger btn-r-md"
+                *ngIf="user.isActive === 1"
+              >
+                <i class="fa-solid fa-lock"></i>
+              </button>
+              <button
+                (click)="handleReactivateUser(user._id)"
+                class="btn btn-icon btn-secondary btn-r-md"
+                *ngIf="user.isActive === 0"
+              >
+                <i class="fa-solid fa-unlock"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex items-center">
+          In total there are {{ listUsers ? listUsers.length : 0 }} users.
+        </div>
+      </ng-template>
+    </p-table>
+  </main>
+</section>

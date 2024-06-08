@@ -19,7 +19,7 @@ export class ReviewItemComponent {
 
   ngOnInit() {
     this.productApiService
-      .getProductWithId(this.itemData.productId)
+      .getProductById(this.itemData.productId)
       .subscribe((response) => {
         this.productData = response.data;
       });

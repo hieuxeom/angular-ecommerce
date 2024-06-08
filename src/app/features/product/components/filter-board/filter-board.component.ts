@@ -6,7 +6,7 @@ import {
   type SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { SliderModule, type SliderChangeEvent } from 'primeng/slider';
 
 import { HrComponent } from '../../../../shared/components/hr/hr.component';
@@ -33,22 +33,22 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class FilterBoardComponent {
   @Input() activeFilter: TypeFilter = 'all';
+  @Input() isActivePriceFilter: boolean = false;
 
   public minValue: number = 0;
-  public maxValue: number = 10000;
-  public currentValue: number[] = [50, 1000];
+  public maxValue: number = 50000;
+  public currentValue: number[] = [0, 10000];
   public listColors: string[] = [];
 
   public listCategories: ICategory[] = [];
 
-  public filterWithPrice: boolean = false;
-
   public constructor(
-    private categoryApiService: CategoryService,
-    private productApiService: ProductService,
-    private route: ActivatedRoute
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {
-    this.route.queryParams.subscribe((params) => {
+    this._route.queryParams.subscribe((params) => {
       if (params['filter']) {
         this.activeFilter = params['filter'];
       } else {
@@ -58,16 +58,28 @@ export class FilterBoardComponent {
   }
 
   public ngOnInit() {
-    this.categoryApiService.getAllCategory().subscribe((listCategories) => {
+    this.categoryService.getAllCategories().subscribe((listCategories) => {
       this.listCategories = listCategories.data;
     });
 
-    this.productApiService.getAllProductColors().subscribe((response) => {
+    this.productService.getAllProductColors().subscribe((response) => {
       this.listColors = response.data;
     });
   }
 
   public onChangeValue(event: SliderChangeEvent) {
     this.currentValue = event.values || [];
+  }
+
+  public handleFilterWithPrice($event: any) {
+    if (!$event.checked) {
+      this._router.navigate([], {
+        queryParams: {
+          min: null,
+          max: null,
+        },
+        queryParamsHandling: 'merge',
+      });
+    }
   }
 }

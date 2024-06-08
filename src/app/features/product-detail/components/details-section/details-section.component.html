@@ -61,15 +61,21 @@
 
     <div class="flex items-center justify-between gap-4">
       <div class="min-w-max">
-        <button class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full">
+        <button
+          (click)="decreaseQuantity()"
+          class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-s-full"
+        >
           -
         </button>
         <input
-          class="bg-gray px-4 py-2 max-w-16 text-center"
-          type="text"
+          class="input-number outline-none bg-gray px-4 py-2 max-w-16 text-center"
+          type="number"
           [(ngModel)]="quantity"
         />
-        <button class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full">
+        <button
+          (click)="increaseQuantity()"
+          class="hover:bg-stone-300 bg-gray px-4 py-2 rounded-e-full"
+        >
           +
         </button>
       </div>
@@ -82,6 +88,7 @@
       <button
         (click)="addProductToCart()"
         class="w-full btn-large btn-primary btn-r-full"
+        [disabled]="productStock < 1 || quantity > productStock"
       >
         Add to Cart
       </button>

@@ -1,0 +1,140 @@
+<p-toast />
+
+<section class="w-full flex flex-col gap-4" *ngIf="orderId">
+  <header class="flex items-center justify-between gap-4">
+    <h5 class="font-bold">Order Details</h5>
+    <form [formGroup]="orderStatusForm">
+      <p-dropdown
+        [options]="listOrderStatus"
+        formControlName="orderStatus"
+        placeholder="Select a Country"
+        (onChange)="handleChangeStatus()"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div
+            *ngIf="selectedOrderStatus"
+            [ngClass]="selectedOrderStatus.class + ' px-4 py-2 rounded-md'"
+          >
+            {{ selectedOrderStatus.label | titlecase }}
+          </div>
+        </ng-template>
+        <ng-template let-status pTemplate="item">
+          <div class="{{ status.class }}  px-4 py-1 rounded-md">
+            {{ status.label | titlecase }}
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </form>
+  </header>
+  <main class="flex flex-col gap-4">
+    <div class="w-full grid grid-cols-12 gap-4">
+      <div
+        class="col-span-8 flex flex-col gap-4 border border-primary/10 p-4 rounded-xl"
+      >
+        <header>
+          <h6 class="font-semibold">Customer Info</h6>
+        </header>
+        <main class="flex flex-col gap-4">
+          <div class="flex items-start gap-2">
+            <p class="min-w-max text-sub">Customer Name:</p>
+            <p class="font-semibold">
+              {{ orderDetails?.customerInfo?.fullName }}
+            </p>
+          </div>
+          <div class="flex items-start gap-2">
+            <p class="min-w-max text-sub">Phone Number:</p>
+            <p class="font-semibold">
+              {{ orderDetails?.customerInfo?.phoneNumber }}
+            </p>
+          </div>
+          <div class="flex items-start gap-2">
+            <p class="min-w-max text-sub">Email:</p>
+            <p class="font-semibold">{{ orderDetails?.customerInfo?.email }}</p>
+          </div>
+          <div class="flex items-start gap-2">
+            <p class="min-w-max text-sub">Customer Address:</p>
+            <p class="font-semibold">
+              {{ orderDetails?.customerInfo?.fullAddress }}
+            </p>
+          </div>
+        </main>
+      </div>
+      <div
+        class="col-span-4 flex flex-col gap-4 border border-primary/10 p-4 rounded-xl"
+      >
+        <header class="flex justify-between items-center">
+          <h6 class="font-semibold">Orders Summary</h6>
+          <div class="{{ selectedOrderStatus.class }}  px-4 py-x rounded-md">
+            {{ orderDetails?.orderStatus | titlecase }}
+          </div>
+        </header>
+        <main class="flex justify-between">
+          <div class="flex flex-col items-start gap-4">
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Subtotal:</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.subTotalPrice | number }}
+              </p>
+            </div>
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Discount:</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.discountPrice | number }}
+              </p>
+            </div>
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Delivery Fee:</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.deliveryFee | number }}
+              </p>
+            </div>
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Payment Type:</p>
+              <p class="font-semibold">Cash on Delivery</p>
+            </div>
+          </div>
+          <div class="col-span-3 flex flex-col items-start gap-4">
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Voucher:</p>
+              <p class="font-semibold">
+                {{ orderDetails?.voucherCode | uppercase }}
+              </p>
+            </div>
+            <div class="flex items-start gap-4">
+              <p class="text-sub min-w-max">Total:</p>
+              <p class="font-semibold">${{ orderDetails?.totalPrice }}</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div
+      class="w-full flex flex-col gap-4 border border-primary/10 rounded-xl p-4"
+    >
+      <header>
+        <h6 class="font-semibold">Order Items</h6>
+      </header>
+      <main class="flex flex-col gap-4">
+        <div class="grid grid-cols-12">
+          <div class="col-span-6 flex flex-col items-start h-full">
+            <p class="w-full text-xl font-medium text-sub">Product Details</p>
+          </div>
+          <div class="col-span-3 flex flex-col items-start h-full">
+            <p class="w-full text-center text-xl font-medium text-sub">
+              Unit Price
+            </p>
+          </div>
+          <div class="col-span-3 flex flex-col items-start h-full">
+            <p class="w-full text-center text-xl font-medium text-sub">Total</p>
+          </div>
+        </div>
+        <app-order-item
+          *ngFor="let item of orderDetails?.orderItems"
+          [quantity]="item.quantity"
+          [productId]="item.productId"
+          [productVariant]="item.productVariant"
+        />
+      </main>
+    </div>
+  </main>
+</section>

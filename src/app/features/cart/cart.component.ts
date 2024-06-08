@@ -48,7 +48,7 @@ export class CartComponent implements OnChanges {
 
         this.listCartItems.forEach((item) => {
           return this.productApiService
-            .getProductWithId(item.productId)
+            .getProductById(item.productId)
             .subscribe((response) => {
               this.listCartItems.forEach((cartItem) => {
                 if (cartItem.productId === response.data._id) {
