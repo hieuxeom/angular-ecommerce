@@ -10,3 +10,18 @@ export function transformString(input: string): string {
 
   return `${start}...${end}`;
 }
+
+export function trimProductName(
+  input: string,
+  trimLength: number = 15
+): string {
+  const length = input.length;
+
+  if (length <= trimLength) {
+    return input;
+  }
+
+  const trimString = input.substring(0, trimLength);
+
+  return `${trimString}...`;
+}
