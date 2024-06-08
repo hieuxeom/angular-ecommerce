@@ -5,6 +5,7 @@ import type { IApiResponse } from '../../interfaces/api';
 import type { IUserAuth, IUserAddress, IUser } from '../../interfaces/user';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
 import { catchError, throwError } from 'rxjs';
+import { IOrder } from '../../interfaces/order';
 
 interface changeEmailForm {
   newEmail: string;
@@ -31,6 +32,13 @@ export class UserService {
   public getMe() {
     return this.httpClient.get<IApiResponse<IUser>>(
       `${this.API_URL}/me`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public getUserOrders() {
+    return this.httpClient.get<IApiResponse<IOrder[]>>(
+      `${this.API_URL}/me/orders`,
       this._httpConfig.getHttpOptions()
     );
   }

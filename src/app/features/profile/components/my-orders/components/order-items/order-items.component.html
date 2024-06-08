@@ -1,0 +1,20 @@
+<div class="grid grid-cols-12 items-center gap-4" *ngIf="productData">
+  <div class="col-span-1">
+    <img
+      src="{{ prefixImage }}/{{ productData.productImage }}"
+      alt=""
+      class="w-full"
+    />
+  </div>
+  <div class="h-full col-span-5 flex flex-col gap-4 items-start">
+    <p class="text-base font-semibold">{{ productData.productName }}</p>
+    <p class="text-sub">
+      {{ productVariant ?? "" }} - x {{ quantity ?? 0 | number }}
+    </p>
+  </div>
+  <div class="col-span-6 flex flex-col items-end h-full">
+    <p class="text-center text-base text-danger/80 font-bold">
+      ${{ productData.productPrice * (quantity ?? 0) | number }}
+    </p>
+  </div>
+</div>

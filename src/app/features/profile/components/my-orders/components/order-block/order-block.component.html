@@ -1,0 +1,43 @@
+<div
+  class="w-full p-4 flex flex-col gap-4 border border-primary/10 rounded-md"
+  *ngIf="orderData"
+>
+  <div class="flex items-center justify-between">
+    <div>
+      <p class="text-sub text-xl">{{ orderData.orderDate }}</p>
+    </div>
+    <div>
+      <div class="{{ orderStatus?.class }}  px-4 py-1 rounded-md">
+        {{ orderStatus?.label | titlecase }}
+      </div>
+    </div>
+  </div>
+  <app-hr />
+  <div class="flex flex-col gap-4">
+    <app-order-items
+      *ngFor="let orderItem of orderData.orderItems"
+      [productId]="orderItem.productId"
+      [productVariant]="orderItem.productVariant"
+      [quantity]="orderItem.quantity"
+    />
+  </div>
+  <app-hr />
+  <div class="w-full flex items-center justify-between">
+    <div>
+      <button
+        class="btn btn-danger btn-r-xl"
+        *ngIf="orderStatus?.value === 'pending'"
+        (click)="onCancelOrder()"
+      >
+        Cancel Order
+      </button>
+    </div>
+    <div class="flex items-center gap-4">
+      <i class="text- fa-solid fa-cash-register text-danger"></i>
+      <p class="text-xl text-sub">Order Total:</p>
+      <p class="text-2xl text-danger font-semibold">
+        ${{ orderData.totalPrice | number }}
+      </p>
+    </div>
+  </div>
+</div>
