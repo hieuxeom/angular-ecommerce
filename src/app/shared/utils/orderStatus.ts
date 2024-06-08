@@ -1,10 +1,4 @@
-import { OrderStatusType } from '../../../shared/interfaces/order';
-
-export interface IListOrderStatus {
-  label: string;
-  value: string;
-  class: string;
-}
+import { IListOrderStatus, OrderStatusType } from "../interfaces/order";
 
 export const listOrderStatus: IListOrderStatus[] = [
   {

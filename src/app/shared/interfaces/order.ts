@@ -19,6 +19,12 @@ export type OrderStatusType =
   | 'cancelled'
   | 'returned';
 
+export interface IListOrderStatus {
+  label: string;
+  value: string;
+  class: string;
+}
+
 export interface IOrder {
   _id: string;
   customerId: string;
