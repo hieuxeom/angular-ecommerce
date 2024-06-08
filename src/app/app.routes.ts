@@ -27,6 +27,7 @@ import { OrderDetailsComponent } from './core/admin/pages/order-details/order-de
 import { VoucherManagementComponent } from './core/admin/pages/voucher-management/voucher-management.component';
 import { VoucherEditComponent } from './core/admin/pages/voucher-edit/voucher-edit.component';
 import { VoucherNewComponent } from './core/admin/pages/voucher-new/voucher-new.component';
+import { MyOrdersComponent } from './features/profile/components/my-orders/my-orders.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -149,7 +150,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            component: EditAddressComponent,
+            component: MyOrdersComponent,
           },
           {
             path: ':orderId',
