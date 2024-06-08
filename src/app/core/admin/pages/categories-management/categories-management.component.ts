@@ -70,7 +70,7 @@ export class CategoriesManagementComponent {
   }
 
   private getListCategories() {
-    this.categoryService.getAllCategories().subscribe((response) => {
+    this.categoryService.getAllCategories(false).subscribe((response) => {
       this.listCategories = response.data.map((category) => {
         return {
           ...category,

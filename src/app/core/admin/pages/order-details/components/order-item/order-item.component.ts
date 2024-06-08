@@ -24,7 +24,7 @@ export class OrderItemComponent {
   ngOnInit() {
     if (this.productId) {
       this.productService
-        .getProductWithId(this.productId)
+        .getProductById(this.productId)
         .subscribe((response) => {
           this.productData = response.data;
         });

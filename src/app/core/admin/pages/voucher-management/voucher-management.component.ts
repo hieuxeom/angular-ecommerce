@@ -7,12 +7,14 @@ import { VoucherItemComponent } from './components/voucher-item/voucher-item.com
 import { VoucherService } from '../../../../shared/services/VoucherServices/voucher.service';
 import { IVoucher } from '../../../../shared/interfaces/voucher';
 import { formatDate } from '../../../../shared/utils/formatDate';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-voucher-management',
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     ToastModule,
     FormsModule,
     ReactiveFormsModule,

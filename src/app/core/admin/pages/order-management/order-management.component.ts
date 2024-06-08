@@ -9,17 +9,14 @@ import { formatDate } from '../../../../shared/utils/formatDate';
 import { transformString } from '../../../../shared/utils/transformString';
 import { RouterModule } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
-import {
-  IListOrderStatus,
-  OrderStatusMap,
-  listOrderStatus,
-} from '../../utils/orderStatus';
+
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { OrderStatusMap } from '../../../../shared/utils/orderStatus';
 
 interface IOrderTable extends IOrder {
   transformId: string;

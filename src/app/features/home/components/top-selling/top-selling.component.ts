@@ -15,8 +15,8 @@ import type { IProduct } from '../../../../shared/interfaces/product';
 export class TopSellingComponent {
   public listProducts: IProduct[] = [];
   constructor(private productApiService: ProductService) {
-    this.productApiService.getAllProducts().subscribe((listProducts) => {
-      this.listProducts = listProducts.data;
+    this.productApiService.getTopSell().subscribe((response) => {
+      this.listProducts = response.data;
     });
   }
 }

@@ -15,7 +15,7 @@ import { ProductService } from '../../../../shared/services/ProductServices/prod
 export class ArrivalsSectionComponent {
   public listProducts: IProduct[] = [];
   constructor(private productApiService: ProductService) {
-    productApiService.getAllProducts().subscribe((listProducts) => {
+    productApiService.getNewArrivalProducts().subscribe((listProducts) => {
       this.listProducts = listProducts.data;
     });
   }

@@ -43,6 +43,10 @@ export class ChangePasswordComponent {
       oldPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
+      otpCode: [
+        '',
+        [Validators.required, Validators.minLength(6), Validators.maxLength(6)],
+      ],
     });
   }
 
@@ -56,25 +60,49 @@ export class ChangePasswordComponent {
     return false;
   }
 
-  public onClickChangeButton() {
-    this.userService
-      .changePassword(this.changePwdForm.value)
+  public handleSendEmail() {
+    return this.emailService.sendEmailChangePassword().subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: response.message,
+        });
+      },
+      error: ({ error }) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message,
+        });
+      },
+    });
+  }
 
-      .subscribe(
-        (response) => {
+  public onClickChangeButton() {
+    this.userService.changePassword(this.changePwdForm.value).subscribe(
+      (response) => {
+        if (response.status === 'success') {
           this._messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: response.message || 'vcl',
+            detail: response.message,
           });
-        },
-        ({ error }) => {
+        } else {
           this._messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: error.message,
+            detail: response.message,
           });
         }
-      );
+      },
+      ({ error }) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message,
+        });
+      }
+    );
   }
 }

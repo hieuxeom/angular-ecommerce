@@ -42,8 +42,8 @@ export class OrderSummaryComponent {
   public totalPrice: number = 0;
 
   constructor(
-    private cartApiService: CartService,
-    private voucherApiService: VoucherService,
+    private cartService: CartService,
+    private voucherService: VoucherService,
     private _messageService: MessageService,
     private _formBuilder: FormBuilder
   ) {}
@@ -55,19 +55,31 @@ export class OrderSummaryComponent {
 
   private onChangeVoucherCode() {
     if (this.voucherCode) {
-      this.voucherApiService.getVoucherData(this.voucherCode).subscribe(
+      this.voucherService.getVoucherData(this.voucherCode).subscribe(
         (response) => {
           this.resetValue();
-          if (response.data.type === 'bill') {
-            this.discountPercentage = response.data.discount;
-            this.discountPrice = this.calculateNewDiscountPrice();
-            this.isDiscount = true;
-            this.isHaveShipFee = true;
+          if (response.data.minimumOrderValue > this.subTotalPrice) {
+            this.voucherCode = '';
+            this.cartService.setNewVoucherCode('').subscribe((response) => {
+              this._messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'The current voucher has been automatically deleted because the minimum order value does not meet the voucher requirements',
+              });
+            });
           } else {
-            this.deliveryPercentage = response.data.discount;
-            this.deliveryFee = this.calculateNewDeliveryPrice();
-            this.isDiscount = false;
-            this.isHaveShipFee = false;
+            if (response.data.type === 'bill') {
+              this.discountPercentage = response.data.discount;
+              this.discountPrice = this.calculateNewDiscountPrice();
+              this.isDiscount = true;
+              this.isHaveShipFee = true;
+            } else {
+              this.deliveryPercentage = response.data.discount;
+              this.deliveryFee = this.calculateNewDeliveryPrice();
+              this.isDiscount = false;
+              this.isHaveShipFee = false;
+            }
           }
         },
         (err) => {
@@ -84,7 +96,7 @@ export class OrderSummaryComponent {
 
   private setNewCartDetails() {
     this.totalPrice = this.calculateNewTotal();
-    this.cartApiService
+    this.cartService
       .setNewCartDetails({
         totalPrice: this.totalPrice,
         discountPrice: this.discountPrice,
@@ -93,9 +105,7 @@ export class OrderSummaryComponent {
           : this.deliveryFeeDefault - this.deliveryFee,
         subTotalPrice: this.subTotalPrice,
       })
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe();
   }
   private resetValue() {
     this.discountPrice = 0;
@@ -133,19 +143,19 @@ export class OrderSummaryComponent {
   }
 
   public onApplyVoucher() {
-    this.cartApiService.setNewVoucherCode(this.voucherCode).subscribe(
+    this.cartService.setNewVoucherCode(this.voucherCode).subscribe(
       (response) => {
-        console.log(response);
-        this.onChangeVoucherCode();
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
+        if (response.status === 'success') {
+          this.onChangeVoucherCode();
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
+        }
       },
-      ({ error }) => {
-        console.log(error);
 
+      ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',

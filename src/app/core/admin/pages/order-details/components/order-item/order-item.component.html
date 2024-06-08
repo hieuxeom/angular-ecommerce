@@ -8,7 +8,7 @@
   </div>
   <div class="h-full col-span-5 flex flex-col gap-4 items-start">
     <p class="text-xl font-semibold">{{ productData?.productName }}</p>
-    <p class="text-sub">{{ productVariant }} - x {{ quantity }}</p>
+    <p class="text-sub">{{ productVariant }} - x {{ quantity | number }}</p>
   </div>
   <div class="col-span-3 flex flex-col items-start h-full">
     <p class="w-full text-center text-xl font-semibold">
@@ -17,7 +17,7 @@
   </div>
   <div class="col-span-3 flex flex-col items-start h-full">
     <p class="w-full text-center text-2xl font-bold">
-      ${{ productData?.productPrice ?? 0 * quantity }}
+      ${{ (productData?.productPrice ?? 0) * quantity | number }}
     </p>
   </div>
 </div>

@@ -1,24 +1,31 @@
 <p-toast />
 <section class="w-full flex flex-col gap-4">
-  <header class="flex items-center gap-4">
-    <div
-      class="min-w-max flex gap-4 items-center bg-secondary/10 font-medium text-secondary px-4 py-2 rounded-md"
-    >
-      <p>Total Voucher:</p>
-      <!-- <p>{{ listUsers.length }}</p> -->
-    </div>
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div
+        class="min-w-max flex gap-4 items-center bg-secondary/10 font-medium text-secondary px-4 py-2 rounded-md"
+      >
+        <p>Total Voucher:</p>
+        <!-- <p>{{ listUsers.length }}</p> -->
+      </div>
 
-    <div
-      class="min-w-max flex gap-4 items-center bg-success/10 font-medium text-success px-4 py-2 rounded-md"
-    >
-      <p>Active Vouchers:</p>
-      <p>1</p>
+      <div
+        class="min-w-max flex gap-4 items-center bg-success/10 font-medium text-success px-4 py-2 rounded-md"
+      >
+        <p>Active Vouchers:</p>
+        <p>1</p>
+      </div>
+      <div
+        class="min-w-max flex gap-4 items-center bg-danger/10 font-medium text-danger px-4 py-2 rounded-md"
+      >
+        <p>Inactive Vouchers:</p>
+        <p>1</p>
+      </div>
     </div>
-    <div
-      class="min-w-max flex gap-4 items-center bg-danger/10 font-medium text-danger px-4 py-2 rounded-md"
-    >
-      <p>Inactive Vouchers:</p>
-      <p>1</p>
+    <div>
+      <button [routerLink]="['new']" class="btn btn-r-xl btn-primary">
+        <i class="fa-solid fa-plus"></i> New Voucher
+      </button>
     </div>
   </header>
   <main class="w-full grid grid-cols-4 gap-4">

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
+import { IApiResponse } from '../../interfaces/api';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class EmailService {
   ) {}
 
   public sendEmailChangeEmailAddress(email: string) {
-    return this.httpClient.post(
+    return this.httpClient.post<IApiResponse>(
       this.API_URL_CHANGE_EMAIL,
       {
         email,
@@ -25,13 +26,11 @@ export class EmailService {
     );
   }
 
-  // public sendEmailChangePassword(email: string) {
-  //   return this.httpClient.post(
-  //     this.API_URL_CHANGE_PWD,
-  //     {
-  //       email,
-  //     },
-  //     this._httpConfig.getHttpOptions()
-  //   );
-  // }
+  public sendEmailChangePassword() {
+    return this.httpClient.post<IApiResponse>(
+      this.API_URL_CHANGE_PWD,
+      {},
+      this._httpConfig.getHttpOptions()
+    );
+  }
 }

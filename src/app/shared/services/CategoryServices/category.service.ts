@@ -11,8 +11,10 @@ export class CategoryService {
   private API_URL = 'http://localhost:5000/api/categories';
   constructor(private httpClient: HttpClient) {}
 
-  public getAllCategories() {
-    return this.httpClient.get<IApiResponse<ICategory[]>>(this.API_URL);
+  public getAllCategories(onlyActive: boolean = true) {
+    return this.httpClient.get<IApiResponse<ICategory[]>>(
+      `${this.API_URL}?onlyActive=${onlyActive}`
+    );
   }
 
   public getCategoryById(categoryId: string) {

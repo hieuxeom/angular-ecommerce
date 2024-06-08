@@ -163,7 +163,7 @@ export class ProductsManagementComponent {
   }
 
   private getProductDetails(productId: string) {
-    this.productServices.getProductWithId(productId).subscribe((response) => {
+    this.productServices.getProductById(productId).subscribe((response) => {
       const prodData = response.data;
       this.editProductForm.patchValue({
         productId: productId,

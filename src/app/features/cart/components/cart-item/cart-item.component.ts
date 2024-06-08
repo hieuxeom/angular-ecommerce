@@ -46,9 +46,8 @@ export class CartItemComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     this.productApiService
-      .getProductWithId(this.itemData?.productId || '')
+      .getProductById(this.itemData?.productId || '')
       .subscribe(({ data }) => {
         this.productId = data._id;
         this.productName = data.productName;
@@ -67,7 +66,15 @@ export class CartItemComponent implements OnChanges {
   onChange($event: any) {
     if ($event.target.value > this.productStock) {
       this.quantity = this.productStock;
+    } else {
+      this.quantity = $event.target.value;
     }
+
+    this.onUpdateQuantity.emit({
+      productId: this.productId,
+      productVariant: this.productVariant,
+      newQuantity: this.quantity,
+    });
   }
 
   public addQuantity() {

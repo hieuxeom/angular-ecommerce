@@ -13,15 +13,13 @@
         <ng-template pTemplate="selectedItem">
           <div
             *ngIf="selectedOrderStatus"
-            [ngClass]="
-              selectedOrderStatus.class + ' font-semibold px-4 py-2 rounded-md'
-            "
+            [ngClass]="selectedOrderStatus.class + ' px-4 py-2 rounded-md'"
           >
             {{ selectedOrderStatus.label | titlecase }}
           </div>
         </ng-template>
         <ng-template let-status pTemplate="item">
-          <div class="{{ status.class }} font-semibold px-4 py-x rounded-md">
+          <div class="{{ status.class }}  px-4 py-1 rounded-md">
             {{ status.label | titlecase }}
           </div>
         </ng-template>
@@ -66,11 +64,7 @@
       >
         <header class="flex justify-between items-center">
           <h6 class="font-semibold">Orders Summary</h6>
-          <div
-            class="{{
-              selectedOrderStatus.class
-            }} font-semibold px-4 py-x rounded-md"
-          >
+          <div class="{{ selectedOrderStatus.class }}  px-4 py-x rounded-md">
             {{ orderDetails?.orderStatus | titlecase }}
           </div>
         </header>
@@ -78,15 +72,21 @@
           <div class="flex flex-col items-start gap-4">
             <div class="flex items-start gap-4">
               <p class="text-sub min-w-max">Subtotal:</p>
-              <p class="font-semibold">${{ orderDetails?.subTotalPrice }}</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.subTotalPrice | number }}
+              </p>
             </div>
             <div class="flex items-start gap-4">
               <p class="text-sub min-w-max">Discount:</p>
-              <p class="font-semibold">${{ orderDetails?.discountPrice }}</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.discountPrice | number }}
+              </p>
             </div>
             <div class="flex items-start gap-4">
               <p class="text-sub min-w-max">Delivery Fee:</p>
-              <p class="font-semibold">${{ orderDetails?.deliveryFee }}</p>
+              <p class="font-semibold">
+                ${{ orderDetails?.deliveryFee | number }}
+              </p>
             </div>
             <div class="flex items-start gap-4">
               <p class="text-sub min-w-max">Payment Type:</p>

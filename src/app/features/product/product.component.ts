@@ -58,19 +58,27 @@ export class ProductComponent {
 
   public activeFilter: TypeFilter = 'all';
 
+  public isActivePriceFilter: boolean = false;
+
   public constructor(
-    private productApiService: ProductService,
+    private productService: ProductService,
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe((params) => {
-      if (params['filter']) {
-        this.productApiService
-          .getProductsWithFilter(params['filter'])
-          .subscribe((listProducts) => {
-            this.productData = listProducts.data;
+      if (params['min'] && params['max']) {
+        this.isActivePriceFilter = true;
+      }
+
+      if (params) {
+        console.log('get here 1');
+        this.productService
+          .getProductsWithFilter(params)
+          .subscribe((response) => {
+            this.productData = response.data;
           });
       } else {
-        this.productApiService.getAllProducts().subscribe((listProducts) => {
+        console.log('get here 2');
+        this.productService.getAllProducts().subscribe((listProducts) => {
           this.productData = listProducts.data;
         });
       }

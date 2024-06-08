@@ -1,4 +1,14 @@
-<a [routerLink]="['/product/' + productData?._id]" class="flex flex-col gap-4">
+<a
+  [routerLink]="['/product/' + productData?._id]"
+  class="relative flex flex-col gap-4"
+>
+  <div
+    class="absolute top-2 right-2 flex items-center py-1 px-2 bg-black/80 text-white gap-1 rounded-full"
+  >
+    <p>{{ productData?.views }}</p>
+    <i class="fa-solid fa-eye"></i>
+  </div>
+
   <div class="bg-gray rounded-xl">
     <img
       class="w-full"
@@ -22,6 +32,9 @@
     <div
       *ngIf="productData?.isDiscount; then haveDiscount; else noDiscount"
     ></div>
+    <div>
+      <p class="text-sm italic text-sub">{{ productData?.soldCount }} sold</p>
+    </div>
     <ng-template #noDiscount>
       <div class="flex items-center gap-2">
         <h5 class="font-semibold">${{ productData?.productPrice }}</h5>
