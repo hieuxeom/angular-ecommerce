@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { OrderService } from '../../../../shared/services/OrderServices/order.service';
-import { IListOrderStatus, IOrder, OrderStatusType } from '../../../../shared/interfaces/order';
+import {
+  IListOrderStatus,
+  IOrder,
+  OrderStatusType,
+} from '../../../../shared/interfaces/order';
 import { CommonModule } from '@angular/common';
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { DropdownModule } from 'primeng/dropdown';
@@ -15,7 +19,6 @@ import {
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { listOrderStatus } from '../../../../shared/utils/orderStatus';
-
 
 @Component({
   selector: 'app-order-details',
@@ -42,6 +45,7 @@ export class OrderDetailsComponent {
     label: '',
     value: '',
     class: '',
+    active: '',
   };
 
   public orderStatusForm: FormGroup;

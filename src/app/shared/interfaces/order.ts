@@ -23,6 +23,7 @@ export interface IListOrderStatus {
   label: string;
   value: string;
   class: string;
+  active: string;
 }
 
 export interface IOrder {
