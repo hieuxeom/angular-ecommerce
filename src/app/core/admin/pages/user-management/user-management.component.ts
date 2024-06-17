@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { UserService } from '../../../../shared/services/UserServices/user.service';
 import { TableModule } from 'primeng/table';
 import { AdminService } from '../../services/AdminServices/admin.service';
-import { response } from 'express';
+
 import { IUser } from '../../../../shared/interfaces/user';
 import { formatDate } from '../../../../shared/utils/formatDate';
 import { RippleModule } from 'primeng/ripple';
