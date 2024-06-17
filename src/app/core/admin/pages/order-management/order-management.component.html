@@ -1,18 +1,31 @@
 <p-toast />
 <section class="w-full flex flex-col gap-4">
-  <header class="flex items-center gap-4">
-    <div
-      class="min-w-max flex gap-4 items-center bg-secondary/10 font-medium text-secondary px-4 py-2 rounded-md"
-    >
-      <p>Total Orders:</p>
-      <p>{{ listOrders.length }}</p>
+  <header class="flex justify-between items-center gap-4">
+    <div class="flex items-center gap-4">
+      <div
+        class="min-w-max flex gap-4 items-center bg-secondary/10 font-medium text-secondary px-4 py-2 rounded-md"
+      >
+        <p>Total Orders:</p>
+        <p>{{ listOrders.length }}</p>
+      </div>
+      <div
+        class="min-w-max flex gap-4 items-center bg-success/10 font-medium text-success px-4 py-2 rounded-md"
+      >
+        <p>New Orders Today:</p>
+        <p>1</p>
+      </div>
     </div>
-
-    <div
-      class="min-w-max flex gap-4 items-center bg-success/10 font-medium text-success px-4 py-2 rounded-md"
-    >
-      <p>New Orders Today:</p>
-      <p>1</p>
+    <div>
+      <a [routerLink]="['/admin/orders']" class="px-4 py-2">All</a>
+      <a
+        *ngFor="let status of listOrderStatus"
+        [routerLink]="['/admin/orders']"
+        [queryParams]="{ status: status.value }"
+        class="{{ classMap[status.value] }} {{
+          status.value === activeFilter ? status.active : ''
+        }} px-4 py-2"
+        >{{ status.label }}</a
+      >
     </div>
   </header>
   <main>
@@ -40,7 +53,7 @@
           <td class="text-center">
             <div
               class="{{
-                listOrderStatus[order.orderStatus]
+                classMap[order.orderStatus]
               }} w-max m-auto px-4 py-x rounded-md"
             >
               {{ order.orderStatus | titlecase }}

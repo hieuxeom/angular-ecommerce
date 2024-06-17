@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
 import { IApiResponse } from '../../interfaces/api';
-import { IOrder } from '../../interfaces/order';
+import { IOrder, IOrderItem, OrderStatusType } from '../../interfaces/order';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,13 @@ export class OrderService {
   public getAllOrders() {
     return this.httpClient.get<IApiResponse<IOrder[]>>(
       this.API_URL,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public getOrdersByFilter(orderStatus: OrderStatusType) {
+    return this.httpClient.get<IApiResponse<IOrder[]>>(
+      `${this.API_URL}?filter=${orderStatus}`,
       this._httpConfig.getHttpOptions()
     );
   }
