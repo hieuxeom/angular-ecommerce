@@ -1,12 +1,12 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { HrComponent } from '../../../../shared/components/hr/hr.component';
-import { EmailService } from '../../../../shared/services/EmailService/email.service';
-import { UserService } from '../../../../shared/services/UserServices/user.service';
-import { IUser } from '../../../../shared/interfaces/user';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {HrComponent} from '../../../../shared/components/hr/hr.component';
+import {EmailService} from '../../../../shared/services/EmailService/email.service';
+import {UserService} from '../../../../shared/services/UserServices/user.service';
+import {IUser} from '../../../../shared/interfaces/user';
+import {CommonModule} from '@angular/common';
+import {Router, RouterModule} from '@angular/router';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 import {
   FormBuilder,
   FormGroup,
@@ -39,6 +39,7 @@ export class InformationComponent {
   public isChangeUsernameMode: boolean = false;
   public changeEmailForm: FormGroup;
   public changeUsernameForm: FormGroup;
+
   constructor(
     private emailService: EmailService,
     private userService: UserService,
@@ -66,9 +67,12 @@ export class InformationComponent {
       ],
     });
   }
+
   private getUserData() {
-    this.userService.getMe().subscribe((response) => {
-      this.userData = response.data;
+    this.userService.getMe().subscribe({
+      next: (response) => {
+        this.userData = response.data;
+      }
     });
   }
 
@@ -91,12 +95,14 @@ export class InformationComponent {
         .sendEmailChangeEmailAddress(
           this.changeEmailForm.get(['newEmail'])!.value
         )
-        .subscribe((response) => {
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Email sent successfully',
-          });
+        .subscribe({
+          next: (response) => {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Email sent successfully',
+            });
+          }
         });
       this.disableGetOTPButton();
     } else {
@@ -120,23 +126,25 @@ export class InformationComponent {
   public onSaveButton() {
     this.userService
       .changeEmailAddress(this.changeEmailForm.value)
-      .subscribe((response) => {
-        if (response.status === 'success') {
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Email address changed successfully',
-          });
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Email address changed successfully',
+            });
 
-          this.isChangeEmailMode = false;
-          this.changeEmailForm.reset();
-          this.getUserData();
-        } else {
-          this._messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: response.message,
-          });
+            this.isChangeEmailMode = false;
+            this.changeEmailForm.reset();
+            this.getUserData();
+          } else {
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: response.message,
+            });
+          }
         }
       });
   }
@@ -148,22 +156,24 @@ export class InformationComponent {
   public onChangeUserName() {
     this.userService
       .changeUsername(this.changeUsernameForm.value)
-      .subscribe((response) => {
-        if (response.status === 'success') {
-          this.isChangeUsernameMode = false;
-          this.getUserData();
-          this.changeUsernameForm.reset();
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: response.message,
-          });
-        } else {
-          this._messageService.add({
-            severity: 'error',
-            summary: 'error',
-            detail: response.message,
-          });
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this.isChangeUsernameMode = false;
+            this.getUserData();
+            this.changeUsernameForm.reset();
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+          } else {
+            this._messageService.add({
+              severity: 'error',
+              summary: 'error',
+              detail: response.message,
+            });
+          }
         }
       });
   }

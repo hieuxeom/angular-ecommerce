@@ -32,17 +32,19 @@ export class VoucherManagementComponent {
   }
 
   public getListVouchers() {
-    this.voucherService.getAllVouchers().subscribe((response) => {
-      this.listVouchers = response.data.map((_v) => {
-        return {
-          ..._v,
-          validFrom: formatDate(_v.validFrom),
-          validTo: formatDate(_v.validTo),
-          createdAt: formatDate(_v.createdAt),
-          updatedAt: formatDate(_v.updatedAt),
-        };
-      });
-      console.log(this.listVouchers);
+    this.voucherService.getAllVouchers().subscribe({
+      next: (response) => {
+        this.listVouchers = response.data.map((_v) => {
+          return {
+            ..._v,
+            validFrom: formatDate(_v.validFrom),
+            validTo: formatDate(_v.validTo),
+            createdAt: formatDate(_v.createdAt),
+            updatedAt: formatDate(_v.updatedAt),
+          };
+        });
+        console.log(this.listVouchers);
+      },
     });
   }
 }

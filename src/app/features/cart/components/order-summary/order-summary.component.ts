@@ -1,8 +1,8 @@
-import { RouterLink, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { HrComponent } from '../../../../shared/components/hr/hr.component';
-import { CartService } from '../../../../shared/services/CartServices/cart.service';
+import {RouterLink, RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {Component, Input, SimpleChanges} from '@angular/core';
+import {HrComponent} from '../../../../shared/components/hr/hr.component';
+import {CartService} from '../../../../shared/services/CartServices/cart.service';
 import {
   FormBuilder,
   FormControl,
@@ -10,9 +10,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { VoucherService } from '../../../../shared/services/VoucherServices/voucher.service';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
+import {VoucherService} from '../../../../shared/services/VoucherServices/voucher.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -46,7 +46,8 @@ export class OrderSummaryComponent {
     private voucherService: VoucherService,
     private _messageService: MessageService,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -60,13 +61,15 @@ export class OrderSummaryComponent {
           this.resetValue();
           if (response.data.minimumOrderValue > this.subTotalPrice) {
             this.voucherCode = '';
-            this.cartService.setNewVoucherCode('').subscribe((response) => {
-              this._messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail:
-                  'The current voucher has been automatically deleted because the minimum order value does not meet the voucher requirements',
-              });
+            this.cartService.setNewVoucherCode('').subscribe({
+              next: (response) => {
+                this._messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail:
+                    'The current voucher has been automatically deleted because the minimum order value does not meet the voucher requirements',
+                });
+              }
             });
           } else {
             if (response.data.type === 'bill') {
@@ -107,6 +110,7 @@ export class OrderSummaryComponent {
       })
       .subscribe();
   }
+
   private resetValue() {
     this.discountPrice = 0;
     this.discountPercentage = 0;
@@ -117,14 +121,14 @@ export class OrderSummaryComponent {
   private calculateNewDiscountPrice() {
     return Math.floor(
       this.subTotalPrice -
-        this.subTotalPrice * ((100 - this.discountPercentage) / 100)
+      this.subTotalPrice * ((100 - this.discountPercentage) / 100)
     );
   }
 
   private calculateNewDeliveryPrice() {
     return Math.floor(
       this.deliveryFeeDefault -
-        this.deliveryFeeDefault * ((100 - this.deliveryPercentage) / 100)
+      this.deliveryFeeDefault * ((100 - this.deliveryPercentage) / 100)
     );
   }
 
@@ -155,7 +159,7 @@ export class OrderSummaryComponent {
         }
       },
 
-      ({ error }) => {
+      ({error}) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',

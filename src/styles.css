@@ -197,6 +197,14 @@
     @apply bg-secondary;
   }
 
+  .btn-success {
+    @apply bg-success/80;
+  }
+
+  .btn-success:hover {
+    @apply bg-success;
+  }
+
   .btn-danger {
     @apply bg-danger/80;
   }

@@ -1,9 +1,9 @@
-import { CookieService } from 'ngx-cookie-service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
-import { AuthService } from '../../../core/auth/services/auth.service';
-import { IApiResponse } from '../../interfaces/api';
+import {CookieService} from 'ngx-cookie-service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {throwError} from 'rxjs';
+import {AuthService} from '../../../core/auth/services/auth.service';
+import {IApiResponse} from '../../interfaces/api';
 
 @Injectable({
   providedIn: 'root',
@@ -14,21 +14,24 @@ export class HttpConfigService {
   constructor(
     private httpClient: HttpClient,
     private _cookieService: CookieService
-  ) {}
+  ) {
+  }
 
   public getNewAccessToken() {
     this.httpClient
       .get<IApiResponse>(this.REFRESH_TOKEN_API_URL, this.getRefreshOptions())
-      .subscribe((response) => {
-        const accessTokenExpiredTime = new Date();
-        accessTokenExpiredTime.setHours(accessTokenExpiredTime.getHours() + 1);
+      .subscribe({
+        next: (response) => {
+          const accessTokenExpiredTime = new Date();
+          accessTokenExpiredTime.setHours(accessTokenExpiredTime.getHours() + 1);
 
-        this._cookieService.set(
-          'access_token',
-          response.data,
-          accessTokenExpiredTime,
-          '/'
-        );
+          this._cookieService.set(
+            'access_token',
+            response.data,
+            accessTokenExpiredTime,
+            '/'
+          );
+        }
       });
   }
 

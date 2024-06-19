@@ -65,9 +65,8 @@ export class VoucherNewComponent {
   }
 
   public handleCreateVoucher() {
-    this.voucherService
-      .createVoucher(this.newVoucherForm.value)
-      .subscribe((response) => {
+    this.voucherService.createVoucher(this.newVoucherForm.value).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -77,6 +76,7 @@ export class VoucherNewComponent {
         setTimeout(() => {
           this._router.navigate(['/admin', 'vouchers']);
         }, 1500);
-      });
+      },
+    });
   }
 }

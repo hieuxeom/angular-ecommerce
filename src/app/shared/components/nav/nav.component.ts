@@ -1,7 +1,7 @@
-import { Component, type OnChanges, type SimpleChanges } from '@angular/core';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { AuthService } from '../../../core/auth/services/auth.service';
-import { CommonModule } from '@angular/common';
+import {Component, type OnChanges, type SimpleChanges} from '@angular/core';
+import {RouterModule, Router, NavigationEnd} from '@angular/router';
+import {AuthService} from '../../../core/auth/services/auth.service';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -13,10 +13,13 @@ import { CommonModule } from '@angular/common';
 })
 export class NavComponent {
   public isLoggedIn: boolean | undefined;
+
   constructor(private authService: AuthService, private router: Router) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isLoggedIn = this.authService.isLoggedIn();
+    this.router.events.subscribe({
+      next: (event) => {
+        if (event instanceof NavigationEnd) {
+          this.isLoggedIn = this.authService.isLoggedIn();
+        }
       }
     });
   }

@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
-import { ProductService } from '../../../../shared/services/ProductServices/product.service';
-import type { IProduct } from '../../../../shared/interfaces/product';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
+import {ProductService} from '../../../../shared/services/ProductServices/product.service';
+import type {IProduct} from '../../../../shared/interfaces/product';
 
 @Component({
   selector: 'app-top-selling',
@@ -14,9 +14,12 @@ import type { IProduct } from '../../../../shared/interfaces/product';
 })
 export class TopSellingComponent {
   public listProducts: IProduct[] = [];
+
   constructor(private productApiService: ProductService) {
-    this.productApiService.getTopSell().subscribe((response) => {
-      this.listProducts = response.data;
+    this.productApiService.getTopSell().subscribe({
+      next: (response) => {
+        this.listProducts = response.data;
+      }
     });
   }
 }

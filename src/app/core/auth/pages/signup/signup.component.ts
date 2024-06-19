@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router, RouterModule } from '@angular/router';
-import type { INewAccount } from '../../../../shared/interfaces/auth';
-import { ToastService } from 'angular-toastify';
-import { MessageService } from 'primeng/api';
-import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {Router, RouterModule} from '@angular/router';
+import type {INewAccount} from '../../../../shared/interfaces/auth';
+import {ToastService} from 'angular-toastify';
+import {MessageService} from 'primeng/api';
+import {RippleModule} from 'primeng/ripple';
+import {ToastModule} from 'primeng/toast';
 
 @Component({
   selector: 'app-signup',
@@ -27,7 +27,8 @@ export class SignupComponent {
     private authApiService: AuthService,
     private _messageService: MessageService,
     private _router: Router
-  ) {}
+  ) {
+  }
 
   handleSignUp() {
     if (
@@ -47,18 +48,20 @@ export class SignupComponent {
       email: this.email,
     };
 
-    this.authApiService.createNewAccount(registerData).subscribe((data) => {
-      if (data.status === 'success') {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Create new account successfully',
-          detail:
-            'You will be automatically redirected to the login page after 3 seconds',
-        });
+    this.authApiService.createNewAccount(registerData).subscribe({
+      next: (data) => {
+        if (data.status === 'success') {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Create new account successfully',
+            detail:
+              'You will be automatically redirected to the login page after 3 seconds',
+          });
 
-        setTimeout(() => {
-          this._router.navigateByUrl('/auth/login');
-        }, 3000);
+          setTimeout(() => {
+            this._router.navigateByUrl('/auth/login');
+          }, 3000);
+        }
       }
     });
   }

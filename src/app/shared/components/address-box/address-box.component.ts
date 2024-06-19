@@ -1,25 +1,13 @@
-import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { ListboxModule } from 'primeng/listbox';
-import { HrComponent } from '../hr/hr.component';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { AddressService } from '../../services/AddressServices/address.service';
-import { IUserAddress } from '../../interfaces/user';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, Output, SimpleChanges,} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {DropdownModule} from 'primeng/dropdown';
+import {ListboxModule} from 'primeng/listbox';
+import {HrComponent} from '../hr/hr.component';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
+import {AddressService} from '../../services/AddressServices/address.service';
+import {IUserAddress} from '../../interfaces/user';
 
 interface IAddressBoxEmit {
   formValue: any;
@@ -78,7 +66,7 @@ export class AddressBoxComponent {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (this.addressData) {
-      const { fullName, email, phoneNumber, fullAddress } = this.addressData;
+      const {fullName, email, phoneNumber, fullAddress} = this.addressData;
       if (this.isEdit) {
         this.currentFullAddress = fullAddress;
         this.addressForm.patchValue({
@@ -120,6 +108,7 @@ export class AddressBoxComponent {
     return this.provinces.find((province) => province.value === provinceId)
       .label;
   }
+
   private checkValidAddress(): boolean {
     if (
       this.selectedProvince &&
@@ -133,29 +122,31 @@ export class AddressBoxComponent {
   }
 
   public getListProvinces() {
-    return this.addressService.getListProvinces().subscribe(({ results }) => {
-      const reMapResults = results.map(({ province_id, province_name }) => {
-        return {
-          label: province_name,
-          value: province_id,
-        };
-      });
-      this.provinces = reMapResults;
-      return this.onFillAddress();
+    return this.addressService.getListProvinces().subscribe({
+      next: ({results}) => {
+        this.provinces = results.map(({province_id, province_name}) => {
+          return {
+            label: province_name,
+            value: province_id,
+          };
+        });
+        return this.onFillAddress();
+      }
     });
   }
 
   public getListDistricts() {
     this.addressService
       .getListDistricts(this.selectedProvince)
-      .subscribe(({ results }) => {
-        const reMapResults = results.map(({ district_id, district_name }) => {
-          return {
-            label: district_name,
-            value: district_id,
-          };
-        });
-        this.districts = reMapResults;
+      .subscribe({
+        next: ({results}) => {
+          this.districts = results.map(({district_id, district_name}) => {
+            return {
+              label: district_name,
+              value: district_id,
+            };
+          });
+        }
       });
     return this.onFillAddress();
   }
@@ -163,14 +154,16 @@ export class AddressBoxComponent {
   public getListWards() {
     return this.addressService
       .getListWards(this.selectedDistrict)
-      .subscribe(({ results }) => {
-        const reMapResults = results.map(({ ward_id, ward_name }) => {
-          return {
-            label: ward_name,
-            value: ward_id,
-          };
-        });
-        this.wards = reMapResults;
+      .subscribe({
+        next: ({results}) => {
+          const reMapResults = results.map(({ward_id, ward_name}) => {
+            return {
+              label: ward_name,
+              value: ward_id,
+            };
+          });
+          this.wards = reMapResults;
+        }
       });
   }
 
@@ -187,7 +180,7 @@ export class AddressBoxComponent {
   public onSaveButton() {
     if (this.isNewAddress) {
       if (this.checkValidAddress() && this.addressForm.valid) {
-        this.onSave.emit({ formValue: this.addressForm.value });
+        this.onSave.emit({formValue: this.addressForm.value});
       } else {
         this._messageService.add({
           severity: 'error',
@@ -196,7 +189,7 @@ export class AddressBoxComponent {
         });
       }
     } else {
-      this.onSave.emit({ formValue: this.addressForm.value });
+      this.onSave.emit({formValue: this.addressForm.value});
     }
   }
 }

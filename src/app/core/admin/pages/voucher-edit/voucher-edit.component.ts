@@ -70,20 +70,21 @@ export class VoucherEditComponent {
       isActive: [true, Validators.required],
     });
 
-    this._route.paramMap.subscribe((params) => {
-      this.voucherId = params.get('voucherId') ?? '';
+    this._route.paramMap.subscribe({
+      next: (params) => {
+        this.voucherId = params.get('voucherId') ?? '';
 
-      if (this.voucherId) {
-        this.getVoucherData();
-      }
+        if (this.voucherId) {
+          this.getVoucherData();
+        }
+      },
     });
   }
 
   private getVoucherData() {
     if (this.voucherId) {
-      this.voucherService
-        .getVoucherData(this.voucherId)
-        .subscribe((response) => {
+      this.voucherService.getVoucherData(this.voucherId).subscribe({
+        next: (response) => {
           this.voucherData = response.data;
           this.voucherData = {
             ...this.voucherData,
@@ -104,23 +105,26 @@ export class VoucherEditComponent {
             maxUsage: this.voucherData.maxUsage,
             isActive: this.voucherData.isActive,
           });
-        });
+        },
+      });
     }
   }
 
   public handleEditVoucher() {
     this.voucherService
       .editVoucher(this.voucherId, this.editVoucherForm.value)
-      .subscribe((response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
 
-        setTimeout(() => {
-          this._router.navigate(['/admin', 'vouchers']);
-        }, 1500);
+          setTimeout(() => {
+            this._router.navigate(['/admin', 'vouchers']);
+          }, 1500);
+        },
       });
   }
 }
