@@ -1,7 +1,7 @@
-import { ViewportScroller } from '@angular/common';
-import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import {ViewportScroller} from '@angular/common';
+import {Injectable} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,10 @@ export class ScrollToTopService {
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.viewportScroller.scrollToPosition([0, 0]);
+      .subscribe({
+        next: () => {
+          this.viewportScroller.scrollToPosition([0, 0]);
+        }
       });
   }
 

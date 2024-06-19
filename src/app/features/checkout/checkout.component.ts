@@ -1,18 +1,19 @@
-import { UserService } from './../../shared/services/UserServices/user.service';
-import { CommonModule } from '@angular/common';
-import { Component, type SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { ListboxModule, type ListboxChangeEvent } from 'primeng/listbox';
-import { StepsModule } from 'primeng/steps';
-import { HrComponent } from '../../shared/components/hr/hr.component';
-import { AddressService } from '../../shared/services/AddressServices/address.service';
-import type { IUserAddress } from '../../shared/interfaces/user';
-import { BillingAddressComponent } from './components/billing-address/billing-address.component';
-import { CompleteOrderComponent } from './components/complete-order/complete-order.component';
-import { RecheckBillComponent } from './components/recheck-bill/recheck-bill.component';
-import { OrderService } from '../../shared/services/OrderServices/order.service';
-import { UserAddressService } from '../../shared/services/UserAddressServices/user-address.service';
+import {UserService} from './../../shared/services/UserServices/user.service';
+import {CommonModule} from '@angular/common';
+import {Component, type SimpleChanges} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {DropdownModule} from 'primeng/dropdown';
+import {ListboxModule, type ListboxChangeEvent} from 'primeng/listbox';
+import {StepsModule} from 'primeng/steps';
+import {HrComponent} from '../../shared/components/hr/hr.component';
+import {AddressService} from '../../shared/services/AddressServices/address.service';
+import type {IUserAddress} from '../../shared/interfaces/user';
+import {BillingAddressComponent} from './components/billing-address/billing-address.component';
+import {CompleteOrderComponent} from './components/complete-order/complete-order.component';
+import {RecheckBillComponent} from './components/recheck-bill/recheck-bill.component';
+import {OrderService} from '../../shared/services/OrderServices/order.service';
+import {UserAddressService} from '../../shared/services/UserAddressServices/user-address.service';
+
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -37,19 +38,22 @@ export class CheckoutComponent {
   constructor(
     private userAddressService: UserAddressService,
     private orderService: OrderService
-  ) {}
+  ) {
+  }
 
   public onNextStep1(event: any) {
     if (event) {
-      const { formValue, isSave } = event;
+      const {formValue, isSave} = event;
 
       this.billingAddress = formValue;
 
       if (isSave) {
         this.userAddressService
           .createNewAddress(formValue)
-          .subscribe((response) => {
-            console.log(response);
+          .subscribe({
+            next: (response) => {
+              console.log(response);
+            }
           });
       }
 
@@ -58,11 +62,14 @@ export class CheckoutComponent {
   }
 
   public onNextStep2($event: any) {
-    this.orderService.createNewOrder($event).subscribe((response) => {
-      console.log(response);
+    this.orderService.createNewOrder($event).subscribe({
+      next: (response) => {
+        console.log(response);
+      }
     });
     return (this.step += 1);
   }
 
-  public onComplete($event: any) {}
+  public onComplete($event: any) {
+  }
 }

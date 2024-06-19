@@ -1,6 +1,6 @@
-import { Component, SimpleChanges } from '@angular/core';
-import { HrComponent } from '../../../../shared/components/hr/hr.component';
-import { CommonModule } from '@angular/common';
+import {Component, SimpleChanges} from '@angular/core';
+import {HrComponent} from '../../../../shared/components/hr/hr.component';
+import {CommonModule} from '@angular/common';
 import {
   Form,
   FormBuilder,
@@ -9,14 +9,14 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { AddressService } from '../../../../shared/services/AddressServices/address.service';
-import { AddressBoxComponent } from '../../../../shared/components/address-box/address-box.component';
-import { UserService } from '../../../../shared/services/UserServices/user.service';
-import { IUserAddress } from '../../../../shared/interfaces/user';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { UserAddressService } from '../../../../shared/services/UserAddressServices/user-address.service';
+import {AddressService} from '../../../../shared/services/AddressServices/address.service';
+import {AddressBoxComponent} from '../../../../shared/components/address-box/address-box.component';
+import {UserService} from '../../../../shared/services/UserServices/user.service';
+import {IUserAddress} from '../../../../shared/interfaces/user';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import {MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+import {UserAddressService} from '../../../../shared/services/UserAddressServices/user-address.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -38,6 +38,7 @@ export class EditAddressComponent {
   public addressForm: FormGroup;
   public addressData!: IUserAddress;
   public addressId: string | undefined;
+
   constructor(
     private userAddressService: UserAddressService,
     private _formBuilder: FormBuilder,
@@ -53,33 +54,39 @@ export class EditAddressComponent {
       isDefault: new FormControl(),
     });
 
-    this._route.params.subscribe((param) => {
-      this.addressId = param['addressId'];
-      if (this.addressId) {
-        console.log(this.addressId);
-        this.userAddressService
-          .getUserAddressDetails(this.addressId)
-          .subscribe((response) => {
-            this.addressData = response.data;
-          });
+    this._route.params.subscribe({
+      next: (param) => {
+        this.addressId = param['addressId'];
+        if (this.addressId) {
+          console.log(this.addressId);
+          this.userAddressService
+            .getUserAddressDetails(this.addressId)
+            .subscribe({
+              next: (response) => {
+                this.addressData = response.data;
+              }
+            });
+        }
       }
     });
   }
 
   public onSaveAddress($event: any) {
-    const { formValue: newAddress } = $event;
+    const {formValue: newAddress} = $event;
     this.userAddressService
       .editAddress(this.addressId!, newAddress)
-      .subscribe((response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Edit address successfully ',
-        });
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Edit address successfully ',
+          });
 
-        setTimeout(() => {
-          this._router.navigate(['/profile', 'list-address']);
-        }, 1000);
+          setTimeout(() => {
+            this._router.navigate(['/profile', 'list-address']);
+          }, 1000);
+        }
       });
   }
 }

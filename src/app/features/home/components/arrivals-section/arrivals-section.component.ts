@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
-import type { IProduct } from '../../../../shared/interfaces/product';
-import { ProductService } from '../../../../shared/services/ProductServices/product.service';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {ProductCardComponent} from '../../../../shared/components/product-card/product-card.component';
+import type {IProduct} from '../../../../shared/interfaces/product';
+import {ProductService} from '../../../../shared/services/ProductServices/product.service';
 
 @Component({
   selector: 'app-arrivals-section',
@@ -14,9 +14,12 @@ import { ProductService } from '../../../../shared/services/ProductServices/prod
 })
 export class ArrivalsSectionComponent {
   public listProducts: IProduct[] = [];
+
   constructor(private productApiService: ProductService) {
-    productApiService.getNewArrivalProducts().subscribe((listProducts) => {
-      this.listProducts = listProducts.data;
+    productApiService.getNewArrivalProducts().subscribe({
+      next: (listProducts) => {
+        this.listProducts = listProducts.data;
+      }
     });
   }
 }

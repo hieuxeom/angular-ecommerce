@@ -57,45 +57,52 @@ export class OrderDetailsComponent {
     private _formBuilder: FormBuilder,
     private _messageService: MessageService
   ) {
-    this._route.paramMap.subscribe((params) => {
-      this.orderId = params.get('orderId');
-      if (this.orderId) {
-        this.getOrderDetails(this.orderId);
-      }
+    this._route.paramMap.subscribe({
+      next: (params) => {
+        this.orderId = params.get('orderId');
+        if (this.orderId) {
+          this.getOrderDetails(this.orderId);
+        }
+      },
     });
 
     this.orderStatusForm = this._formBuilder.group({
       orderStatus: ['pending'],
     });
 
-    this.orderStatusForm.get('orderStatus')?.valueChanges.subscribe((value) => {
-      this.selectedOrderStatus = this.listOrderStatus.find(
-        (status) => status.value === value
-      )!;
+    this.orderStatusForm.get('orderStatus')?.valueChanges.subscribe({
+      next: (value) => {
+        this.selectedOrderStatus = this.listOrderStatus.find(
+          (status) => status.value === value
+        )!;
+      },
     });
   }
 
   private getOrderDetails(orderId: string) {
-    this.orderService.getOrderDetails(orderId).subscribe((response) => {
-      this.orderDetails = response.data;
-      this.orderStatusForm.patchValue({
-        orderStatus: this.orderDetails?.orderStatus,
-      });
+    this.orderService.getOrderDetails(orderId).subscribe({
+      next: (response) => {
+        this.orderDetails = response.data;
+        this.orderStatusForm.patchValue({
+          orderStatus: this.orderDetails?.orderStatus,
+        });
+      },
     });
   }
 
   public handleChangeStatus() {
-    console.log(this.orderStatusForm.value);
     if (this.orderId) {
       this.orderService
         .changeOrderStatus(this.orderId, this.orderStatusForm.value)
-        .subscribe((response) => {
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: response.message,
-          });
-          this.getOrderDetails(this.orderId!);
+        .subscribe({
+          next: (response) => {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+            this.getOrderDetails(this.orderId!);
+          },
         });
     }
   }

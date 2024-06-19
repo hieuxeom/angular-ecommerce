@@ -33,37 +33,43 @@ export class UserManagementComponent {
   }
 
   private getListUsers() {
-    this.adminService.getAllUsers().subscribe((response) => {
-      this.listUsers = response.data.map((user): IUser => {
-        return {
-          ...user,
-          createdAt: formatDate(user.createdAt),
-        };
-      });
+    this.adminService.getAllUsers().subscribe({
+      next: (response) => {
+        this.listUsers = response.data.map((user): IUser => {
+          return {
+            ...user,
+            createdAt: formatDate(user.createdAt),
+          };
+        });
 
-      this.fetchState = 'finished';
+        this.fetchState = 'finished';
+      },
     });
   }
 
   public handleDeactivateUser(userId: string) {
-    this.adminService.deactivateUser(userId).subscribe((response) => {
-      this._messageService.add({
-        severity: 'error',
-        summary: 'Deactivate',
-        detail: 'Account deactivate successfully',
-      });
-      this.getListUsers();
+    this.adminService.deactivateUser(userId).subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Deactivate',
+          detail: 'Account deactivate successfully',
+        });
+        this.getListUsers();
+      },
     });
   }
 
   public handleReactivateUser(userId: string) {
-    this.adminService.reactivateUser(userId).subscribe((response) => {
-      this._messageService.add({
-        severity: 'success',
-        summary: 'Reactivate',
-        detail: 'Account reactivated successfully',
-      });
-      this.getListUsers();
+    this.adminService.reactivateUser(userId).subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Reactivate',
+          detail: 'Account reactivated successfully',
+        });
+        this.getListUsers();
+      },
     });
   }
 }

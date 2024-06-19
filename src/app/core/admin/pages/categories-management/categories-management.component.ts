@@ -70,56 +70,64 @@ export class CategoriesManagementComponent {
   }
 
   private getListCategories() {
-    this.categoryService.getAllCategories(false).subscribe((response) => {
-      this.listCategories = response.data.map((category) => {
-        return {
-          ...category,
-          createdAt: formatDate(category.createdAt),
-          updatedAt: formatDate(category.updatedAt),
-        };
-      });
+    this.categoryService.getAllCategories(false).subscribe({
+      next: (response) => {
+        this.listCategories = response.data.map((category) => {
+          return {
+            ...category,
+            createdAt: formatDate(category.createdAt),
+            updatedAt: formatDate(category.updatedAt),
+          };
+        });
 
-      this.inactiveCategories = this.listCategories.filter(
-        (_c) => _c.isActive === 0
-      ).length;
-      this.activeCategories = this.listCategories.filter(
-        (_c) => _c.isActive === 1
-      ).length;
+        this.inactiveCategories = this.listCategories.filter(
+          (_c) => _c.isActive === 0
+        ).length;
+        this.activeCategories = this.listCategories.filter(
+          (_c) => _c.isActive === 1
+        ).length;
+      },
     });
   }
 
   private getEditCategoryDetails(categoryId: string) {
-    this.categoryService.getCategoryById(categoryId).subscribe((response) => {
-      const categoryData = response.data;
-      console.log(categoryData);
-      this.editCategoryForm.patchValue({
-        categoryId,
-        categoryName: categoryData.categoryName,
-        queryParams: categoryData.queryParams,
-        isActive: categoryData.isActive === 1 ? true : false,
-      });
+    this.categoryService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+        const categoryData = response.data;
+        console.log(categoryData);
+        this.editCategoryForm.patchValue({
+          categoryId,
+          categoryName: categoryData.categoryName,
+          queryParams: categoryData.queryParams,
+          isActive: categoryData.isActive === 1 ? true : false,
+        });
+      },
     });
   }
 
   public handleDeactivateCategory(categoryId: string) {
-    this.adminService.deactivateCategory(categoryId).subscribe((response) => {
-      this._messageService.add({
-        severity: 'error',
-        summary: 'Deactivate',
-        detail: response.message,
-      });
-      this.getListCategories();
+    this.adminService.deactivateCategory(categoryId).subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Deactivate',
+          detail: response.message,
+        });
+        this.getListCategories();
+      },
     });
   }
 
   public handleReactivateCategory(categoryId: string) {
-    this.adminService.reactivateCategory(categoryId).subscribe((response) => {
-      this._messageService.add({
-        severity: 'success',
-        summary: 'Reactivate',
-        detail: response.message,
-      });
-      this.getListCategories();
+    this.adminService.reactivateCategory(categoryId).subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Reactivate',
+          detail: response.message,
+        });
+        this.getListCategories();
+      },
     });
   }
 
@@ -134,9 +142,8 @@ export class CategoriesManagementComponent {
   }
 
   public handleSave() {
-    this.adminService
-      .editCategory(this.editCategoryForm.value)
-      .subscribe((response) => {
+    this.adminService.editCategory(this.editCategoryForm.value).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -144,7 +151,8 @@ export class CategoriesManagementComponent {
         });
         this.isShowEditDialog = false;
         this.getListCategories();
-      });
+      },
+    });
   }
 
   public handleShowCreateDialog() {
@@ -159,14 +167,16 @@ export class CategoriesManagementComponent {
   public handleCreate() {
     this.adminService
       .createNewCategory(this.createCategoryForm.value)
-      .subscribe((response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully created new category',
-        });
-        this.isShowCreateDialog = false;
-        this.getListCategories();
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Successfully created new category',
+          });
+          this.isShowCreateDialog = false;
+          this.getListCategories();
+        },
       });
   }
 }

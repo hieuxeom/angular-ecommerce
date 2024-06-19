@@ -51,4 +51,15 @@ export class OrderService {
       this._httpConfig.getHttpOptions()
     );
   }
+
+  public updateAllOrdersStatus(updateData: {
+    fromStatus: OrderStatusType;
+    toStatus: OrderStatusType;
+  }) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}/order-status`,
+      updateData,
+      this._httpConfig.getHttpOptions()
+    );
+  }
 }

@@ -23,11 +23,11 @@ export class OrderItemComponent {
 
   ngOnInit() {
     if (this.productId) {
-      this.productService
-        .getProductById(this.productId)
-        .subscribe((response) => {
+      this.productService.getProductById(this.productId).subscribe({
+        next: (response) => {
           this.productData = response.data;
-        });
+        },
+      });
     }
   }
 }

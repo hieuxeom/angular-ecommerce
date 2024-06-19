@@ -1,27 +1,27 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DetailsSectionComponent } from './components/details-section/details-section.component';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DetailsSectionComponent} from './components/details-section/details-section.component';
 
-import { TabViewModule, type TabViewChangeEvent } from 'primeng/tabview';
-import { CommentsSectionComponent } from './components/comments-section/comments-section.component';
-import { ReviewsSectionComponent } from './components/reviews-section/reviews-section.component';
-import { MessageService, type MenuItem } from 'primeng/api';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { ProductService } from '../../shared/services/ProductServices/product.service';
+import {TabViewModule, type TabViewChangeEvent} from 'primeng/tabview';
+import {CommentsSectionComponent} from './components/comments-section/comments-section.component';
+import {ReviewsSectionComponent} from './components/reviews-section/reviews-section.component';
+import {MessageService, type MenuItem} from 'primeng/api';
+import {ProductCardComponent} from '../../shared/components/product-card/product-card.component';
+import {ProductService} from '../../shared/services/ProductServices/product.service';
 import type {
   IProduct,
   IProductComment,
   IProductReview,
 } from '../../shared/interfaces/product';
-import { InputTextModule } from 'primeng/inputtext';
-import { DialogModule } from 'primeng/dialog';
-import { CommentService } from '../../shared/services/CommentServices/comment.service';
-import { ReviewService } from '../../shared/services/ReviewServices/review.service';
-import { FormsModule } from '@angular/forms';
-import { ToastModule } from 'primeng/toast';
-import { StarRateComponent } from './components/star-rate/star-rate.component';
-import { AuthService } from '../../core/auth/services/auth.service';
+import {InputTextModule} from 'primeng/inputtext';
+import {DialogModule} from 'primeng/dialog';
+import {CommentService} from '../../shared/services/CommentServices/comment.service';
+import {ReviewService} from '../../shared/services/ReviewServices/review.service';
+import {FormsModule} from '@angular/forms';
+import {ToastModule} from 'primeng/toast';
+import {StarRateComponent} from './components/star-rate/star-rate.component';
+import {AuthService} from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -51,7 +51,7 @@ import { AuthService } from '../../core/auth/services/auth.service';
 })
 export class ProductDetailComponent {
   public tabItems: MenuItem[] = [
-    { label: 'Comments', routerLink: ['/comments'] },
+    {label: 'Comments', routerLink: ['/comments']},
     {
       label: 'Reviews',
       routerLink: ['/reviews'],
@@ -83,40 +83,45 @@ export class ProductDetailComponent {
     private route: ActivatedRoute,
     private _router: Router
   ) {
-    this.route.params.subscribe((params) => {
-      this.productId = params['productId'] || '';
+    this.route.params.subscribe({
+      next: (params) => {
+        this.productId = params['productId'] || '';
 
-      if (!this.productId) {
-        this._router.navigateByUrl('/product');
+        if (!this.productId) {
+          this._router.navigateByUrl('/product');
+        }
+
+        this.productService.increaseView(this.productId).subscribe();
+
+        this.productService.getProductById(this.productId).subscribe({
+          next: (response) => {
+            this.productDetails = response.data;
+            this.productComments = response.data.productComments;
+            this.productReviews = response.data.productReviews;
+          },
+          error: (error) => {
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: error.message,
+            });
+            this._router.navigate(['home']);
+          },
+        });
       }
-
-      this.productService.increaseView(this.productId).subscribe();
-
-      this.productService.getProductById(this.productId).subscribe({
-        next: (response) => {
-          this.productDetails = response.data;
-          this.productComments = response.data.productComments;
-          this.productReviews = response.data.productReviews;
-        },
-        error: (error) => {
-          this._messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.message,
-          });
-          this._router.navigateByUrl('/home');
-        },
-      });
     });
 
-    this.productService.getAllProducts().subscribe((listProducts) => {
-      this.top4RelateTo = listProducts.data.slice(0, 4);
+    this.productService.getAllProducts().subscribe({
+      next: (listProducts) => {
+        this.top4RelateTo = listProducts.data.slice(0, 4);
+      }
     });
 
     this.isLoggedIn = this.authApiService.isLoggedIn();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public handleStarChange(event: number) {
     this.reviewStar = event;
@@ -125,9 +130,11 @@ export class ProductDetailComponent {
   public changeCurrentTab(event: TabViewChangeEvent) {
     this.currentTab = event.index;
   }
+
   public showCommentDialog() {
     this.visibleCommentDialog = true;
   }
+
   public hideCommentDialog() {
     this.visibleCommentDialog = false;
   }
@@ -135,22 +142,24 @@ export class ProductDetailComponent {
   public handleSubmitComment() {
     this.commentApiService
       .createNewComment(this.productId, this.commentContent)
-      .subscribe((response) => {
-        if (response.status === 'success') {
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: response.message,
-          });
-          return setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        } else {
-          return this._messageService.add({
-            severity: 'error',
-            summary: 'Success',
-            detail: response.message,
-          });
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+            return setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          } else {
+            return this._messageService.add({
+              severity: 'error',
+              summary: 'Success',
+              detail: response.message,
+            });
+          }
         }
       });
   }
@@ -158,6 +167,7 @@ export class ProductDetailComponent {
   public showReviewDialog() {
     this.visibleReviewDialog = true;
   }
+
   public hideReviewDialog() {
     this.visibleReviewDialog = false;
   }
@@ -168,22 +178,24 @@ export class ProductDetailComponent {
         reviewContent: this.reviewContent,
         reviewStar: this.reviewStar,
       })
-      .subscribe((response) => {
-        if (response.status === 'success') {
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: response.message,
-          });
-          return setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        } else {
-          return this._messageService.add({
-            severity: 'error',
-            summary: 'Success',
-            detail: response.message,
-          });
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: response.message,
+            });
+            return setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          } else {
+            return this._messageService.add({
+              severity: 'error',
+              summary: 'Success',
+              detail: response.message,
+            });
+          }
         }
       });
   }

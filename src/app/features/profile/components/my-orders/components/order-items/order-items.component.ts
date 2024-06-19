@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { IProduct } from '../../../../../../shared/interfaces/product';
-import { ProductService } from '../../../../../../shared/services/ProductServices/product.service';
-import { CommonModule } from '@angular/common';
+import {Component, Input} from '@angular/core';
+import {IProduct} from '../../../../../../shared/interfaces/product';
+import {ProductService} from '../../../../../../shared/services/ProductServices/product.service';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-order-items',
@@ -19,7 +19,8 @@ export class OrderItemsComponent {
 
   public productData: IProduct | null = null;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) {
+  }
 
   ngOnInit() {
     this.getProductDetails();
@@ -29,9 +30,11 @@ export class OrderItemsComponent {
     if (this.productId) {
       this.productService
         .getProductById(this.productId)
-        .subscribe((response) => {
-          this.productData = response.data;
-          console.log(this.productData);
+        .subscribe({
+          next: (response) => {
+            this.productData = response.data;
+            console.log(this.productData);
+          }
         });
     }
   }

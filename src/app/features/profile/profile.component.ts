@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { UserService } from '../../shared/services/UserServices/user.service';
-import type { IUser, IUserAuth } from '../../shared/interfaces/user';
-import { Router, RouterModule } from '@angular/router';
-import { HrComponent } from '../../shared/components/hr/hr.component';
-import { AuthService } from '../../core/auth/services/auth.service';
-import { CookieService } from 'ngx-cookie-service';
+import {Component} from '@angular/core';
+import {UserService} from '../../shared/services/UserServices/user.service';
+import type {IUser, IUserAuth} from '../../shared/interfaces/user';
+import {Router, RouterModule} from '@angular/router';
+import {HrComponent} from '../../shared/components/hr/hr.component';
+import {AuthService} from '../../core/auth/services/auth.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-profile',
@@ -31,8 +31,10 @@ export class ProfileComponent {
   }
 
   public getUserData() {
-    this.userService.getMe().subscribe((response) => {
-      this.userData = response.data;
+    this.userService.getMe().subscribe({
+      next: (response) => {
+        this.userData = response.data;
+      }
     });
   }
 

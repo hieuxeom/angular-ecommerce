@@ -11,7 +11,7 @@ import {
 } from '../../../../shared/interfaces/order';
 import { formatDate } from '../../../../shared/utils/formatDate';
 import { transformString } from '../../../../shared/utils/transformString';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 
 import {
@@ -58,7 +58,8 @@ export class OrderManagementComponent {
     private orderService: OrderService,
     private _formBuilder: FormBuilder,
     private _messageService: MessageService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {
     this.getListOrders();
 
@@ -66,62 +67,68 @@ export class OrderManagementComponent {
       orderStatus: ['pending'],
     });
 
-    this._route.queryParamMap.subscribe((params) => {
-      this.activeFilter = params.get('status') || 'all';
-      if (this.activeFilter !== 'all') {
-        this.orderService
-          .getOrdersByFilter(this.activeFilter as OrderStatusType)
-          .subscribe({
-            next: (response) => {
-              this.listOrders = response.data.map((order) => {
-                return {
-                  ...order,
-                  transformId: transformString(order._id),
-                  orderDate: formatDate(order.orderDate),
-                  createdAt: formatDate(order.createdAt),
-                  updatedAt: formatDate(order.updatedAt),
-                };
-              });
-            },
-            error: ({ err }) => {
-              this._messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: err.message,
-              });
-            },
-          });
-      } else {
-        this.getListOrders();
-      }
+    this._route.queryParamMap.subscribe({
+      next: (params) => {
+        this.activeFilter = params.get('status') || 'all';
+        if (this.activeFilter !== 'all') {
+          // fix
+          this.orderService
+            .getOrdersByFilter(this.activeFilter as OrderStatusType)
+            .subscribe({
+              next: (response) => {
+                this.listOrders = response.data.map((order) => {
+                  return {
+                    ...order,
+                    transformId: transformString(order._id),
+                    orderDate: formatDate(order.orderDate),
+                    createdAt: formatDate(order.createdAt),
+                    updatedAt: formatDate(order.updatedAt),
+                  };
+                });
+              },
+            });
+        } else {
+          this.getListOrders();
+        }
+      },
     });
   }
 
   private getListOrders() {
-    this.orderService.getAllOrders().subscribe((response) => {
-      this.listOrders = response.data.map((order) => {
-        return {
-          ...order,
-          transformId: transformString(order._id),
-          orderDate: formatDate(order.orderDate),
-          createdAt: formatDate(order.createdAt),
-          updatedAt: formatDate(order.updatedAt),
-        };
-      });
+    this.orderService.getAllOrders().subscribe({
+      next: (response) => {
+        this.listOrders = response.data.map((order) => {
+          return {
+            ...order,
+            transformId: transformString(order._id),
+            orderDate: formatDate(order.orderDate),
+            createdAt: formatDate(order.createdAt),
+            updatedAt: formatDate(order.updatedAt),
+          };
+        });
+      },
     });
   }
 
-  public handleChangeStatus(orderId: string) {
-    console.log(this.orderStatusForm.value);
-
+  public handleChangeStatus(
+    fromStatus: OrderStatusType,
+    toStatus: OrderStatusType
+  ) {
     this.orderService
-      .changeOrderStatus(orderId, this.orderStatusForm.value)
-      .subscribe((response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
+      .updateAllOrdersStatus({ fromStatus, toStatus })
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
+          this._router.navigate(['/admin', 'orders'], {
+            queryParams: {
+              status: toStatus,
+            },
+          });
+        },
       });
   }
 }

@@ -18,12 +18,14 @@ export function adminGuard(): CanActivateFn {
       const _cookieService = inject(CookieService);
       const authService = inject(AuthService);
 
-      authService.isAdminRole().subscribe((res) => {
-        if (res.data) {
-          resolve(res.data);
-        } else {
-          resolve(router.navigate(['/home']));
-        }
+      authService.isAdminRole().subscribe({
+        next: (res) => {
+          if (res.data) {
+            resolve(res.data);
+          } else {
+            resolve(router.navigate(['/home']));
+          }
+        },
       });
     });
   };

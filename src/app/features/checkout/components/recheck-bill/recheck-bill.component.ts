@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HrComponent } from '../../../../shared/components/hr/hr.component';
-import { CartService } from '../../../../shared/services/CartServices/cart.service';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {HrComponent} from '../../../../shared/components/hr/hr.component';
+import {CartService} from '../../../../shared/services/CartServices/cart.service';
 import {
   ICartItem,
   IUserAddress,
   IUserCart,
 } from '../../../../shared/interfaces/user';
-import { ReviewItemComponent } from '../review-item/review-item.component';
+import {ReviewItemComponent} from '../review-item/review-item.component';
 
 @Component({
   selector: 'app-recheck-bill',
@@ -27,14 +27,17 @@ export class RecheckBillComponent {
   public deliveryFee: number = 0;
   public showOrderReview: boolean = false;
   public voucherCode: string = '';
+
   constructor(private cartService: CartService) {
-    this.cartService.getUserCart().subscribe((response) => {
-      this.cartItems = response.data.cartItems;
-      this.subTotalPrice = response.data.subTotalPrice;
-      this.discountPrice = response.data.discountPrice;
-      this.deliveryFee = response.data.deliveryFee;
-      this.totalPrice = response.data.totalPrice;
-      this.voucherCode = response.data.voucherCode;
+    this.cartService.getUserCart().subscribe({
+      next: (response) => {
+        this.cartItems = response.data.cartItems;
+        this.subTotalPrice = response.data.subTotalPrice;
+        this.discountPrice = response.data.discountPrice;
+        this.deliveryFee = response.data.deliveryFee;
+        this.totalPrice = response.data.totalPrice;
+        this.voucherCode = response.data.voucherCode;
+      }
     });
   }
 

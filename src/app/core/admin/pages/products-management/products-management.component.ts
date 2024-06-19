@@ -94,15 +94,15 @@ export class ProductsManagementComponent {
       this.createProductForm.get('discountPercents');
 
     discountPercentsControl?.disable();
-    this.createProductForm
-      .get('isDiscount')
-      ?.valueChanges.subscribe((isDiscount) => {
+    this.createProductForm.get('isDiscount')?.valueChanges.subscribe({
+      next: (isDiscount) => {
         if (isDiscount) {
           discountPercentsControl?.enable();
         } else {
           discountPercentsControl?.disable();
         }
-      });
+      },
+    });
   }
 
   public onFileChange(event: any, form: string) {
@@ -134,48 +134,54 @@ export class ProductsManagementComponent {
   }
 
   private getListProducts() {
-    this.productServices.getAllProducts().subscribe((response) => {
-      this.listProducts = response.data.map((prod) => {
-        return {
-          ...prod,
-          createdAt: formatDate(prod.createdAt),
-          updatedAt: formatDate(prod.updatedAt),
-        };
-      });
-      this.activeProducts = this.listProducts.filter(
-        (prod) => prod.isActive
-      ).length;
-      this.inactiveProducts = this.listProducts.filter(
-        (prod) => !prod.isActive
-      ).length;
+    this.productServices.getAllProducts().subscribe({
+      next: (response) => {
+        this.listProducts = response.data.map((prod) => {
+          return {
+            ...prod,
+            createdAt: formatDate(prod.createdAt),
+            updatedAt: formatDate(prod.updatedAt),
+          };
+        });
+        this.activeProducts = this.listProducts.filter(
+          (prod) => prod.isActive
+        ).length;
+        this.inactiveProducts = this.listProducts.filter(
+          (prod) => !prod.isActive
+        ).length;
+      },
     });
   }
 
   private getListCategories() {
-    this.categoryService.getAllCategories().subscribe((response) => {
-      this.listCategories = response.data.map((_cat) => {
-        return {
-          label: _cat.categoryName,
-          value: _cat.queryParams,
-        };
-      });
+    this.categoryService.getAllCategories().subscribe({
+      next: (response) => {
+        this.listCategories = response.data.map((_cat) => {
+          return {
+            label: _cat.categoryName,
+            value: _cat.queryParams,
+          };
+        });
+      },
     });
   }
 
   private getProductDetails(productId: string) {
-    this.productServices.getProductById(productId).subscribe((response) => {
-      const prodData = response.data;
-      this.editProductForm.patchValue({
-        productId: productId,
-        productName: prodData.productName,
-        productPrice: prodData.productPrice,
-        isDiscount: prodData.isDiscount,
-        discountPercents: prodData.discountPercents,
-        productCategory: prodData.productCategory,
-        productColor: prodData.productColor,
-        productStock: prodData.productStock,
-        isActive: prodData.isActive,
-      });
+    this.productServices.getProductById(productId).subscribe({
+      next: (response) => {
+        const prodData = response.data;
+        this.editProductForm.patchValue({
+          productId: productId,
+          productName: prodData.productName,
+          productPrice: prodData.productPrice,
+          isDiscount: prodData.isDiscount,
+          discountPercents: prodData.discountPercents,
+          productCategory: prodData.productCategory,
+          productColor: prodData.productColor,
+          productStock: prodData.productStock,
+          isActive: prodData.isActive,
+        });
+      },
     });
   }
 
@@ -202,8 +208,8 @@ export class ProductsManagementComponent {
   }
 
   public handleDeactivateProduct(productId: string) {
-    this.adminService.deactivateProduct(productId).subscribe(
-      (response) => {
+    this.adminService.deactivateProduct(productId).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -211,18 +217,18 @@ export class ProductsManagementComponent {
         });
         this.getListProducts();
       },
-      ({ error }) => {
+      error: ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: error.message,
         });
-      }
-    );
+      },
+    });
   }
   public handleReactivateProduct(productId: string) {
-    this.adminService.reactivateProduct(productId).subscribe(
-      (response) => {
+    this.adminService.reactivateProduct(productId).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -230,19 +236,19 @@ export class ProductsManagementComponent {
         });
         this.getListProducts();
       },
-      ({ error }) => {
+      error: ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: error.message,
         });
-      }
-    );
+      },
+    });
   }
 
   public handleEditProduct() {
-    this.adminService.editProductDetails(this.editProductForm.value).subscribe(
-      (response) => {
+    this.adminService.editProductDetails(this.editProductForm.value).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -251,21 +257,21 @@ export class ProductsManagementComponent {
         this.handleCloseEditDialog();
         this.getListProducts();
       },
-      ({ error }) => {
+      error: ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: error.message,
         });
-      }
-    );
+      },
+    });
   }
 
   public handleCreateProduct() {
     console.log(this.createProductForm.value);
 
-    this.adminService.createNewProduct(this.createProductForm.value).subscribe(
-      (response) => {
+    this.adminService.createNewProduct(this.createProductForm.value).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -274,19 +280,19 @@ export class ProductsManagementComponent {
         this.handleCloseCreateDialog();
         this.getListProducts();
       },
-      ({ error }) => {
+      error: ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: error.message,
         });
-      }
-    );
+      },
+    });
   }
 
   public handleDeleteProduct(productId: string) {
-    this.adminService.deleteProduct(productId).subscribe(
-      (response) => {
+    this.adminService.deleteProduct(productId).subscribe({
+      next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -294,13 +300,13 @@ export class ProductsManagementComponent {
         });
         this.getListProducts();
       },
-      ({ error }) => {
+      error: ({ error }) => {
         this._messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: error.message,
         });
-      }
-    );
+      },
+    });
   }
 }

@@ -41,24 +41,28 @@ export class CartComponent implements OnChanges {
   }
 
   private fetchUserCart() {
-    return this.cartApiService.getUserCart().subscribe((response) => {
-      if (response) {
-        this.listCartItems = response.data.cartItems;
-        this.voucherCode = response.data.voucherCode;
+    return this.cartApiService.getUserCart().subscribe({
+      next: (response) => {
+        if (response) {
+          this.listCartItems = response.data.cartItems;
+          this.voucherCode = response.data.voucherCode;
 
-        this.listCartItems.forEach((item) => {
-          return this.productApiService
-            .getProductById(item.productId)
-            .subscribe((response) => {
-              this.listCartItems.forEach((cartItem) => {
-                if (cartItem.productId === response.data._id) {
-                  cartItem.price = response.data.productPrice;
-                }
+          this.listCartItems.forEach((item) => {
+            return this.productApiService
+              .getProductById(item.productId)
+              .subscribe({
+                next: (response) => {
+                  this.listCartItems.forEach((cartItem) => {
+                    if (cartItem.productId === response.data._id) {
+                      cartItem.price = response.data.productPrice;
+                    }
+                  });
+                  this.subTotalPrice = this.calculateSubTotal();
+                },
               });
-              this.subTotalPrice = this.calculateSubTotal();
-            });
-        });
-      }
+          });
+        }
+      },
     });
   }
 
