@@ -146,6 +146,17 @@
     @apply cursor-pointer;
   }
 
+  .btn-flat-warning {
+    @apply bg-warning/10;
+    @apply text-warning;
+  }
+
+  .btn-flat-warning:hover {
+    @apply bg-warning;
+    @apply text-white;
+    @apply cursor-pointer;
+  }
+
   .btn-icon {
     @apply px-4 py-2;
     @apply text-white;

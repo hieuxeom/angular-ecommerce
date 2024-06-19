@@ -1,0 +1,98 @@
+<p-toast />
+<section class="w-full flex flex-col gap-4">
+  <header class="flex justify-between items-center">
+    <h5 class="font-bold">New Product</h5>
+    <div class="flex items-center gap-1">
+      <button
+        class="btn btn-r-xl btn-primary"
+        [routerLink]="['/admin', 'products']"
+      >
+        <i class="fa-solid fa-chevron-left"></i>Back
+      </button>
+    </div>
+  </header>
+  <main>
+    <form [formGroup]="editProductForm" class="flex flex-col gap-4">
+      <div class="w-full flex flex-col gap-2">
+        <p>Product Name</p>
+        <input
+          class="input-md input-r-xl"
+          type="text"
+          formControlName="productName"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-2">
+          <p>Product Price</p>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            formControlName="productPrice"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <div class="flex gap-2 items-center">
+            <input type="checkbox" formControlName="isDiscount" />
+            <p>% Discount</p>
+          </div>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            formControlName="discountPercents"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <p>Stock</p>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            formControlName="productStock"
+          />
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <div class="w-full flex flex-col gap-2">
+          <p>Category</p>
+          <p-dropdown
+            [options]="listCategories"
+            formControlName="productCategory"
+            styleClass="w-full border border-black/10"
+            placeholder="Select product category"
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <p>Thumbnail</p>
+          <input
+            class="input-md input-r-xl"
+            type="file"
+            (change)="onFileChange($event)"
+            accept="image/*"
+            #imageEditInput
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <p>Current Thumbnail</p>
+          <div class="w-max-2xl">
+            <img
+              src="{{ prefixImage }}/{{ productDetails?.productImage }}"
+              class="w-full"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <input type="checkbox" formControlName="isActive" />
+          <p>Is Active?</p>
+        </div>
+      </div>
+    </form>
+    <div class="w-full flex justify-end items-center">
+      <button
+        class="btn btn-r-xl btn-flat-warning"
+        (click)="handleEditProduct()"
+      >
+        Edit
+      </button>
+    </div>
+  </main>
+</section>

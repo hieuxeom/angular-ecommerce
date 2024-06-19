@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, type Routes } from '@angular/router';
+import { type Routes } from '@angular/router';
 import { authGuard } from './core/auth/guards/auth.guard';
 import { profileGuard } from './core/auth/guards/profile.guard';
 import { LoginComponent } from './core/auth/pages/login/login.component';
@@ -20,7 +19,6 @@ import { AdminIndexComponent } from './core/admin/pages/admin-index/admin-index.
 import { AdminAnalyticsComponent } from './core/admin/pages/admin-analytics/admin-analytics.component';
 import { OrderManagementComponent } from './core/admin/pages/order-management/order-management.component';
 import { UserManagementComponent } from './core/admin/pages/user-management/user-management.component';
-import { adminGuard } from './core/admin/guards/admin.guard';
 import { CategoriesManagementComponent } from './core/admin/pages/categories-management/categories-management.component';
 import { ProductsManagementComponent } from './core/admin/pages/products-management/products-management.component';
 import { OrderDetailsComponent } from './core/admin/pages/order-details/order-details.component';
@@ -28,13 +26,17 @@ import { VoucherManagementComponent } from './core/admin/pages/voucher-managemen
 import { VoucherEditComponent } from './core/admin/pages/voucher-edit/voucher-edit.component';
 import { VoucherNewComponent } from './core/admin/pages/voucher-new/voucher-new.component';
 import { MyOrdersComponent } from './features/profile/components/my-orders/my-orders.component';
+import { adminGuard } from './core/admin/guards/admin.guard';
+import { NewProductComponent } from './core/admin/pages/products-management/pages/new-product/new-product.component';
+import { ProductDetailsComponent } from './core/admin/pages/products-management/pages/product-details/product-details.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'admin',
     component: AdminIndexComponent,
-    // canActivate: [adminGuard()],
+    canActivate: [adminGuard()],
     children: [
       {
         path: '',
@@ -51,7 +53,29 @@ export const routes: Routes = [
       },
       {
         path: 'products',
-        component: ProductsManagementComponent,
+        children: [
+          {
+            path: '',
+            component: ProductsManagementComponent,
+          },
+          {
+            path: 'new',
+            component: NewProductComponent,
+          },
+          {
+            path: ':productId',
+            children: [
+              {
+                path: '',
+                component: ProductDetailsComponent,
+              },
+              {
+                path: 'edit',
+                component: EditProductComponent,
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'orders',

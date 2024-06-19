@@ -23,10 +23,7 @@
       </div>
     </div>
     <div>
-      <button
-        (click)="handleShowCreateDialog()"
-        class="btn btn-r-xl btn-primary"
-      >
+      <button class="btn btn-r-xl btn-primary" [routerLink]="['new']">
         <i class="fa-solid fa-plus"></i>New Product
       </button>
     </div>
@@ -36,22 +33,17 @@
       [value]="listProducts"
       [tableStyle]="{
         'min-width': '60rem',
-        width: 'max-content', 
       }"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th class="w-max text-center">Thumbnail</th>
-          <th class="w-full text-center">Product Name</th>
-          <th class="w-full text-center">Price</th>
-          <th class="w-full text-center">% Discount</th>
-          <th class="w-full text-center">Category</th>
-          <th class="w-full text-center">Stars Rate</th>
-          <th class="w-full text-center">On Stock</th>
-          <th class="min-w-max text-center">Created Date</th>
-          <th class="min-w-max text-center">Last Edited</th>
-          <th class="w-full text-center">Status</th>
-          <th class="w-full text-center">Action</th>
+          <th class="w-1/12 text-center">Thumbnail</th>
+          <th class="w-6/12 text-center">Product Name</th>
+          <th class="w-1/12 text-center">Price</th>
+          <th class="w-1/12 text-center">Category</th>
+          <th class="w-1/12 text-center">Stock</th>
+          <th class="w-1/12 text-center">Status</th>
+          <th class="w-1/12 text-center">Action</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-product>
@@ -63,17 +55,16 @@
               alt=""
             />
           </td>
-          <td class="w-full text-center">{{ product.productName }}</td>
-          <td class="w-full text-center">{{ product.productPrice }}</td>
-          <td class="w-full text-center">{{ product.discountPercents }}</td>
-          <td class="w-full text-center">{{ product.productCategory }}</td>
-          <td class="w-full text-center">{{ product.productRating }}</td>
-          <td class="w-full text-center">{{ product.productStock }}</td>
-          <td class="min-w-max text-center">
-            <p class="min-w-max">{{ product.createdAt }}</p>
-          </td>
-          <td class="min-w-max text-center">
-            <p class="min-w-max">{{ product.updatedAt }}</p>
+          <td class="text-center">{{ product.productName }}</td>
+          <td class="text-center">{{ product.productPrice }}</td>
+          <td class="text-center">{{ product.productCategory }}</td>
+          <td class="w-full text-center">
+            {{ product.productStock }}
+            <span
+              class="min-w-max text-danger italic"
+              *ngIf="product.productStock < 10"
+              >({{ product.productStock !== 0 ? "Low" : "Out stock" }})</span
+            >
           </td>
           <td
             class="w-full text-center"
@@ -100,7 +91,13 @@
                 <i class="fa-solid fa-unlock"></i>
               </button>
               <button
-                (click)="handleShowEditDialog(product._id)"
+                class="btn btn-icon btn-secondary btn-r-md"
+                [routerLink]="[product._id]"
+              >
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button
+                [routerLink]="[product._id, 'edit']"
                 class="btn btn-icon btn-warning btn-r-md"
               >
                 <i class="fa-solid fa-pen-to-square"></i>
@@ -123,209 +120,4 @@
       </ng-template>
     </p-table>
   </main>
-</section>
-
-<section
-  class="absolute flex justify-center items-center top-0 left-0 w-full h-full border border-black/10 bg-black/25 transition-all duration-300"
-  [ngClass]="{
-    block: isShowEditDialog,
-    hidden: !isShowEditDialog
-  }"
->
-  <div class="w-1/2 h-max bg-white py-4 px-8 rounded-2xl flex flex-col gap-4">
-    <header class="w-full flex items-center justify-between">
-      <h5 class="font-bold">Edit Product Details</h5>
-      <button
-        class="hover:bg-black/20 transition-all duration-300 flex justify-center items-center w-8 h-8 text-xl rounded-full"
-        (click)="handleCloseEditDialog()"
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </header>
-    <main>
-      <form [formGroup]="editProductForm" class="flex flex-col gap-4">
-        <div class="w-full flex flex-col gap-2">
-          <p>Product Name</p>
-          <input
-            class="input-md input-r-xl"
-            type="text"
-            formControlName="productName"
-          />
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-full flex flex-col gap-2">
-            <p>Product Price</p>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="productPrice"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <div class="flex gap-2 items-center">
-              <input type="checkbox" formControlName="isDiscount" />
-              <p>% Discount</p>
-            </div>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="discountPercents"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <p>Stock</p>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="productStock"
-            />
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-full flex flex-col gap-2">
-            <p>Category</p>
-            <!-- <input
-              class="input-md input-r-xl"
-              type="text"
-              formControlName="productCategory"
-            /> -->
-            <p-dropdown
-              filter="true"
-              [options]="listCategories"
-              formControlName="productCategory"
-              styleClass="w-full border border-black/10"
-              placeholder="Select product category"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <p>Thumbnail</p>
-            <input
-              class="input-md input-r-xl"
-              type="file"
-              (change)="onFileChange($event, 'edit')"
-              accept="image/*"
-              #imageEditInput
-            />
-          </div>
-        </div>
-        <div class="w-full flex gap-2">
-          <input type="checkbox" formControlName="isActive" class />
-          <p>Is Active?</p>
-        </div>
-      </form>
-    </main>
-    <footer class="flex justify-end gap-4 items-center">
-      <button
-        (click)="handleCloseEditDialog()"
-        class="btn btn-r-xl btn-flat-danger"
-      >
-        Cancel
-      </button>
-      <button
-        (click)="handleEditProduct()"
-        class="btn btn-r-xl btn-flat-secondary"
-      >
-        Save
-      </button>
-    </footer>
-  </div>
-</section>
-
-<section
-  class="absolute flex justify-center items-center top-0 left-0 w-full h-full border border-black/10 bg-black/25 transition-all duration-300"
-  [ngClass]="{
-    block: isShowCreateDialog,
-    hidden: !isShowCreateDialog
-  }"
->
-  <div class="w-1/2 h-max bg-white py-4 px-8 rounded-2xl flex flex-col gap-4">
-    <header class="w-full flex items-center justify-between">
-      <h5 class="font-bold">Create new Product</h5>
-      <button
-        class="hover:bg-black/20 transition-all duration-300 flex justify-center items-center w-8 h-8 text-xl rounded-full"
-        (click)="handleCloseCreateDialog()"
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </header>
-    <main>
-      <form [formGroup]="createProductForm" class="flex flex-col gap-4">
-        <div class="w-full flex flex-col gap-2">
-          <p>Product Name</p>
-          <input
-            class="input-md input-r-xl"
-            type="text"
-            formControlName="productName"
-          />
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-full flex flex-col gap-2">
-            <p>Product Price</p>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="productPrice"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <div class="flex gap-2 items-center">
-              <input type="checkbox" formControlName="isDiscount" />
-              <p>% Discount</p>
-            </div>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="discountPercents"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <p>Stock</p>
-            <input
-              class="input-md input-r-xl"
-              type="Number"
-              formControlName="productStock"
-            />
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-full flex flex-col gap-2">
-            <p>Category</p>
-            <input
-              class="input-md input-r-xl"
-              type="text"
-              formControlName="productCategory"
-            />
-          </div>
-          <div class="w-full flex flex-col gap-2">
-            <p>Thumbnail</p>
-            <input
-              class="input-md input-r-xl"
-              type="file"
-              (change)="onFileChange($event, 'create')"
-              accept="image/*"
-              #imageNewInput
-            />
-          </div>
-        </div>
-        <div class="w-full flex gap-2">
-          <input type="checkbox" formControlName="isActive" class />
-          <p>Is Active?</p>
-        </div>
-      </form>
-    </main>
-    <footer class="flex justify-end gap-4 items-center">
-      <button
-        (click)="handleCloseCreateDialog()"
-        class="btn btn-r-xl btn-flat-danger"
-      >
-        Cancel
-      </button>
-      <button
-        (click)="handleCreateProduct()"
-        class="btn btn-r-xl btn-flat-secondary"
-      >
-        Create
-      </button>
-    </footer>
-  </div>
 </section>

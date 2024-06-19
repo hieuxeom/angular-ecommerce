@@ -1,0 +1,96 @@
+<p-toast />
+<section class="w-full flex flex-col gap-4">
+  <header class="flex justify-between items-center">
+    <h5 class="font-bold">New Product</h5>
+    <div class="flex items-center gap-1">
+      <button
+        class="btn btn-r-xl btn-primary"
+        [routerLink]="['/admin', 'products']"
+      >
+        <i class="fa-solid fa-chevron-left"></i>Back
+      </button>
+      <button class="btn btn-r-xl btn-warning" [routerLink]="['edit']">
+        <i class="fa-solid fa-pen-to-square"></i>
+        Edit
+      </button>
+    </div>
+  </header>
+  <main>
+    <div class="flex flex-col gap-4">
+      <div class="w-full flex flex-col gap-2">
+        <p>Product Name</p>
+        <input
+          class="input-md input-r-xl"
+          type="text"
+          value="{{ productDetails?.productName }}"
+          readonly
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col gap-2">
+          <p>Product Price</p>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            value="{{ productDetails?.productPrice }}"
+            readonly
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <div class="flex gap-2 items-center">
+            <input
+              type="checkbox"
+              [checked]="productDetails?.isDiscount ?? false"
+              class="pointer-events-none"
+            />
+            <p>% Discount</p>
+          </div>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            value="{{ productDetails?.discountPercents }}"
+            readonly
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <p>Stock</p>
+          <input
+            class="input-md input-r-xl"
+            type="Number"
+            value="{{ productDetails?.productStock }}"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <div class="w-max-4xl flex flex-col gap-2">
+          <p>Category</p>
+          <input
+            class="input-md input-r-xl"
+            type="text"
+            value="{{ productDetails?.productCategory }}"
+            readonly
+          />
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <p>Thumbnail</p>
+          <div class="w-max-2xl">
+            <img
+              src="{{ prefixImage }}/{{ productDetails?.productImage }}"
+              class="w-full"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <input
+            type="checkbox"
+            [checked]="productDetails?.isActive ?? false"
+            class="pointer-events-none"
+          />
+          <p>Is Active?</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>
