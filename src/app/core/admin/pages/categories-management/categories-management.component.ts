@@ -147,8 +147,10 @@ export class CategoriesManagementComponent {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: 'Successfully edited the category',
+          detail: response.message,
         });
+
+        this.editCategoryForm.reset();
         this.isShowEditDialog = false;
         this.getListCategories();
       },
@@ -175,6 +177,7 @@ export class CategoriesManagementComponent {
             detail: 'Successfully created new category',
           });
           this.isShowCreateDialog = false;
+          this.createCategoryForm.reset();
           this.getListCategories();
         },
       });
@@ -202,5 +205,25 @@ export class CategoriesManagementComponent {
           });
         },
       });
+  }
+
+  public handleDelete(categoryId: string) {
+    this.categoryService.deleteCategory(categoryId).subscribe({
+      next: (response) => {
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: response.message,
+        });
+        return this.getListCategories();
+      },
+      error: ({ error }) => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.message,
+        });
+      },
+    });
   }
 }

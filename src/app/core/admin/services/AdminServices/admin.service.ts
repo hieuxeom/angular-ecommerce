@@ -74,7 +74,7 @@ export class AdminService {
   }
 
   public editCategory(editCategoryForm: IEditCategoryForm) {
-    return this.httpClient.put(
+    return this.httpClient.put<IApiResponse>(
       `${this.API_CATEGORY}/`,
       editCategoryForm,
       this._httpConfig.getHttpOptions()
@@ -82,7 +82,7 @@ export class AdminService {
   }
 
   public createNewCategory(createCategoryForm: ICreateCategoryForm) {
-    return this.httpClient.post(
+    return this.httpClient.post<IApiResponse>(
       `${this.API_CATEGORY}`,
       createCategoryForm,
       this._httpConfig.getHttpOptions()

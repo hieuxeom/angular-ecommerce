@@ -35,4 +35,11 @@ export class CategoryService {
       this._httpConfig.getHttpOptions()
     );
   }
+
+  public deleteCategory(categoryId: string) {
+    return this.httpClient.delete<IApiResponse>(
+      `${this.API_URL}/${categoryId}`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
 }
