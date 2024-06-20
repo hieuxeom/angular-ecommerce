@@ -183,8 +183,8 @@ export class CategoriesManagementComponent {
   public handleDropdownChange(event: any, category: any) {
     const isActive = event.value;
     category.isActive = isActive;
-    this.adminService
-      .changeCategoryActivateStatus(category._id, isActive)
+    this.categoryService
+      .changeActivateStatus(category._id, isActive)
       .subscribe({
         next: (response) => {
           this._messageService.add({

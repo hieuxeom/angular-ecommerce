@@ -73,16 +73,6 @@ export class AdminService {
     );
   }
 
-  public changeCategoryActivateStatus(categoryId: string, isActive: number) {
-    return this.httpClient.put<IApiResponse>(
-      `${this.API_CATEGORY}/${categoryId}/activate`,
-      {
-        isActive,
-      },
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
   public editCategory(editCategoryForm: IEditCategoryForm) {
     return this.httpClient.put(
       `${this.API_CATEGORY}/`,
