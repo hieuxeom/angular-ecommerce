@@ -55,7 +55,7 @@ export class ProductsManagementComponent {
 
   constructor(
     private _messageService: MessageService,
-    private productServices: ProductService,
+    private productService: ProductService,
 
     private adminService: AdminService
   ) {
@@ -63,7 +63,7 @@ export class ProductsManagementComponent {
   }
 
   private getListProducts() {
-    this.productServices.getAllProducts().subscribe({
+    this.productService.getAllProducts().subscribe({
       next: (response) => {
         this.listProducts = response.data.map((prod) => {
           return {
@@ -102,7 +102,7 @@ export class ProductsManagementComponent {
 
     product.isActive = isActive;
 
-    this.productServices.changeActivateStatus(product._id, isActive).subscribe({
+    this.productService.changeActivateStatus(product._id, isActive).subscribe({
       next: (response) => {
         this._messageService.add({
           severity: 'success',
@@ -122,7 +122,7 @@ export class ProductsManagementComponent {
   }
 
   public handleDeleteProduct(productId: string) {
-    this.adminService.deleteProduct(productId).subscribe({
+    this.productService.deleteProduct(productId).subscribe({
       next: (response) => {
         this._messageService.add({
           severity: 'success',

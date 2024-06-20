@@ -7,12 +7,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AdminService } from '../../../../services/AdminServices/admin.service';
 import { MessageService } from 'primeng/api';
 import { Router, RouterModule } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { CategoryService } from '../../../../../../shared/services/CategoryServices/category.service';
+import { ProductService } from '../../../../../../shared/services/ProductServices/product.service';
 
 @Component({
   selector: 'app-new-product',
@@ -35,7 +35,7 @@ export class NewProductComponent {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private adminService: AdminService,
+    private productService: ProductService,
     private categoryService: CategoryService,
     private _messageService: MessageService,
     private _router: Router
@@ -98,25 +98,27 @@ export class NewProductComponent {
   }
 
   public handleCreateProduct() {
-    this.adminService.createNewProduct(this.createProductForm.value).subscribe({
-      next: (response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
+    this.productService
+      .createNewProduct(this.createProductForm.value)
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
 
-        setTimeout(() => {
-          this._router.navigate(['/admin', 'products']);
-        }, 1500);
-      },
-      error: ({ error }) => {
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.message,
-        });
-      },
-    });
+          setTimeout(() => {
+            this._router.navigate(['/admin', 'products']);
+          }, 1500);
+        },
+        error: ({ error }) => {
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+          });
+        },
+      });
   }
 }

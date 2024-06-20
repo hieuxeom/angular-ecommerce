@@ -88,27 +88,4 @@ export class AdminService {
       this._httpConfig.getHttpOptions()
     );
   }
-
-  public createNewProduct(createProductForm: ICreateProductForm) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_PRODUCT}`,
-      createProductForm,
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public editProductDetails(editProductForm: IEditProductForm) {
-    return this.httpClient.put<IApiResponse>(
-      `${this.API_PRODUCT}`,
-      editProductForm,
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public deleteProduct(productId: string) {
-    return this.httpClient.delete<IApiResponse>(
-      `${this.API_PRODUCT}/${productId}`,
-      this._httpConfig.getHttpOptions()
-    );
-  }
 }

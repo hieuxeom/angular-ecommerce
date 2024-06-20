@@ -13,7 +13,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { IProduct } from '../shared/interfaces/product';
 import { apiUrl } from '../shared/utils/apiUrl';
-import { AdminService } from '../core/admin/services/AdminServices/admin.service';
+
 import { CategoryService } from '../shared/services/CategoryServices/category.service';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -42,7 +42,7 @@ export class EditProductComponent {
   public constructor(
     private _formBuilder: FormBuilder,
     private productService: ProductService,
-    private adminService: AdminService,
+
     private categoryService: CategoryService,
     private _messageService: MessageService,
     private _route: ActivatedRoute,
@@ -122,7 +122,7 @@ export class EditProductComponent {
   }
 
   public handleEditProduct() {
-    this.adminService.editProductDetails(this.editProductForm.value).subscribe({
+    this.productService.editProduct(this.editProductForm.value).subscribe({
       next: (response) => {
         this._messageService.add({
           severity: 'success',

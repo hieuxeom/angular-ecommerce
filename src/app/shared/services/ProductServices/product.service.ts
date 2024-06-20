@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
 import type { IApiResponse } from '../../interfaces/api';
 import type { IProduct } from '../../interfaces/product';
+import { FormGroup } from '@angular/forms';
 
 // Define the ProductService
 @Injectable({
@@ -77,6 +78,29 @@ export class ProductService {
       {
         isActive,
       },
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public deleteProduct(productId: string) {
+    return this.httpClient.delete<IApiResponse>(
+      `${this.API_URL}/${productId}`,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public createNewProduct(createProductForm: FormGroup) {
+    return this.httpClient.post<IApiResponse>(
+      `${this.API_URL}`,
+      createProductForm,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public editProduct(editProductForm: FormGroup) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}`,
+      editProductForm,
       this._httpConfig.getHttpOptions()
     );
   }
