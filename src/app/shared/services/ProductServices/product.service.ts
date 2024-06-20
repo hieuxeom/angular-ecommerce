@@ -1,6 +1,6 @@
 import { HttpConfigService } from './../HttpConfig/http-config.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
 import type { IApiResponse } from '../../interfaces/api';
 import type { IProduct } from '../../interfaces/product';
@@ -68,6 +68,16 @@ export class ProductService {
     return this.httpClient.post<IApiResponse>(
       `${this.API_URL}/${productId}/views`,
       {}
+    );
+  }
+
+  public changeActivateStatus(productId: string, isActive: boolean) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}/${productId}/activate`,
+      {
+        isActive,
+      },
+      this._httpConfig.getHttpOptions()
     );
   }
 }

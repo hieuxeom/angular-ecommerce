@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
@@ -8,7 +8,6 @@ import { ProductService } from '../../../../shared/services/ProductServices/prod
 import { AdminService } from '../../services/AdminServices/admin.service';
 import { IProduct } from '../../../../shared/interfaces/product';
 import { formatDate } from '../../../../shared/utils/formatDate';
-import { CategoryService } from '../../../../shared/services/CategoryServices/category.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { RouterModule } from '@angular/router';
 
@@ -29,12 +28,24 @@ import { RouterModule } from '@angular/router';
   styleUrl: './products-management.component.css',
 })
 export class ProductsManagementComponent {
-  @ViewChild('imageNewInput') imageNewInput!: ElementRef;
-  @ViewChild('imageEditInput') imageEditInput!: ElementRef;
   public prefixImage: string = 'http://localhost:5000';
 
   public listProducts: IProduct[] = [];
-  public listCategories: any = [];
+
+  public activeDropdown: any[] = [
+    {
+      label: 'Active',
+      value: true,
+      class: 'text-success',
+    },
+    {
+      label: 'Disabled',
+      value: false,
+      class: 'text-danger',
+    },
+  ];
+
+  public mapStatusDropdownValue: { [key: string]: boolean } = {};
 
   public activeProducts: number = 0;
   public inactiveProducts: number = 0;
@@ -45,7 +56,7 @@ export class ProductsManagementComponent {
   constructor(
     private _messageService: MessageService,
     private productServices: ProductService,
-    private categoryService: CategoryService,
+
     private adminService: AdminService
   ) {
     this.getListProducts();
@@ -61,44 +72,44 @@ export class ProductsManagementComponent {
             updatedAt: formatDate(prod.updatedAt),
           };
         });
-        this.activeProducts = this.listProducts.filter(
-          (prod) => prod.isActive
-        ).length;
-        this.inactiveProducts = this.listProducts.filter(
-          (prod) => !prod.isActive
-        ).length;
+
+        this.mapDropdown();
+
+        this.calculateActivationProducts();
       },
     });
   }
 
-  public handleDeactivateProduct(productId: string) {
-    this.adminService.deactivateProduct(productId).subscribe({
-      next: (response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
-        this.getListProducts();
-      },
-      error: ({ error }) => {
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.message,
-        });
-      },
+  private mapDropdown() {
+    this.listProducts.forEach((product) => {
+      this.mapStatusDropdownValue[product._id] = product.isActive;
     });
+
+    console.log(this.mapStatusDropdownValue);
   }
-  public handleReactivateProduct(productId: string) {
-    this.adminService.reactivateProduct(productId).subscribe({
+
+  private calculateActivationProducts() {
+    this.activeProducts = this.listProducts.filter(
+      (prod) => prod.isActive
+    ).length;
+    this.inactiveProducts = this.listProducts.filter(
+      (prod) => !prod.isActive
+    ).length;
+  }
+
+  public handleDropdownChange($event: any, product: IProduct) {
+    const isActive = $event.value;
+
+    product.isActive = isActive;
+
+    this.productServices.changeActivateStatus(product._id, isActive).subscribe({
       next: (response) => {
         this._messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: response.message,
         });
-        this.getListProducts();
+        this.calculateActivationProducts();
       },
       error: ({ error }) => {
         this._messageService.add({

@@ -105,26 +105,6 @@ export class AdminService {
     );
   }
 
-  public deactivateProduct(productId: string) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_PRODUCT}/deactivate`,
-      {
-        productId,
-      },
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public reactivateProduct(productId: string) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_PRODUCT}/reactivate`,
-      {
-        productId,
-      },
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
   public deleteProduct(productId: string) {
     return this.httpClient.delete<IApiResponse>(
       `${this.API_PRODUCT}/${productId}`,
