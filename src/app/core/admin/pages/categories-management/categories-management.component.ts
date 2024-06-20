@@ -142,7 +142,7 @@ export class CategoriesManagementComponent {
   }
 
   public handleSave() {
-    this.adminService.editCategory(this.editCategoryForm.value).subscribe({
+    this.categoryService.editCategory(this.editCategoryForm.value).subscribe({
       next: (response) => {
         this._messageService.add({
           severity: 'success',
@@ -167,7 +167,7 @@ export class CategoriesManagementComponent {
   }
 
   public handleCreate() {
-    this.adminService
+    this.categoryService
       .createNewCategory(this.createCategoryForm.value)
       .subscribe({
         next: (response) => {

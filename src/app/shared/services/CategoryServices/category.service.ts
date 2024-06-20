@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { IApiResponse } from '../../interfaces/api';
 import { ICategory } from '../../interfaces/category';
 import { HttpConfigService } from '../HttpConfig/http-config.service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,22 @@ export class CategoryService {
       {
         isActive,
       },
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public editCategory(editCategoryForm: FormGroup) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_URL}/`,
+      editCategoryForm,
+      this._httpConfig.getHttpOptions()
+    );
+  }
+
+  public createNewCategory(createCategoryForm: FormGroup) {
+    return this.httpClient.post<IApiResponse>(
+      `${this.API_URL}`,
+      createCategoryForm,
       this._httpConfig.getHttpOptions()
     );
   }

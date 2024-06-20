@@ -72,20 +72,4 @@ export class AdminService {
       this._httpConfig.getHttpOptions()
     );
   }
-
-  public editCategory(editCategoryForm: IEditCategoryForm) {
-    return this.httpClient.put<IApiResponse>(
-      `${this.API_CATEGORY}/`,
-      editCategoryForm,
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public createNewCategory(createCategoryForm: ICreateCategoryForm) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_CATEGORY}`,
-      createCategoryForm,
-      this._httpConfig.getHttpOptions()
-    );
-  }
 }
