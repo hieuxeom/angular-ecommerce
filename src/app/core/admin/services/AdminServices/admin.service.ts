@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpConfigService } from '../../../../shared/services/HttpConfig/http-config.service';
 import { IApiResponse } from '../../../../shared/interfaces/api';
 import { IUser } from '../../../../shared/interfaces/user';
-import { FormGroup } from '@angular/forms';
 
 interface IEditCategoryForm {
   categoryId: string;
@@ -74,21 +73,11 @@ export class AdminService {
     );
   }
 
-  public deactivateCategory(categoryId: string) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_CATEGORY}/deactivate`,
+  public changeCategoryActivateStatus(categoryId: string, isActive: number) {
+    return this.httpClient.put<IApiResponse>(
+      `${this.API_CATEGORY}/${categoryId}/activate`,
       {
-        categoryId,
-      },
-      this._httpConfig.getHttpOptions()
-    );
-  }
-
-  public reactivateCategory(categoryId: string) {
-    return this.httpClient.post<IApiResponse>(
-      `${this.API_CATEGORY}/reactivate`,
-      {
-        categoryId,
+        isActive,
       },
       this._httpConfig.getHttpOptions()
     );

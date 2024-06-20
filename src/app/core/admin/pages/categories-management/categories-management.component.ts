@@ -7,11 +7,9 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { AdminService } from '../../services/AdminServices/admin.service';
 
-import { IProduct } from '../../../../shared/interfaces/product';
 import { CategoryService } from '../../../../shared/services/CategoryServices/category.service';
 import { ICategory } from '../../../../shared/interfaces/category';
 import { formatDate } from '../../../../shared/utils/formatDate';
-import { DialogModule } from 'primeng/dialog';
 import {
   FormBuilder,
   FormGroup,
@@ -19,7 +17,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-categories-management',
@@ -32,6 +30,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     TableModule,
     RippleModule,
     ToastModule,
+    DropdownModule,
   ],
   providers: [MessageService],
   templateUrl: './categories-management.component.html',
@@ -42,6 +41,22 @@ export class CategoriesManagementComponent {
   public isShowCreateDialog = false;
 
   public listCategories: ICategory[] = [];
+
+  public activeDropdown: any[] = [
+    {
+      label: 'Active',
+      value: 1,
+      class: 'text-success',
+    },
+    {
+      label: 'Disabled',
+      value: 0,
+      class: 'text-danger',
+    },
+  ];
+
+  public mapStatusDropdownValue: { [key: string]: number } = {};
+
   public activeCategories: number = 0;
   public inactiveCategories: number = 0;
 
@@ -69,6 +84,12 @@ export class CategoriesManagementComponent {
     });
   }
 
+  private mapDropdown() {
+    this.listCategories.forEach((category) => {
+      this.mapStatusDropdownValue[category._id] = category.isActive;
+    });
+  }
+
   private getListCategories() {
     this.categoryService.getAllCategories(false).subscribe({
       next: (response) => {
@@ -80,14 +101,19 @@ export class CategoriesManagementComponent {
           };
         });
 
-        this.inactiveCategories = this.listCategories.filter(
-          (_c) => _c.isActive === 0
-        ).length;
-        this.activeCategories = this.listCategories.filter(
-          (_c) => _c.isActive === 1
-        ).length;
+        this.mapDropdown();
+        this.calculateActivatedCategories();
       },
     });
+  }
+
+  private calculateActivatedCategories() {
+    this.inactiveCategories = this.listCategories.filter(
+      (_c) => _c.isActive === 0
+    ).length;
+    this.activeCategories = this.listCategories.filter(
+      (_c) => _c.isActive === 1
+    ).length;
   }
 
   private getEditCategoryDetails(categoryId: string) {
@@ -101,32 +127,6 @@ export class CategoriesManagementComponent {
           queryParams: categoryData.queryParams,
           isActive: categoryData.isActive === 1 ? true : false,
         });
-      },
-    });
-  }
-
-  public handleDeactivateCategory(categoryId: string) {
-    this.adminService.deactivateCategory(categoryId).subscribe({
-      next: (response) => {
-        this._messageService.add({
-          severity: 'error',
-          summary: 'Deactivate',
-          detail: response.message,
-        });
-        this.getListCategories();
-      },
-    });
-  }
-
-  public handleReactivateCategory(categoryId: string) {
-    this.adminService.reactivateCategory(categoryId).subscribe({
-      next: (response) => {
-        this._messageService.add({
-          severity: 'success',
-          summary: 'Reactivate',
-          detail: response.message,
-        });
-        this.getListCategories();
       },
     });
   }
@@ -176,6 +176,30 @@ export class CategoriesManagementComponent {
           });
           this.isShowCreateDialog = false;
           this.getListCategories();
+        },
+      });
+  }
+
+  public handleDropdownChange(event: any, category: any) {
+    const isActive = event.value;
+    category.isActive = isActive;
+    this.adminService
+      .changeCategoryActivateStatus(category._id, isActive)
+      .subscribe({
+        next: (response) => {
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
+          this.calculateActivatedCategories();
+        },
+        error: ({ error }) => {
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+          });
         },
       });
   }
